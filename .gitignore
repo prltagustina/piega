@@ -1,0 +1,102 @@
+# ========================================
+# Dependencias
+# ========================================
+node_modules/
+.pnp/
+.pnp.js
+.yarn/install-state.gz
+
+# ========================================
+# Build / Output
+# ========================================
+.next/
+out/
+dist/
+build/
+.output/
+storybook-static/
+
+# ========================================
+# Variables de entorno
+# ========================================
+.env
+.env.*
+!.env.example
+
+# ========================================
+# Sistema operativo
+# ========================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+*.swp
+*.swo
+*~
+
+# ========================================
+# IDE / Editores
+# ========================================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# ========================================
+# Vercel
+# ========================================
+.vercel
+
+# ========================================
+# Logs
+# ========================================
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+
+# ========================================
+# Cache
+# ========================================
+.cache/
+.turbo/
+.eslintcache
+.stylelintcache
+.parcel-cache/
+
+# ========================================
+# TypeScript
+# ========================================
+*.tsbuildinfo
+next-env.d.ts
+
+# ========================================
+# Testing
+# ========================================
+coverage/
+.nyc_output/
+
+# ========================================
+# Debug
+# ========================================
+.clinic/
+.node-inspect/
+
+# ========================================
+# Misc
+# ========================================
+*.pem
+.contentlayer/
+
+# ========================================
+# v0 runtime files (solo existen en preview)
+# ========================================
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+instrumentation-client.js
+instrumentation-client.ts

@@ -1,0 +1,122 @@
+:root {
+  --site-bg: #1a1714;
+  --site-bg-warm: #221f1a;
+  --site-fg: #f5f0e8;
+  --site-fg-muted: #a89f91;
+  --site-accent: #c8a97e;
+  --site-accent-light: #dcc5a0;
+  --site-border: rgba(200, 169, 126, 0.15);
+}
+
+.site-page {
+  background-color: var(--site-bg);
+  color: var(--site-fg);
+  overflow-x: hidden;
+}
+
+.site-page * {
+  box-sizing: border-box;
+}
+
+/* Smooth scroll */
+.site-page {
+  scroll-behavior: smooth;
+}
+
+/* Hero parallax image */
+.hero-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-wrapper img {
+  transition: transform 0.1s linear;
+}
+
+/* Horizontal rule with fade */
+.site-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--site-border) 20%,
+    var(--site-accent) 50%,
+    var(--site-border) 80%,
+    transparent 100%
+  );
+  opacity: 0.5;
+}
+
+/* Custom cursor on hover for links */
+.site-link {
+  position: relative;
+  display: inline-block;
+}
+
+.site-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background-color: var(--site-accent);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.site-link:hover::after {
+  width: 100%;
+}
+
+/* Gallery masonry */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Service card hover */
+.service-card {
+  transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.service-card:hover {
+  background-color: var(--site-bg-warm);
+}
+
+/* Text reveal mask */
+@keyframes reveal-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(20px);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 25s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}

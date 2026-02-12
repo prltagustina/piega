@@ -1,0 +1,147 @@
+"use client"
+
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ScrollReveal } from "./scroll-reveal"
+import Image from "next/image"
+
+const services = [
+  {
+    title: "Corte & Estilo",
+    description:
+      "Cortes personalizados que realzan tu belleza natural. Nuestros estilistas analizan la textura, forma del rostro y estilo de vida para crear el look perfecto.",
+    price: "Desde $5.500",
+  },
+  {
+    title: "Color & Mechas",
+    description:
+      "Técnicas de coloración de vanguardia. Balayage, highlights, global color y más. Trabajamos con productos premium para un resultado impecable.",
+    price: "Desde $12.000",
+  },
+  {
+    title: "Tratamientos Capilares",
+    description:
+      "Hidratación profunda, keratina, botox capilar y tratamientos reparadores. Devolvemos la salud y el brillo a tu cabello.",
+    price: "Desde $8.000",
+  },
+  {
+    title: "Spa & Bienestar",
+    description:
+      "Rituales de relajación que combinan aromaterapia, masajes y cuidados especializados. Una experiencia integral de bienestar.",
+    price: "Desde $9.500",
+  },
+  {
+    title: "Maquillaje Profesional",
+    description:
+      "Looks para eventos, sesiones fotográficas o tu día a día. Resaltamos tus rasgos con técnicas profesionales y productos de alta gama.",
+    price: "Desde $7.000",
+  },
+  {
+    title: "Novias & Eventos",
+    description:
+      "Paquetes exclusivos para tu día especial. Incluyen prueba previa, peinado, maquillaje y atención personalizada. Hacemos de tu momento algo único.",
+    price: "Consultar",
+  },
+]
+
+export function ServicesSection() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+
+  return (
+    <section id="servicios" className="py-24 md:py-32 px-6 md:px-12 lg:px-16">
+      <ScrollReveal>
+        <p
+          className="text-xs uppercase tracking-[0.3em] mb-4"
+          style={{ color: "var(--site-accent)" }}
+        >
+          Nuestros Servicios
+        </p>
+        <h2
+          className="text-4xl md:text-5xl lg:text-6xl font-serif font-light leading-tight max-w-2xl"
+          style={{ color: "var(--site-fg)" }}
+        >
+          Experiencias que transforman
+        </h2>
+      </ScrollReveal>
+
+      <div className="mt-16 md:mt-20 grid lg:grid-cols-2 gap-0 lg:gap-16">
+        {/* Services list */}
+        <div className="flex flex-col">
+          {services.map((service, i) => (
+            <ScrollReveal key={service.title} delay={i * 0.08}>
+              <button
+                type="button"
+                className="service-card w-full text-left py-7 border-b flex items-start justify-between gap-4 group"
+                style={{ borderColor: "var(--site-border)" }}
+                onClick={() => setActiveIndex(activeIndex === i ? null : i)}
+                onMouseEnter={() => setActiveIndex(i)}
+              >
+                <div className="flex-1">
+                  <div className="flex items-baseline gap-4">
+                    <span
+                      className="text-xs font-mono"
+                      style={{ color: "var(--site-fg-muted)" }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h3
+                      className="text-xl md:text-2xl font-serif font-light transition-colors duration-300"
+                      style={{
+                        color:
+                          activeIndex === i
+                            ? "var(--site-accent)"
+                            : "var(--site-fg)",
+                      }}
+                    >
+                      {service.title}
+                    </h3>
+                  </div>
+                  <AnimatePresence>
+                    {activeIndex === i && (
+                      <motion.p
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="text-sm font-light leading-relaxed mt-3 ml-10 max-w-md"
+                        style={{ color: "var(--site-fg-muted)" }}
+                      >
+                        {service.description}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </div>
+                <span
+                  className="text-xs uppercase tracking-wider mt-2 whitespace-nowrap"
+                  style={{ color: "var(--site-fg-muted)" }}
+                >
+                  {service.price}
+                </span>
+              </button>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        {/* Image column */}
+        <ScrollReveal delay={0.2} className="hidden lg:block sticky top-32 h-fit">
+          <div className="relative aspect-[3/4] overflow-hidden">
+            <Image
+              src="/images/services.jpg"
+              alt="Estilista profesional en acción"
+              fill
+              className="object-cover"
+              sizes="50vw"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to top, var(--site-bg) 0%, transparent 40%)",
+              }}
+            />
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  )
+}
