@@ -1,22 +1,26 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import Image from "next/image"
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 
 export function HeroSection() {
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
-  })
+  });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"])
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0.45, 0.8])
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0.45, 0.8]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   return (
-    <section ref={ref} id="inicio" className="relative h-screen overflow-hidden">
+    <section
+      ref={ref}
+      id="inicio"
+      className="relative h-screen overflow-hidden"
+    >
       {/* Parallax background image */}
       <motion.div className="absolute inset-0" style={{ y: imageY }}>
         <Image
@@ -56,8 +60,12 @@ export function HeroSection() {
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-5xl md:text-7xl lg:text-8xl font-serif font-light leading-[0.95] tracking-tight text-balance"
+          transition={{
+            duration: 1,
+            delay: 0.5,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+          className="text-6xl md:text-8xl lg:text-9xl font-serif font-semibold leading-[0.95] tracking-tight text-balance"
           style={{ color: "var(--site-fg)" }}
         >
           El arte de
@@ -113,12 +121,16 @@ export function HeroSection() {
         >
           <motion.div
             animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+            transition={{
+              duration: 1.5,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
             className="w-[1px] h-12"
             style={{ backgroundColor: "var(--site-accent)", opacity: 0.5 }}
           />
         </motion.div>
       </motion.div>
     </section>
-  )
+  );
 }

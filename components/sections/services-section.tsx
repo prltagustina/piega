@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ScrollReveal } from "./scroll-reveal"
-import Image from "next/image"
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ScrollReveal } from "./scroll-reveal";
+import Image from "next/image";
 
 const services = [
   {
@@ -42,10 +42,10 @@ const services = [
       "Paquetes exclusivos para tu día especial. Incluyen prueba previa, peinado, maquillaje y atención personalizada. Hacemos de tu momento algo único.",
     price: "Consultar",
   },
-]
+];
 
 export function ServicesSection() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
     <section id="servicios" className="py-24 md:py-32 px-6 md:px-12 lg:px-16">
@@ -57,7 +57,7 @@ export function ServicesSection() {
           Nuestros Servicios
         </p>
         <h2
-          className="text-4xl md:text-5xl lg:text-6xl font-serif font-light leading-tight max-w-2xl"
+          className="text-4xl md:text-6xl lg:text-7xl font-serif font-semibold leading-tight max-w-2xl"
           style={{ color: "var(--site-fg)" }}
         >
           Experiencias que transforman
@@ -79,13 +79,13 @@ export function ServicesSection() {
                 <div className="flex-1">
                   <div className="flex items-baseline gap-4">
                     <span
-                      className="text-xs font-mono"
+                      className="text-sm md:text-base font-mono"
                       style={{ color: "var(--site-fg-muted)" }}
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3
-                      className="text-xl md:text-2xl font-serif font-light transition-colors duration-300"
+                      className="text-2xl md:text-3xl lg:text-4xl font-serif font-medium transition-colors duration-300"
                       style={{
                         color:
                           activeIndex === i
@@ -103,7 +103,7 @@ export function ServicesSection() {
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="text-sm font-light leading-relaxed mt-3 ml-10 max-w-md"
+                        className="text-base md:text-lg font-light leading-relaxed mt-3 ml-10 max-w-md"
                         style={{ color: "var(--site-fg-muted)" }}
                       >
                         {service.description}
@@ -112,7 +112,7 @@ export function ServicesSection() {
                   </AnimatePresence>
                 </div>
                 <span
-                  className="text-xs uppercase tracking-wider mt-2 whitespace-nowrap"
+                  className="text-sm md:text-base uppercase tracking-wider mt-2 whitespace-nowrap"
                   style={{ color: "var(--site-fg-muted)" }}
                 >
                   {service.price}
@@ -123,7 +123,10 @@ export function ServicesSection() {
         </div>
 
         {/* Image column */}
-        <ScrollReveal delay={0.2} className="hidden lg:block sticky top-32 h-fit">
+        <ScrollReveal
+          delay={0.2}
+          className="hidden lg:block sticky top-32 h-fit"
+        >
           <div className="relative aspect-[3/4] overflow-hidden">
             <Image
               src="/images/services.jpg"
@@ -143,5 +146,5 @@ export function ServicesSection() {
         </ScrollReveal>
       </div>
     </section>
-  )
+  );
 }

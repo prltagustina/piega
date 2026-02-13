@@ -1,29 +1,49 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { ScrollReveal } from "./scroll-reveal"
-import Image from "next/image"
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ScrollReveal } from "./scroll-reveal";
+import Image from "next/image";
 
 const images = [
-  { src: "/images/gallery-1.jpg", alt: "Resultado de estilismo profesional", aspect: "aspect-[3/4]" },
-  { src: "/images/gallery-2.jpg", alt: "Sala de spa y tratamientos", aspect: "aspect-square" },
-  { src: "/images/gallery-3.jpg", alt: "Productos y herramientas premium", aspect: "aspect-[3/4]" },
-  { src: "/images/hero.jpg", alt: "Ambiente del salón", aspect: "aspect-square" },
-  { src: "/images/services.jpg", alt: "Estilista en acción", aspect: "aspect-[3/4]" },
+  {
+    src: "/images/gallery-1.jpg",
+    alt: "Resultado de estilismo profesional",
+    aspect: "aspect-[3/4]",
+  },
+  {
+    src: "/images/gallery-2.jpg",
+    alt: "Sala de spa y tratamientos",
+    aspect: "aspect-square",
+  },
+  {
+    src: "/images/gallery-3.jpg",
+    alt: "Productos y herramientas premium",
+    aspect: "aspect-[3/4]",
+  },
+  {
+    src: "/images/hero.jpg",
+    alt: "Ambiente del salón",
+    aspect: "aspect-square",
+  },
+  {
+    src: "/images/services.jpg",
+    alt: "Estilista en acción",
+    aspect: "aspect-[3/4]",
+  },
   { src: "/images/salon.jpg", alt: "Vista del salón", aspect: "aspect-square" },
-]
+];
 
 export function GallerySection() {
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
-  })
+  });
 
-  const col1Y = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"])
-  const col2Y = useTransform(scrollYProgress, [0, 1], ["-3%", "3%"])
-  const col3Y = useTransform(scrollYProgress, [0, 1], ["4%", "-4%"])
+  const col1Y = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
+  const col2Y = useTransform(scrollYProgress, [0, 1], ["-3%", "3%"]);
+  const col3Y = useTransform(scrollYProgress, [0, 1], ["4%", "-4%"]);
 
   return (
     <section
@@ -40,7 +60,7 @@ export function GallerySection() {
             Galería
           </p>
           <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-serif font-light"
+            className="text-4xl md:text-6xl lg:text-7xl font-serif font-semibold"
             style={{ color: "var(--site-fg)" }}
           >
             Nuestro trabajo
@@ -51,7 +71,10 @@ export function GallerySection() {
       {/* Masonry grid with parallax columns */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
         {/* Column 1 */}
-        <motion.div className="flex flex-col gap-3 md:gap-4" style={{ y: col1Y }}>
+        <motion.div
+          className="flex flex-col gap-3 md:gap-4"
+          style={{ y: col1Y }}
+        >
           {images.slice(0, 2).map((img, i) => (
             <ScrollReveal key={img.src} delay={i * 0.1}>
               <motion.div
@@ -141,5 +164,5 @@ export function GallerySection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

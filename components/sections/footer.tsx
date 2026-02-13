@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { ScrollReveal } from "./scroll-reveal"
+import { ScrollReveal } from "./scroll-reveal";
 
 export function Footer() {
   return (
@@ -13,7 +13,7 @@ export function Footer() {
         <ScrollReveal className="md:col-span-1">
           <div>
             <span
-              className="text-3xl font-serif font-light tracking-wide"
+              className="text-3xl font-serif font-medium tracking-wide"
               style={{ color: "var(--site-fg)" }}
             >
               Piega
@@ -28,8 +28,8 @@ export function Footer() {
               className="mt-4 text-xs font-light leading-relaxed max-w-xs"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              Un espacio donde el estilo se encuentra con la
-              sofisticación. Experiencias de belleza que transforman.
+              Un espacio donde el estilo se encuentra con la sofisticación.
+              Experiencias de belleza que transforman.
             </p>
           </div>
         </ScrollReveal>
@@ -55,7 +55,7 @@ export function Footer() {
                       {item}
                     </a>
                   </li>
-                )
+                ),
               )}
             </ul>
           </div>
@@ -159,5 +159,5 @@ export function Footer() {
         </p>
       </div>
     </footer>
-  )
+  );
 }

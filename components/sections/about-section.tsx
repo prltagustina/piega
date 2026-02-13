@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { ScrollReveal } from "./scroll-reveal"
-import Image from "next/image"
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ScrollReveal } from "./scroll-reveal";
+import Image from "next/image";
 
 export function AboutSection() {
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
-  })
+  });
 
-  const imageScale = useTransform(scrollYProgress, [0, 0.5], [1.15, 1])
-  const imageY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"])
+  const imageScale = useTransform(scrollYProgress, [0, 0.5], [1.15, 1]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
     <section
@@ -53,7 +53,7 @@ export function AboutSection() {
 
           <ScrollReveal delay={0.2}>
             <h2
-              className="text-4xl md:text-5xl font-serif font-light leading-tight"
+              className="text-4xl md:text-6xl font-serif font-semibold leading-tight"
               style={{ color: "var(--site-fg)" }}
             >
               Un espacio pensado para vos
@@ -67,8 +67,8 @@ export function AboutSection() {
             >
               Piega nació con la visión de crear un salón donde la calidad, el
               diseño y la calidez humana se fusionan. Cada detalle de nuestro
-              espacio fue cuidadosamente pensado para que te sientas en un
-              lugar único desde el momento en que entrás.
+              espacio fue cuidadosamente pensado para que te sientas en un lugar
+              único desde el momento en que entrás.
             </p>
           </ScrollReveal>
 
@@ -92,7 +92,7 @@ export function AboutSection() {
               ].map((stat) => (
                 <div key={stat.label}>
                   <p
-                    className="text-3xl md:text-4xl font-serif font-light"
+                    className="text-3xl md:text-4xl font-serif font-medium"
                     style={{ color: "var(--site-accent)" }}
                   >
                     {stat.number}
@@ -110,5 +110,5 @@ export function AboutSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

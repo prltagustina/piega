@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Inicio", href: "#inicio" },
@@ -9,17 +9,17 @@ const navLinks = [
   { label: "El Salón", href: "#salon" },
   { label: "Equipo", href: "#equipo" },
   { label: "Galería", href: "#galeria" },
-]
+];
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 80)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    const handleScroll = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -37,7 +37,7 @@ export function Navbar() {
           {/* Logo */}
           <a href="#inicio" className="flex flex-col items-start">
             <span
-              className="text-2xl md:text-3xl font-serif font-light tracking-wide"
+              className="text-2xl md:text-3xl font-serif font-medium tracking-wide"
               style={{ color: "var(--site-fg)" }}
             >
               Piega
@@ -74,12 +74,12 @@ export function Navbar() {
                 color: "var(--site-accent)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--site-accent)"
-                e.currentTarget.style.color = "var(--site-bg)"
+                e.currentTarget.style.backgroundColor = "var(--site-accent)";
+                e.currentTarget.style.color = "var(--site-bg)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent"
-                e.currentTarget.style.color = "var(--site-accent)"
+                e.currentTarget.style.backgroundColor = "transparent";
+                e.currentTarget.style.color = "var(--site-accent)";
               }}
             >
               Reservar
@@ -103,7 +103,9 @@ export function Navbar() {
                 style={{ backgroundColor: "var(--site-fg)" }}
               />
               <motion.span
-                animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                animate={
+                  menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
+                }
                 className="block w-6 h-[1px]"
                 style={{ backgroundColor: "var(--site-fg)" }}
               />
@@ -130,7 +132,7 @@ export function Navbar() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * i, duration: 0.4 }}
-                className="text-3xl font-serif font-light tracking-wide"
+                className="text-3xl font-serif font-medium tracking-wide"
                 style={{ color: "var(--site-fg)" }}
                 onClick={() => setMenuOpen(false)}
               >
@@ -155,5 +157,5 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }

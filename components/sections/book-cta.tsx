@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { ScrollReveal } from "./scroll-reveal"
-import Image from "next/image"
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ScrollReveal } from "./scroll-reveal";
+import Image from "next/image";
 
 export function BookCTA() {
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
-  })
+  });
 
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   return (
     <section
@@ -50,7 +50,7 @@ export function BookCTA() {
 
         <ScrollReveal delay={0.1}>
           <h2
-            className="text-4xl md:text-6xl lg:text-7xl font-serif font-light leading-tight max-w-3xl text-balance"
+            className="text-4xl md:text-6xl lg:text-8xl font-serif font-semibold leading-tight max-w-3xl text-balance"
             style={{ color: "var(--site-fg)" }}
           >
             Tu momento de belleza te espera
@@ -117,5 +117,5 @@ export function BookCTA() {
         </ScrollReveal>
       </div>
     </section>
-  )
+  );
 }

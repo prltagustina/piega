@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { ScrollReveal } from "./scroll-reveal"
-import Image from "next/image"
+import { motion } from "framer-motion";
+import { ScrollReveal } from "./scroll-reveal";
+import Image from "next/image";
 
 const team = [
   {
@@ -20,7 +20,7 @@ const team = [
     role: "Especialista en Spa",
     image: "/images/gallery-2.jpg",
   },
-]
+];
 
 export function TeamSection() {
   return (
@@ -35,7 +35,7 @@ export function TeamSection() {
               Nuestro Equipo
             </p>
             <h2
-              className="text-4xl md:text-5xl lg:text-6xl font-serif font-light leading-tight"
+              className="text-4xl md:text-6xl lg:text-7xl font-serif font-semibold leading-tight"
               style={{ color: "var(--site-fg)" }}
             >
               Artistas del estilo
@@ -75,7 +75,6 @@ export function TeamSection() {
                   />
                 </motion.div>
 
-                {/* Overlay on hover */}
                 <motion.div
                   className="absolute inset-0 flex flex-col justify-end p-6"
                   initial={{ opacity: 0 }}
@@ -99,7 +98,7 @@ export function TeamSection() {
 
               <div className="mt-4">
                 <h3
-                  className="text-xl font-serif font-light"
+                  className="text-2xl md:text-3xl font-serif font-medium"
                   style={{ color: "var(--site-fg)" }}
                 >
                   {member.name}
@@ -116,5 +115,5 @@ export function TeamSection() {
         ))}
       </div>
     </section>
-  )
+  );
 }
