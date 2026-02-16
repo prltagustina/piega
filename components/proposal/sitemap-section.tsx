@@ -170,7 +170,7 @@ export function SitemapSection() {
           La integración con AgendaPro se realizará mediante link directo o
           embed (iframe) del widget de reservas. El cliente proporcionará
           AgendaPro ya configurado con sus servicios, profesionales y
-          horarios. La implementación incluye: botón "Reservar" en el header
+          horarios. La implementación incluye: botón &quot;Reservar&quot; en el header
           (siempre visible), CTAs contextuales en cada servicio, y página
           dedicada /reservar con el widget embebido o redirección automática.
         </p>
