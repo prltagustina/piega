@@ -74,12 +74,12 @@ export function Navbar() {
                 color: "var(--site-accent)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--site-accent)";
+                e.currentTarget.style.backgroundColor = "var(--site-pink)";
                 e.currentTarget.style.color = "var(--site-bg)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.color = "var(--site-accent)";
+                e.currentTarget.style.color = "var(--site-pink)";
               }}
             >
               Reservar

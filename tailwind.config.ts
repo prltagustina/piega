@@ -61,6 +61,22 @@ const config: Config = {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        /* PIEGA Brand Colors */
+        piega: {
+          pink: {
+            DEFAULT: '#F0B4B9',
+            dark: '#d9949a',
+            light: '#f5cdd0',
+          },
+          violet: {
+            DEFAULT: '#5C5278',
+            dark: '#3d3652',
+          },
+          cream: '#F7E9D4',
+          mint: '#A8D5BA',
+          gray: '#C7C7C7',
+          gold: '#FAC03F',
+        },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'Montserrat', 'system-ui', 'sans-serif'],

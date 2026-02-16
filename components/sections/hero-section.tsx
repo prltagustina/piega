@@ -104,7 +104,7 @@ export function HeroSection() {
             href="#servicios"
             className="px-10 py-4 text-xs uppercase tracking-[0.25em] font-light border transition-colors duration-300"
             style={{
-              borderColor: "var(--site-fg-muted)",
+              borderColor: "var(--site-accent)",
               color: "var(--site-fg)",
             }}
           >

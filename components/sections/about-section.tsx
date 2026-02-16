@@ -93,7 +93,7 @@ export function AboutSection() {
                 <div key={stat.label}>
                   <p
                     className="text-3xl md:text-4xl font-serif font-medium"
-                    style={{ color: "var(--site-accent)" }}
+                    style={{ color: "var(--site-accent-secondary)" }}
                   >
                     {stat.number}
                   </p>

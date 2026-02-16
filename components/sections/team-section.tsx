@@ -84,7 +84,7 @@ export function TeamSection() {
                   transition={{ duration: 0.4 }}
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(26,23,20,0.9) 0%, transparent 60%)",
+                      "linear-gradient(to top, rgba(28,21,32,0.9) 0%, transparent 60%)",
                   }}
                 >
                   <p

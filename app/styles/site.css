@@ -1,11 +1,28 @@
 :root {
-  --site-bg: #1a1714;
-  --site-bg-warm: #221f1a;
-  --site-fg: #f5f0e8;
-  --site-fg-muted: #a89f91;
-  --site-accent: #c8a97e;
-  --site-accent-light: #dcc5a0;
-  --site-border: rgba(200, 169, 126, 0.15);
+  /* PIEGA Brand Palette - Pantone based */
+  /* Primary: Pantone 4064 C (Rosa) */
+  --site-pink: #F0B4B9;
+  --site-pink-dark: #d9949a;
+  --site-pink-light: #f5cdd0;
+  /* Pantone 5275 C (Violeta oscuro) */
+  --site-violet: #5C5278;
+  --site-violet-dark: #3d3652;
+  /* Pantone 7506 C al 50% (Crema) */
+  --site-cream: #F7E9D4;
+  /* Pantone 2246 C (Verde menta) */
+  --site-mint: #A8D5BA;
+  /* Pantone 428 C (Gris) */
+  --site-gray: #C7C7C7;
+
+  /* Semantic tokens mapped to brand palette */
+  --site-bg: #1c1520;
+  --site-bg-warm: #241c2a;
+  --site-fg: #F7E9D4;
+  --site-fg-muted: #b8a8a0;
+  --site-accent: #F0B4B9;
+  --site-accent-light: #f5cdd0;
+  --site-accent-secondary: #A8D5BA;
+  --site-border: rgba(240, 180, 185, 0.15);
 }
 
 .site-page {
@@ -41,7 +58,7 @@
     90deg,
     transparent 0%,
     var(--site-border) 20%,
-    var(--site-accent) 50%,
+    var(--site-pink-dark) 50%,
     var(--site-border) 80%,
     transparent 100%
   );

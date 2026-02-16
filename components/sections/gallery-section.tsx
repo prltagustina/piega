@@ -93,7 +93,7 @@ export function GallerySection() {
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(26,23,20,0.6) 0%, transparent 50%)",
+                      "linear-gradient(to top, rgba(28,21,32,0.6) 0%, transparent 50%)",
                   }}
                 />
               </motion.div>
@@ -124,7 +124,7 @@ export function GallerySection() {
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(26,23,20,0.6) 0%, transparent 50%)",
+                      "linear-gradient(to top, rgba(28,21,32,0.6) 0%, transparent 50%)",
                   }}
                 />
               </motion.div>
@@ -155,7 +155,7 @@ export function GallerySection() {
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(26,23,20,0.6) 0%, transparent 50%)",
+                      "linear-gradient(to top, rgba(28,21,32,0.6) 0%, transparent 50%)",
                   }}
                 />
               </motion.div>
