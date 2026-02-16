@@ -39,7 +39,7 @@ export function Footer() {
           <div>
             <h4
               className="text-xs uppercase tracking-[0.2em] mb-4 font-medium"
-              style={{ color: "var(--site-accent)" }}
+              style={{ color: "var(--site-pink)" }}
             >
               Navegación
             </h4>
@@ -66,7 +66,7 @@ export function Footer() {
           <div>
             <h4
               className="text-xs uppercase tracking-[0.2em] mb-4 font-medium"
-              style={{ color: "var(--site-accent)" }}
+              style={{ color: "var(--site-pink)" }}
             >
               Servicios
             </h4>
@@ -96,7 +96,7 @@ export function Footer() {
           <div>
             <h4
               className="text-xs uppercase tracking-[0.2em] mb-4 font-medium"
-              style={{ color: "var(--site-accent)" }}
+              style={{ color: "var(--site-pink)" }}
             >
               Contacto
             </h4>

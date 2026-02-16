@@ -27,7 +27,7 @@ export function Marquee() {
             {item}
             <span
               className="inline-block w-1.5 h-1.5 rounded-full"
-              style={{ backgroundColor: "var(--site-accent)" }}
+              style={{ backgroundColor: "var(--site-pink)" }}
             />
           </span>
         ))}

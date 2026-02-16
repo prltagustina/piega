@@ -139,7 +139,7 @@ export function ServicesSection() {
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to top, var(--site-bg) 0%, transparent 40%)",
+                  "linear-gradient(to top, var(--site-bg) 5%, transparent 45%)",
               }}
             />
           </div>
