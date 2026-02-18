@@ -14,7 +14,6 @@ async function getSiteData() {
     const supabase = createPublicClient()
 
     if (!supabase) {
-      // Env vars not available, render with defaults
       return { hero: null, settings: null, services: [], about: null, team: [], gallery: [] }
     }
 
@@ -22,22 +21,10 @@ async function getSiteData() {
       await Promise.all([
         supabase.from("hero_section").select("*").single(),
         supabase.from("site_settings").select("*").single(),
-        supabase
-          .from("services")
-          .select("*")
-          .eq("is_active", true)
-          .order("sort_order"),
+        supabase.from("services").select("*").eq("is_active", true).order("sort_order"),
         supabase.from("about_section").select("*").single(),
-        supabase
-          .from("team_members")
-          .select("*")
-          .eq("is_active", true)
-          .order("sort_order"),
-        supabase
-          .from("gallery_images")
-          .select("*")
-          .eq("is_active", true)
-          .order("sort_order"),
+        supabase.from("team_members").select("*").eq("is_active", true).order("sort_order"),
+        supabase.from("gallery_images").select("*").eq("is_active", true).order("sort_order"),
       ])
 
     return {
@@ -49,15 +36,7 @@ async function getSiteData() {
       gallery: galleryRes.data ?? [],
     }
   } catch {
-    // Fallback: return nulls so sections render with defaults
-    return {
-      hero: null,
-      settings: null,
-      services: [],
-      about: null,
-      team: [],
-      gallery: [],
-    }
+    return { hero: null, settings: null, services: [], about: null, team: [], gallery: [] }
   }
 }
 
