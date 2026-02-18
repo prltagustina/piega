@@ -95,7 +95,7 @@ export default async function AdminPage() {
                   Nombre del Salon
                 </span>
                 <span className="text-sm text-foreground">
-                  {settingsRes.data.salon_name}
+                  {settingsRes.data.site_name}
                 </span>
               </div>
               <div className="flex flex-col gap-1">

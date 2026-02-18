@@ -115,33 +115,39 @@ export function Footer({ settings, services }: { settings: SettingsData; service
                 className="text-sm font-light"
                 style={{ color: "var(--site-fg-muted)" }}
               >
-                Av. Ejemplo 1234, Santa Fe
+                {settings?.address || "Av. Ejemplo 1234, Santa Fe"}
               </p>
               <a
-                href="tel:+5493426000000"
+                href={`tel:${settings?.phone || "+5493426000000"}`}
                 className="site-link text-sm font-light"
                 style={{ color: "var(--site-fg-muted)" }}
               >
-                +54 9 342 600 0000
+                {settings?.phone || "+54 9 342 600 0000"}
               </a>
               <a
-                href="mailto:hola@piega.com.ar"
+                href={`mailto:${settings?.email || "hola@piega.com.ar"}`}
                 className="site-link text-sm font-light"
                 style={{ color: "var(--site-fg-muted)" }}
               >
-                hola@piega.com.ar
+                {settings?.email || "hola@piega.com.ar"}
               </a>
 
               {/* Social */}
               <div className="flex gap-6 mt-4">
-                {["Instagram", "WhatsApp", "Facebook"].map((social) => (
+                {[
+                  { label: "Instagram", url: settings?.instagram_url },
+                  { label: "WhatsApp", url: settings?.whatsapp_url },
+                  { label: "Facebook", url: settings?.facebook_url },
+                ].filter(s => s.url).map((social) => (
                   <a
-                    key={social}
-                    href="#"
+                    key={social.label}
+                    href={social.url!}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="site-link text-xs uppercase tracking-wider"
                     style={{ color: "var(--site-fg-muted)" }}
                   >
-                    {social}
+                    {social.label}
                   </a>
                 ))}
               </div>

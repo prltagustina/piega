@@ -1,6 +1,6 @@
 "use client"
 
-import { updateAboutSection } from "@/app/admin/actions"
+import { handleAboutUpdate } from "@/app/admin/action-wrappers"
 import { FormCard } from "@/components/admin/form-card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -21,26 +21,13 @@ type AboutData = {
   stat3_label: string
 }
 
-async function handleUpdate(
-  _prevState: { error: string | null; success: boolean },
-  formData: FormData
-) {
-  "use server"
-  try {
-    await updateAboutSection(formData)
-    return { error: null, success: true }
-  } catch (e) {
-    return { error: e instanceof Error ? e.message : "Error desconocido", success: false }
-  }
-}
-
 export function AboutForm({ about }: { about: AboutData }) {
   return (
     <div className="flex flex-col gap-6 max-w-2xl">
       <FormCard
         title="Sobre Nosotros"
         description="Edita la seccion de presentacion del salon."
-        action={handleUpdate}
+        action={handleAboutUpdate}
       >
         <input type="hidden" name="id" value={about.id} />
 

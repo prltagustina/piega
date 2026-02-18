@@ -1,6 +1,6 @@
 "use client"
 
-import { updateHeroSection } from "@/app/admin/actions"
+import { handleHeroUpdate } from "@/app/admin/action-wrappers"
 import { FormCard } from "@/components/admin/form-card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -17,26 +17,13 @@ type HeroData = {
   cta_secondary_text: string
 }
 
-async function handleUpdate(
-  _prevState: { error: string | null; success: boolean },
-  formData: FormData
-) {
-  "use server"
-  try {
-    await updateHeroSection(formData)
-    return { error: null, success: true }
-  } catch (e) {
-    return { error: e instanceof Error ? e.message : "Error desconocido", success: false }
-  }
-}
-
 export function HeroForm({ hero }: { hero: HeroData }) {
   return (
     <div className="flex flex-col gap-6 max-w-2xl">
       <FormCard
         title="Seccion Hero"
         description="Edita el contenido principal de la pagina de inicio."
-        action={handleUpdate}
+        action={handleHeroUpdate}
       >
         <input type="hidden" name="id" value={hero.id} />
 

@@ -42,7 +42,7 @@ export function FormCard({
             </p>
           )}
           {state.success && (
-            <p className="text-sm text-accent bg-accent/10 rounded-md p-2">
+            <p className="text-sm text-emerald-600 bg-emerald-500/10 rounded-md p-2">
               Cambios guardados correctamente
             </p>
           )}

@@ -11,7 +11,13 @@ const navLinks = [
   { label: "Galería", href: "#galeria" },
 ];
 
-export function Navbar() {
+type SettingsData = {
+  site_name?: string
+  tagline?: string
+  booking_url?: string
+} | null
+
+export function Navbar({ settings }: { settings?: SettingsData }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -40,13 +46,13 @@ export function Navbar() {
               className="text-2xl md:text-3xl font-serif font-medium tracking-wide"
               style={{ color: "var(--site-fg)" }}
             >
-              Piega
+              {settings?.site_name || "Piega"}
             </span>
             <span
               className="text-[9px] uppercase tracking-[0.35em] -mt-1"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              hair & beauty
+              {settings?.tagline || "hair & beauty"}
             </span>
           </a>
 
@@ -67,7 +73,7 @@ export function Navbar() {
           {/* Book button */}
           <div className="flex items-center gap-6">
             <a
-              href="#reservar"
+              href={settings?.booking_url || "#reservar"}
               className="hidden md:inline-flex text-xs uppercase tracking-[0.2em] px-6 py-3 border font-light transition-colors duration-300 hover:text-[var(--site-bg)]"
               style={{
                 borderColor: "var(--site-accent)",

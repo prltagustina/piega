@@ -1,6 +1,6 @@
 "use client"
 
-import { updateSiteSettings } from "@/app/admin/actions"
+import { handleSettingsUpdate } from "@/app/admin/action-wrappers"
 import { FormCard } from "@/components/admin/form-card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -18,26 +18,13 @@ type Settings = {
   booking_url: string
 }
 
-async function handleUpdate(
-  _prevState: { error: string | null; success: boolean },
-  formData: FormData
-) {
-  "use server"
-  try {
-    await updateSiteSettings(formData)
-    return { error: null, success: true }
-  } catch (e) {
-    return { error: e instanceof Error ? e.message : "Error desconocido", success: false }
-  }
-}
-
 export function SettingsForm({ settings }: { settings: Settings }) {
   return (
     <div className="flex flex-col gap-6 max-w-2xl">
       <FormCard
         title="Datos del Salon"
         description="Informacion general del negocio."
-        action={handleUpdate}
+        action={handleSettingsUpdate}
       >
         <input type="hidden" name="id" value={settings.id} />
 
