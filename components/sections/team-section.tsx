@@ -11,7 +11,14 @@ type TeamMember = {
   image_url: string
 }
 
-export function TeamSection({ team }: { team: TeamMember[] }) {
+const defaultTeam: TeamMember[] = [
+  { id: "1", name: "Sofia Martinez", role: "Directora Creativa", image_url: "/images/team.jpg" },
+  { id: "2", name: "Valentina Rossi", role: "Colorista Senior", image_url: "/images/gallery-1.jpg" },
+  { id: "3", name: "Camila Torres", role: "Especialista en Spa", image_url: "/images/gallery-2.jpg" },
+]
+
+export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
+  const team = propTeam.length > 0 ? propTeam : defaultTeam
   return (
     <section id="equipo" className="py-24 md:py-32 px-6 md:px-12 lg:px-16">
       <ScrollReveal>

@@ -18,7 +18,16 @@ type ServiceData = {
   title: string
 }
 
-export function Footer({ settings, services }: { settings: SettingsData; services: ServiceData[] }) {
+const defaultFooterServices: ServiceData[] = [
+  { id: "1", title: "Corte & Estilo" },
+  { id: "2", title: "Color & Mechas" },
+  { id: "3", title: "Tratamientos" },
+  { id: "4", title: "Spa & Bienestar" },
+  { id: "5", title: "Novias" },
+]
+
+export function Footer({ settings, services: propServices }: { settings: SettingsData; services: ServiceData[] }) {
+  const services = propServices.length > 0 ? propServices : defaultFooterServices
   return (
     <footer
       className="py-16 md:py-20 px-6 md:px-12 lg:px-16 border-t"
@@ -135,10 +144,10 @@ export function Footer({ settings, services }: { settings: SettingsData; service
               {/* Social */}
               <div className="flex gap-6 mt-4">
                 {[
-                  { label: "Instagram", url: settings?.instagram_url },
-                  { label: "WhatsApp", url: settings?.whatsapp_url },
-                  { label: "Facebook", url: settings?.facebook_url },
-                ].filter(s => s.url).map((social) => (
+                  { label: "Instagram", url: settings?.instagram_url || "#" },
+                  { label: "WhatsApp", url: settings?.whatsapp_url || "#" },
+                  { label: "Facebook", url: settings?.facebook_url || "#" },
+                ].map((social) => (
                   <a
                     key={social.label}
                     href={social.url!}

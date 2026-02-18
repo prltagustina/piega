@@ -9,48 +9,55 @@ import { GallerySection } from "@/components/sections/gallery-section"
 import { BookCTA } from "@/components/sections/book-cta"
 import { Footer } from "@/components/sections/footer"
 
+async function getSiteData() {
+  try {
+    const supabase = createPublicClient()
+
+    const [heroRes, settingsRes, servicesRes, aboutRes, teamRes, galleryRes] =
+      await Promise.all([
+        supabase.from("hero_section").select("*").single(),
+        supabase.from("site_settings").select("*").single(),
+        supabase
+          .from("services")
+          .select("*")
+          .eq("is_active", true)
+          .order("sort_order"),
+        supabase.from("about_section").select("*").single(),
+        supabase
+          .from("team_members")
+          .select("*")
+          .eq("is_active", true)
+          .order("sort_order"),
+        supabase
+          .from("gallery_images")
+          .select("*")
+          .eq("is_active", true)
+          .order("sort_order"),
+      ])
+
+    return {
+      hero: heroRes.data,
+      settings: settingsRes.data,
+      services: servicesRes.data ?? [],
+      about: aboutRes.data,
+      team: teamRes.data ?? [],
+      gallery: galleryRes.data ?? [],
+    }
+  } catch {
+    // Fallback: return nulls so sections render with defaults
+    return {
+      hero: null,
+      settings: null,
+      services: [],
+      about: null,
+      team: [],
+      gallery: [],
+    }
+  }
+}
+
 export default async function Page() {
-  const supabase = createPublicClient()
-
-  const [heroRes, settingsRes, servicesRes, aboutRes, teamRes, galleryRes] =
-    await Promise.all([
-      supabase.from("hero_section").select("*").single(),
-      supabase.from("site_settings").select("*").single(),
-      supabase
-        .from("services")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order"),
-      supabase.from("about_section").select("*").single(),
-      supabase
-        .from("team_members")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order"),
-      supabase
-        .from("gallery_images")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order"),
-    ])
-
-  const hero = heroRes.data
-  const settings = settingsRes.data
-  const services = servicesRes.data ?? []
-  const about = aboutRes.data
-  const team = teamRes.data ?? []
-  const gallery = galleryRes.data ?? []
-
-  console.log("[v0] Data loaded:", {
-    hero: !!hero,
-    settings: !!settings,
-    services: services.length,
-    about: !!about,
-    team: team.length,
-    gallery: gallery.length,
-    heroError: heroRes.error?.message,
-    settingsError: settingsRes.error?.message,
-  })
+  const { hero, settings, services, about, team, gallery } = await getSiteData()
 
   return (
     <div className="site-page relative">

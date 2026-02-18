@@ -13,7 +13,17 @@ type ServiceData = {
   sort_order: number
 }
 
-export function ServicesSection({ services }: { services: ServiceData[] }) {
+const defaultServices: ServiceData[] = [
+  { id: "1", title: "Corte & Estilo", description: "Cortes personalizados que realzan tu belleza natural. Nuestros estilistas analizan la textura, forma del rostro y estilo de vida para crear el look perfecto.", price: "Desde $5.500", sort_order: 1 },
+  { id: "2", title: "Color & Mechas", description: "Tecnicas de coloracion de vanguardia. Balayage, highlights, global color y mas. Trabajamos con productos premium para un resultado impecable.", price: "Desde $12.000", sort_order: 2 },
+  { id: "3", title: "Tratamientos Capilares", description: "Hidratacion profunda, keratina, botox capilar y tratamientos reparadores. Devolvemos la salud y el brillo a tu cabello.", price: "Desde $8.000", sort_order: 3 },
+  { id: "4", title: "Spa & Bienestar", description: "Rituales de relajacion que combinan aromaterapia, masajes y cuidados especializados. Una experiencia integral de bienestar.", price: "Desde $9.500", sort_order: 4 },
+  { id: "5", title: "Maquillaje Profesional", description: "Looks para eventos, sesiones fotograficas o tu dia a dia. Resaltamos tus rasgos con tecnicas profesionales y productos de alta gama.", price: "Desde $7.000", sort_order: 5 },
+  { id: "6", title: "Novias & Eventos", description: "Paquetes exclusivos para tu dia especial. Incluyen prueba previa, peinado, maquillaje y atencion personalizada.", price: "Consultar", sort_order: 6 },
+]
+
+export function ServicesSection({ services: propServices }: { services: ServiceData[] }) {
+  const services = propServices.length > 0 ? propServices : defaultServices
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
