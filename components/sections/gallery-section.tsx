@@ -5,36 +5,21 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
 
-const images = [
-  {
-    src: "/images/gallery-1.jpg",
-    alt: "Resultado de estilismo profesional",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    src: "/images/gallery-2.jpg",
-    alt: "Sala de spa y tratamientos",
-    aspect: "aspect-square",
-  },
-  {
-    src: "/images/gallery-3.jpg",
-    alt: "Productos y herramientas premium",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    src: "/images/hero.jpg",
-    alt: "Ambiente del salón",
-    aspect: "aspect-square",
-  },
-  {
-    src: "/images/services.jpg",
-    alt: "Estilista en acción",
-    aspect: "aspect-[3/4]",
-  },
-  { src: "/images/salon.jpg", alt: "Vista del salón", aspect: "aspect-square" },
-];
+type GalleryImage = {
+  id: string
+  image_url: string
+  alt_text: string
+  sort_order: number
+}
 
-export function GallerySection() {
+const aspects = ["aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square"]
+
+export function GallerySection({ gallery }: { gallery: GalleryImage[] }) {
+  const images = gallery.map((img, i) => ({
+    src: img.image_url,
+    alt: img.alt_text || "Imagen de galeria",
+    aspect: aspects[i % aspects.length],
+  }))
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,

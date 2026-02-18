@@ -5,46 +5,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
 
-const services = [
-  {
-    title: "Corte & Estilo",
-    description:
-      "Cortes personalizados que realzan tu belleza natural. Nuestros estilistas analizan la textura, forma del rostro y estilo de vida para crear el look perfecto.",
-    price: "Desde $5.500",
-  },
-  {
-    title: "Color & Mechas",
-    description:
-      "Técnicas de coloración de vanguardia. Balayage, highlights, global color y más. Trabajamos con productos premium para un resultado impecable.",
-    price: "Desde $12.000",
-  },
-  {
-    title: "Tratamientos Capilares",
-    description:
-      "Hidratación profunda, keratina, botox capilar y tratamientos reparadores. Devolvemos la salud y el brillo a tu cabello.",
-    price: "Desde $8.000",
-  },
-  {
-    title: "Spa & Bienestar",
-    description:
-      "Rituales de relajación que combinan aromaterapia, masajes y cuidados especializados. Una experiencia integral de bienestar.",
-    price: "Desde $9.500",
-  },
-  {
-    title: "Maquillaje Profesional",
-    description:
-      "Looks para eventos, sesiones fotográficas o tu día a día. Resaltamos tus rasgos con técnicas profesionales y productos de alta gama.",
-    price: "Desde $7.000",
-  },
-  {
-    title: "Novias & Eventos",
-    description:
-      "Paquetes exclusivos para tu día especial. Incluyen prueba previa, peinado, maquillaje y atención personalizada. Hacemos de tu momento algo único.",
-    price: "Consultar",
-  },
-];
+type ServiceData = {
+  id: string
+  title: string
+  description: string
+  price: string
+  sort_order: number
+}
 
-export function ServicesSection() {
+export function ServicesSection({ services }: { services: ServiceData[] }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (

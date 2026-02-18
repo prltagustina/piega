@@ -1,3 +1,4 @@
+import { createClient } from "@/lib/supabase/server"
 import { Navbar } from "@/components/sections/navbar"
 import { HeroSection } from "@/components/sections/hero-section"
 import { Marquee } from "@/components/sections/marquee"
@@ -8,21 +9,52 @@ import { GallerySection } from "@/components/sections/gallery-section"
 import { BookCTA } from "@/components/sections/book-cta"
 import { Footer } from "@/components/sections/footer"
 
-export default function Page() {
+export default async function Page() {
+  const supabase = await createClient()
+
+  const [heroRes, settingsRes, servicesRes, aboutRes, teamRes, galleryRes] =
+    await Promise.all([
+      supabase.from("hero_section").select("*").single(),
+      supabase.from("site_settings").select("*").single(),
+      supabase
+        .from("services")
+        .select("*")
+        .eq("is_active", true)
+        .order("sort_order"),
+      supabase.from("about_section").select("*").single(),
+      supabase
+        .from("team_members")
+        .select("*")
+        .eq("is_active", true)
+        .order("sort_order"),
+      supabase
+        .from("gallery_images")
+        .select("*")
+        .eq("is_active", true)
+        .order("sort_order"),
+    ])
+
+  const hero = heroRes.data
+  const settings = settingsRes.data
+  const services = servicesRes.data ?? []
+  const about = aboutRes.data
+  const team = teamRes.data ?? []
+  const gallery = galleryRes.data ?? []
+
   return (
     <div className="site-page relative">
-      <Navbar />
-      <HeroSection />
+      <Navbar settings={settings} />
+      <HeroSection hero={hero} settings={settings} />
       <Marquee />
-      <ServicesSection />
+      <ServicesSection services={services} />
       <hr className="site-divider mx-6 md:mx-12 lg:mx-16" />
-      <AboutSection />
+      <AboutSection about={about} />
       <hr className="site-divider mx-6 md:mx-12 lg:mx-16" />
-      <TeamSection />
+      <TeamSection team={team} />
       <Marquee />
-      <GallerySection />
-      <BookCTA />
-      <Footer />
+      <GallerySection gallery={gallery} />
+      <BookCTA settings={settings} />
+      <Footer settings={settings} services={services} />
     </div>
   )
 }

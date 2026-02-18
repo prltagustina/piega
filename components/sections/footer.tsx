@@ -2,7 +2,23 @@
 
 import { ScrollReveal } from "./scroll-reveal";
 
-export function Footer() {
+type SettingsData = {
+  site_name?: string
+  tagline?: string
+  phone?: string
+  email?: string
+  address?: string
+  instagram_url?: string
+  whatsapp_url?: string
+  facebook_url?: string
+} | null
+
+type ServiceData = {
+  id: string
+  title: string
+}
+
+export function Footer({ settings, services }: { settings: SettingsData; services: ServiceData[] }) {
   return (
     <footer
       className="py-16 md:py-20 px-6 md:px-12 lg:px-16 border-t"
@@ -16,13 +32,13 @@ export function Footer() {
               className="text-3xl font-serif font-medium tracking-wide"
               style={{ color: "var(--site-fg)" }}
             >
-              Piega
+              {settings?.site_name || "Piega"}
             </span>
             <p
               className="text-[9px] uppercase tracking-[0.35em]"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              hair & beauty
+              {settings?.tagline || "hair & beauty"}
             </p>
             <p
               className="mt-4 text-xs font-light leading-relaxed max-w-xs"
@@ -71,19 +87,13 @@ export function Footer() {
               Servicios
             </h4>
             <ul className="flex flex-col gap-3">
-              {[
-                "Corte & Estilo",
-                "Color & Mechas",
-                "Tratamientos",
-                "Spa & Bienestar",
-                "Novias",
-              ].map((item) => (
-                <li key={item}>
+              {services.slice(0, 5).map((service) => (
+                <li key={service.id}>
                   <span
                     className="text-sm font-light"
                     style={{ color: "var(--site-fg-muted)" }}
                   >
-                    {item}
+                    {service.title}
                   </span>
                 </li>
               ))}

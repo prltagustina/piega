@@ -5,7 +5,21 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
 
-export function AboutSection() {
+type AboutData = {
+  subtitle?: string
+  title?: string
+  paragraph1?: string
+  paragraph2?: string
+  image_url?: string
+  stat1_number?: string
+  stat1_label?: string
+  stat2_number?: string
+  stat2_label?: string
+  stat3_number?: string
+  stat3_label?: string
+} | null
+
+export function AboutSection({ about }: { about: AboutData }) {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -30,7 +44,7 @@ export function AboutSection() {
               style={{ scale: imageScale, y: imageY }}
             >
               <Image
-                src="/images/salon.jpg"
+                src={about?.image_url || "/images/salon.jpg"}
                 alt="Interior del salón Piega"
                 fill
                 className="object-cover"
@@ -47,7 +61,7 @@ export function AboutSection() {
               className="text-xs uppercase tracking-[0.3em]"
               style={{ color: "var(--site-accent)" }}
             >
-              El Salón
+              {about?.subtitle || "El Salón"}
             </p>
           </ScrollReveal>
 
@@ -56,7 +70,7 @@ export function AboutSection() {
               className="text-4xl md:text-6xl font-serif font-semibold leading-tight"
               style={{ color: "var(--site-fg)" }}
             >
-              Un espacio pensado para vos
+              {about?.title || "Un espacio pensado para vos"}
             </h2>
           </ScrollReveal>
 
@@ -65,10 +79,7 @@ export function AboutSection() {
               className="text-sm md:text-base font-light leading-relaxed"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              Piega nació con la visión de crear un salón donde la calidad, el
-              diseño y la calidez humana se fusionan. Cada detalle de nuestro
-              espacio fue cuidadosamente pensado para que te sientas en un lugar
-              único desde el momento en que entrás.
+              {about?.paragraph1 || "Piega nació con la visión de crear un salón donde la calidad, el diseño y la calidez humana se fusionan. Cada detalle de nuestro espacio fue cuidadosamente pensado para que te sientas en un lugar único desde el momento en que entrás."}
             </p>
           </ScrollReveal>
 
@@ -77,18 +88,16 @@ export function AboutSection() {
               className="text-sm md:text-base font-light leading-relaxed"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              Trabajamos con productos de primera línea y un equipo de
-              profesionales apasionados por lo que hacen. Porque creemos que
-              cada persona merece una experiencia de belleza excepcional.
+              {about?.paragraph2 || "Trabajamos con productos de primera línea y un equipo de profesionales apasionados por lo que hacen. Porque creemos que cada persona merece una experiencia de belleza excepcional."}
             </p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.5}>
             <div className="flex gap-12 mt-4">
               {[
-                { number: "10+", label: "Años de experiencia" },
-                { number: "5k+", label: "Clientes felices" },
-                { number: "15", label: "Profesionales" },
+                { number: about?.stat1_number || "10+", label: about?.stat1_label || "Años de experiencia" },
+                { number: about?.stat2_number || "5k+", label: about?.stat2_label || "Clientes felices" },
+                { number: about?.stat3_number || "15", label: about?.stat3_label || "Profesionales" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <p
