@@ -2,8 +2,14 @@ import { createClient } from "@/lib/supabase/server"
 import { HeroForm } from "./hero-form"
 
 export default async function AdminHeroPage() {
-  const supabase = await createClient()
-  const { data: hero } = await supabase.from("hero_section").select("*").single()
+  let hero = null
+  try {
+    const supabase = await createClient()
+    const { data } = await supabase.from("hero_section").select("*").single()
+    hero = data
+  } catch {
+    // Supabase not available
+  }
 
   if (!hero) {
     return (

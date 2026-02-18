@@ -2,8 +2,14 @@ import { createClient } from "@/lib/supabase/server"
 import { AboutForm } from "./about-form"
 
 export default async function AdminAboutPage() {
-  const supabase = await createClient()
-  const { data: about } = await supabase.from("about_section").select("*").single()
+  let about = null
+  try {
+    const supabase = await createClient()
+    const { data } = await supabase.from("about_section").select("*").single()
+    about = data
+  } catch {
+    // Supabase not available
+  }
 
   if (!about) {
     return (

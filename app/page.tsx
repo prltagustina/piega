@@ -13,6 +13,11 @@ async function getSiteData() {
   try {
     const supabase = createPublicClient()
 
+    if (!supabase) {
+      // Env vars not available, render with defaults
+      return { hero: null, settings: null, services: [], about: null, team: [], gallery: [] }
+    }
+
     const [heroRes, settingsRes, servicesRes, aboutRes, teamRes, galleryRes] =
       await Promise.all([
         supabase.from("hero_section").select("*").single(),

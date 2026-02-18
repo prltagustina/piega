@@ -10,33 +10,45 @@ import { Sparkles, Users, ImageIcon, Settings } from "lucide-react"
 import Link from "next/link"
 
 export default async function AdminPage() {
-  const supabase = await createClient()
+  let servicesCount = 0
+  let teamCount = 0
+  let galleryCount = 0
+  let settingsData: Record<string, string> | null = null
 
-  const [servicesRes, teamRes, galleryRes, settingsRes] = await Promise.all([
-    supabase.from("services").select("id", { count: "exact" }),
-    supabase.from("team_members").select("id", { count: "exact" }),
-    supabase.from("gallery_images").select("id", { count: "exact" }),
-    supabase.from("site_settings").select("*").single(),
-  ])
+  try {
+    const supabase = await createClient()
+    const [servicesRes, teamRes, galleryRes, settingsRes] = await Promise.all([
+      supabase.from("services").select("id", { count: "exact" }),
+      supabase.from("team_members").select("id", { count: "exact" }),
+      supabase.from("gallery_images").select("id", { count: "exact" }),
+      supabase.from("site_settings").select("*").single(),
+    ])
+    servicesCount = servicesRes.count ?? 0
+    teamCount = teamRes.count ?? 0
+    galleryCount = galleryRes.count ?? 0
+    settingsData = settingsRes.data
+  } catch {
+    // Supabase not available
+  }
 
   const stats = [
     {
       title: "Servicios",
-      count: servicesRes.count ?? 0,
+      count: servicesCount,
       icon: Sparkles,
       href: "/admin/services",
       description: "Servicios activos en el sitio",
     },
     {
       title: "Miembros del Equipo",
-      count: teamRes.count ?? 0,
+      count: teamCount,
       icon: Users,
       href: "/admin/team",
       description: "Profesionales del equipo",
     },
     {
       title: "Imagenes en Galeria",
-      count: galleryRes.count ?? 0,
+      count: galleryCount,
       icon: ImageIcon,
       href: "/admin/gallery",
       description: "Fotos en la galeria",
@@ -77,7 +89,7 @@ export default async function AdminPage() {
         ))}
       </div>
 
-      {settingsRes.data && (
+      {settingsData && (
         <Card className="border-border/50 bg-card">
           <CardHeader>
             <CardTitle className="text-foreground flex items-center gap-2">
@@ -95,19 +107,19 @@ export default async function AdminPage() {
                   Nombre del Salon
                 </span>
                 <span className="text-sm text-foreground">
-                  {settingsRes.data.site_name}
+                  {settingsData.site_name}
                 </span>
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-xs text-muted-foreground">Telefono</span>
                 <span className="text-sm text-foreground">
-                  {settingsRes.data.phone}
+                  {settingsData.phone}
                 </span>
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-xs text-muted-foreground">Email</span>
                 <span className="text-sm text-foreground">
-                  {settingsRes.data.email}
+                  {settingsData.email}
                 </span>
               </div>
               <div className="flex flex-col gap-1">
@@ -115,7 +127,7 @@ export default async function AdminPage() {
                   Direccion
                 </span>
                 <span className="text-sm text-foreground">
-                  {settingsRes.data.address}
+                  {settingsData.address}
                 </span>
               </div>
             </div>
