@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/db/server"
 import { TeamManager } from "./team-manager"
 
 export default async function AdminTeamPage() {
