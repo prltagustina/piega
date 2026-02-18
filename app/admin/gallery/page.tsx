@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/db/server"
+import { createClient } from "@/lib/supabase/server"
 import { GalleryManager } from "./gallery-manager"
 
 export default async function AdminGalleryPage() {

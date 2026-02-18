@@ -1,4 +1,4 @@
-import { createPublicClient } from "@/lib/db/public"
+import { createPublicClient } from "@/lib/supabase/public"
 import { Navbar } from "@/components/sections/navbar"
 import { HeroSection } from "@/components/sections/hero-section"
 import { Marquee } from "@/components/sections/marquee"

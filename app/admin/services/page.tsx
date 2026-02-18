@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/db/server"
+import { createClient } from "@/lib/supabase/server"
 import { ServicesManager } from "./services-manager"
 
 export default async function AdminServicesPage() {

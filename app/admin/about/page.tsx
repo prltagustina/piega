@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/db/server"
+import { createClient } from "@/lib/supabase/server"
 import { AboutForm } from "./about-form"
 
 export default async function AdminAboutPage() {
