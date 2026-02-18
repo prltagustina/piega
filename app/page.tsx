@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createPublicClient } from "@/lib/supabase/public"
 import { Navbar } from "@/components/sections/navbar"
 import { HeroSection } from "@/components/sections/hero-section"
 import { Marquee } from "@/components/sections/marquee"
@@ -10,7 +10,7 @@ import { BookCTA } from "@/components/sections/book-cta"
 import { Footer } from "@/components/sections/footer"
 
 export default async function Page() {
-  const supabase = await createClient()
+  const supabase = createPublicClient()
 
   const [heroRes, settingsRes, servicesRes, aboutRes, teamRes, galleryRes] =
     await Promise.all([
@@ -40,6 +40,17 @@ export default async function Page() {
   const about = aboutRes.data
   const team = teamRes.data ?? []
   const gallery = galleryRes.data ?? []
+
+  console.log("[v0] Data loaded:", {
+    hero: !!hero,
+    settings: !!settings,
+    services: services.length,
+    about: !!about,
+    team: team.length,
+    gallery: gallery.length,
+    heroError: heroRes.error?.message,
+    settingsError: settingsRes.error?.message,
+  })
 
   return (
     <div className="site-page relative">
