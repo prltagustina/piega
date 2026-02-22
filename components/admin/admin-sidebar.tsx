@@ -60,7 +60,7 @@ export function AdminSidebar({ user }: { user: User }) {
             height={26}
             className="h-6 w-auto brightness-110"
           />
-          <span className="text-[7px] font-heading font-medium leading-[1.3] tracking-[0.08em] uppercase text-sidebar-foreground">
+          <span className="text-[7px] font-heading font-medium leading-[1.3] tracking-[0.04em] text-sidebar-foreground">
             Hair &<br />Beauty<br />Club
           </span>
           <span className="text-xs text-muted-foreground ml-1">Admin</span>

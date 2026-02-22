@@ -63,7 +63,7 @@ export default function LoginPage() {
                 className="h-10 w-auto"
                 priority
               />
-              <span className="text-[9px] font-heading font-medium leading-[1.3] tracking-[0.08em] uppercase text-primary">
+              <span className="text-[9px] font-heading font-medium leading-[1.3] tracking-[0.04em] text-primary">
                 Hair &<br />Beauty<br />Club
               </span>
             </div>

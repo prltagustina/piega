@@ -52,7 +52,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
               priority
             />
             <span
-              className="text-[8px] md:text-[9px] font-heading font-medium leading-[1.3] tracking-[0.08em] uppercase"
+              className="text-[8px] md:text-[9px] font-heading font-medium leading-[1.3] tracking-[0.04em]"
               style={{ color: "var(--site-fg)" }}
             >
               Hair &<br />Beauty<br />Club
