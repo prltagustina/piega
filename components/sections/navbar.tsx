@@ -35,19 +35,12 @@ export function Navbar() {
       >
         <nav className="flex items-center justify-between px-6 md:px-12 lg:px-16 py-5">
           {/* Logo */}
-          <a href="#inicio" className="flex flex-col items-start">
-            <span
-              className="text-2xl md:text-3xl font-heading font-medium tracking-wide"
-              style={{ color: "var(--site-fg)" }}
-            >
-              Piega
-            </span>
-            <span
-              className="text-[9px] font-heading font-medium uppercase tracking-[0.35em] -mt-1"
-              style={{ color: "var(--site-fg-muted)" }}
-            >
-              hair & beauty club
-            </span>
+          <a href="#inicio" className="flex items-center">
+            <img
+              src="/images/logo-piega.png"
+              alt="Piega Hair & Beauty Club"
+              className="h-10 md:h-12 w-auto"
+            />
           </a>
 
           {/* Desktop nav */}
