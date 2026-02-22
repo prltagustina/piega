@@ -26,6 +26,7 @@ import {
   Palette,
 } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 
 const navItems = [
@@ -52,10 +53,17 @@ export function AdminSidebar({ user }: { user: User }) {
     <Sidebar className="border-r border-border/50">
       <SidebarHeader className="p-4">
         <Link href="/admin" className="flex items-center gap-2">
-          <h2 className="text-xl font-serif tracking-wide text-primary">
-            PIEGA
-          </h2>
-          <span className="text-xs text-muted-foreground">Admin</span>
+          <Image
+            src="/images/logo-piega.png"
+            alt="Piega"
+            width={80}
+            height={26}
+            className="h-6 w-auto brightness-110"
+          />
+          <span className="text-[7px] font-heading font-medium leading-[1.3] tracking-[0.08em] uppercase text-sidebar-foreground">
+            Hair &<br />Beauty<br />Club
+          </span>
+          <span className="text-xs text-muted-foreground ml-1">Admin</span>
         </Link>
       </SidebarHeader>
 

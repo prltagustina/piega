@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const navLinks = [
   { label: "Inicio", href: "#inicio" },
@@ -41,18 +42,20 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
       >
         <nav className="flex items-center justify-between px-6 md:px-12 lg:px-16 py-5">
           {/* Logo */}
-          <a href="#inicio" className="flex flex-col items-start">
+          <a href="#inicio" className="flex items-center gap-2.5">
+            <Image
+              src="/images/logo-piega.png"
+              alt="Piega"
+              width={120}
+              height={40}
+              className="h-7 md:h-9 w-auto"
+              priority
+            />
             <span
-              className="text-2xl md:text-3xl font-serif font-medium tracking-wide"
+              className="text-[8px] md:text-[9px] font-heading font-medium leading-[1.3] tracking-[0.08em] uppercase"
               style={{ color: "var(--site-fg)" }}
             >
-              {settings?.site_name || "Piega"}
-            </span>
-            <span
-              className="text-[9px] uppercase tracking-[0.35em] -mt-1"
-              style={{ color: "var(--site-fg-muted)" }}
-            >
-              {settings?.tagline || "hair & beauty"}
+              Hair &<br />Beauty<br />Club
             </span>
           </a>
 
@@ -138,7 +141,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * i, duration: 0.4 }}
-                className="text-3xl font-serif font-medium tracking-wide"
+                className="text-3xl font-heading font-medium tracking-wide"
                 style={{ color: "var(--site-fg)" }}
                 onClick={() => setMenuOpen(false)}
               >

@@ -5,8 +5,8 @@ import { AdminHeader } from "@/components/admin/admin-header"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
 export const metadata = {
-  title: "Panel Admin | Piega Hair & Beauty",
-  description: "Tablero de control administrativo de Piega",
+  title: "Panel Admin | Piega Hair & Beauty Club",
+  description: "Tablero de control administrativo de Piega Hair & Beauty Club",
 }
 
 export default async function AdminLayout({

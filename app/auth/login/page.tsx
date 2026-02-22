@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Lock, Mail } from "lucide-react"
+import Image from "next/image"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -53,9 +54,19 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
-            <h1 className="text-3xl font-serif tracking-wide text-primary">
-              PIEGA
-            </h1>
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/images/logo-piega.png"
+                alt="Piega"
+                width={140}
+                height={46}
+                className="h-10 w-auto"
+                priority
+              />
+              <span className="text-[9px] font-heading font-medium leading-[1.3] tracking-[0.08em] uppercase text-primary">
+                Hair &<br />Beauty<br />Club
+              </span>
+            </div>
             <p className="text-sm text-muted-foreground">
               Panel de Administracion
             </p>

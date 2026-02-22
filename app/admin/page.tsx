@@ -58,7 +58,7 @@ export default async function AdminPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-2xl font-serif text-foreground">
+        <h2 className="text-2xl font-heading font-medium text-foreground">
           Bienvenido al Panel
         </h2>
         <p className="text-muted-foreground mt-1">
