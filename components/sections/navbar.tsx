@@ -42,10 +42,10 @@ export function Navbar() {
               className="h-10 md:h-12 w-auto"
             />
             <span
-              className="text-[8px] md:text-[9px] font-heading font-medium uppercase tracking-[0.35em] mt-0.5"
+              className="text-[8px] md:text-[9px] font-heading font-medium tracking-[0.35em] mt-0.5"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              hair & beauty club
+              Hair & Beauty Club
             </span>
           </a>
 
