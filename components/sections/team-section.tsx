@@ -4,25 +4,21 @@ import { motion } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
 
-const team = [
-  {
-    name: "Sofia Martinez",
-    role: "Directora Creativa",
-    image: "/images/team.jpg",
-  },
-  {
-    name: "Valentina Rossi",
-    role: "Colorista Senior",
-    image: "/images/gallery-1.jpg",
-  },
-  {
-    name: "Camila Torres",
-    role: "Especialista en Spa",
-    image: "/images/gallery-2.jpg",
-  },
-];
+type TeamMember = {
+  id: string
+  name: string
+  role: string
+  image_url: string
+}
 
-export function TeamSection() {
+const defaultTeam: TeamMember[] = [
+  { id: "1", name: "Sofia Martinez", role: "Directora Creativa", image_url: "/images/team.jpg" },
+  { id: "2", name: "Valentina Rossi", role: "Colorista Senior", image_url: "/images/gallery-1.jpg" },
+  { id: "3", name: "Camila Torres", role: "Especialista en Spa", image_url: "/images/gallery-2.jpg" },
+]
+
+export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
+  const team = propTeam.length > 0 ? propTeam : defaultTeam
   return (
     <section id="equipo" className="py-24 md:py-32 px-6 md:px-12 lg:px-16">
       <ScrollReveal>
@@ -67,7 +63,7 @@ export function TeamSection() {
                   transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                 >
                   <Image
-                    src={member.image || "/placeholder.svg"}
+                    src={member.image_url || "/placeholder.svg"}
                     alt={member.name}
                     fill
                     className="object-cover"

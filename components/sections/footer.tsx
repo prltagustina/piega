@@ -2,7 +2,32 @@
 
 import { ScrollReveal } from "./scroll-reveal";
 
-export function Footer() {
+type SettingsData = {
+  site_name?: string
+  tagline?: string
+  phone?: string
+  email?: string
+  address?: string
+  instagram_url?: string
+  whatsapp_url?: string
+  facebook_url?: string
+} | null
+
+type ServiceData = {
+  id: string
+  title: string
+}
+
+const defaultFooterServices: ServiceData[] = [
+  { id: "1", title: "Corte & Estilo" },
+  { id: "2", title: "Color & Mechas" },
+  { id: "3", title: "Tratamientos" },
+  { id: "4", title: "Spa & Bienestar" },
+  { id: "5", title: "Novias" },
+]
+
+export function Footer({ settings, services: propServices }: { settings: SettingsData; services: ServiceData[] }) {
+  const services = propServices.length > 0 ? propServices : defaultFooterServices
   return (
     <footer
       className="py-16 md:py-20 px-6 md:px-12 lg:px-16 border-t"
@@ -12,19 +37,18 @@ export function Footer() {
         {/* Brand */}
         <ScrollReveal className="md:col-span-1">
           <div>
-            <div className="flex items-center gap-2.5">
-              <img
-                src="/images/logo-piega.png"
-                alt="Piega Hair & Beauty Club"
-                className="h-12 w-auto"
-              />
-              <span
-                className="text-[10px] font-heading font-medium leading-[1.4] tracking-[0.08em]"
-                style={{ color: "var(--site-fg-muted)" }}
-              >
-                Hair &<br />Beauty<br />Club
-              </span>
-            </div>
+            <span
+              className="text-3xl font-serif font-medium tracking-wide"
+              style={{ color: "var(--site-fg)" }}
+            >
+              {settings?.site_name || "Piega"}
+            </span>
+            <p
+              className="text-[9px] uppercase tracking-[0.35em]"
+              style={{ color: "var(--site-fg-muted)" }}
+            >
+              {settings?.tagline || "hair & beauty"}
+            </p>
             <p
               className="mt-4 text-xs font-light leading-relaxed max-w-xs"
               style={{ color: "var(--site-fg-muted)" }}
@@ -45,21 +69,15 @@ export function Footer() {
               Navegación
             </h4>
             <ul className="flex flex-col gap-3">
-              {[
-                { label: "Inicio", href: "#inicio" },
-                { label: "Servicios", href: "#servicios" },
-                { label: "El Salon", href: "#salon" },
-                { label: "Equipo", href: "#equipo" },
-                { label: "Galeria", href: "#galeria" },
-              ].map(
+              {["Inicio", "Servicios", "El Salón", "Equipo", "Galería"].map(
                 (item) => (
-                  <li key={item.label}>
+                  <li key={item}>
                     <a
-                      href={item.href}
+                      href={`#${item.toLowerCase().replace(" ", "-")}`}
                       className="site-link text-sm font-light"
                       style={{ color: "var(--site-fg-muted)" }}
                     >
-                      {item.label}
+                      {item}
                     </a>
                   </li>
                 ),
@@ -78,19 +96,13 @@ export function Footer() {
               Servicios
             </h4>
             <ul className="flex flex-col gap-3">
-              {[
-                "Corte & Estilo",
-                "Color & Mechas",
-                "Tratamientos",
-                "Spa & Bienestar",
-                "Novias",
-              ].map((item) => (
-                <li key={item}>
+              {services.slice(0, 5).map((service) => (
+                <li key={service.id}>
                   <span
                     className="text-sm font-light"
                     style={{ color: "var(--site-fg-muted)" }}
                   >
-                    {item}
+                    {service.title}
                   </span>
                 </li>
               ))}
@@ -112,33 +124,39 @@ export function Footer() {
                 className="text-sm font-light"
                 style={{ color: "var(--site-fg-muted)" }}
               >
-                Av. Ejemplo 1234, Santa Fe
+                {settings?.address || "Av. Ejemplo 1234, Santa Fe"}
               </p>
               <a
-                href="tel:+5493426000000"
+                href={`tel:${settings?.phone || "+5493426000000"}`}
                 className="site-link text-sm font-light"
                 style={{ color: "var(--site-fg-muted)" }}
               >
-                +54 9 342 600 0000
+                {settings?.phone || "+54 9 342 600 0000"}
               </a>
               <a
-                href="mailto:hola@piega.com.ar"
+                href={`mailto:${settings?.email || "hola@piega.com.ar"}`}
                 className="site-link text-sm font-light"
                 style={{ color: "var(--site-fg-muted)" }}
               >
-                hola@piega.com.ar
+                {settings?.email || "hola@piega.com.ar"}
               </a>
 
               {/* Social */}
               <div className="flex gap-6 mt-4">
-                {["Instagram", "WhatsApp", "Facebook"].map((social) => (
+                {[
+                  { label: "Instagram", url: settings?.instagram_url || "#" },
+                  { label: "WhatsApp", url: settings?.whatsapp_url || "#" },
+                  { label: "Facebook", url: settings?.facebook_url || "#" },
+                ].map((social) => (
                   <a
-                    key={social}
-                    href="#"
+                    key={social.label}
+                    href={social.url!}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="site-link text-xs uppercase tracking-wider"
                     style={{ color: "var(--site-fg-muted)" }}
                   >
-                    {social}
+                    {social.label}
                   </a>
                 ))}
               </div>
@@ -156,7 +174,7 @@ export function Footer() {
           className="text-xs font-light"
           style={{ color: "var(--site-fg-muted)" }}
         >
-          2026 Piega Hair & Beauty Club. Todos los derechos reservados.
+          2026 Piega Hair & Beauty. Todos los derechos reservados.
         </p>
         <p
           className="text-xs font-light"

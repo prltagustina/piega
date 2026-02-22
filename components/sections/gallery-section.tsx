@@ -5,36 +5,31 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
 
-const images = [
-  {
-    src: "/images/gallery-1.jpg",
-    alt: "Resultado de estilismo profesional",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    src: "/images/gallery-2.jpg",
-    alt: "Sala de spa y tratamientos",
-    aspect: "aspect-square",
-  },
-  {
-    src: "/images/gallery-3.jpg",
-    alt: "Productos y herramientas premium",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    src: "/images/hero.jpg",
-    alt: "Ambiente del salón",
-    aspect: "aspect-square",
-  },
-  {
-    src: "/images/services.jpg",
-    alt: "Estilista en acción",
-    aspect: "aspect-[3/4]",
-  },
-  { src: "/images/salon.jpg", alt: "Vista del salón", aspect: "aspect-square" },
-];
+type GalleryImage = {
+  id: string
+  image_url: string
+  alt_text: string
+  sort_order: number
+}
 
-export function GallerySection() {
+const aspects = ["aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square"]
+
+const defaultGallery: GalleryImage[] = [
+  { id: "1", image_url: "/images/gallery-1.jpg", alt_text: "Resultado de estilismo profesional", sort_order: 1 },
+  { id: "2", image_url: "/images/gallery-2.jpg", alt_text: "Sala de spa y tratamientos", sort_order: 2 },
+  { id: "3", image_url: "/images/gallery-3.jpg", alt_text: "Productos y herramientas premium", sort_order: 3 },
+  { id: "4", image_url: "/images/hero.jpg", alt_text: "Ambiente del salon", sort_order: 4 },
+  { id: "5", image_url: "/images/services.jpg", alt_text: "Estilista en accion", sort_order: 5 },
+  { id: "6", image_url: "/images/salon.jpg", alt_text: "Vista del salon", sort_order: 6 },
+]
+
+export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage[] }) {
+  const gallery = propGallery.length > 0 ? propGallery : defaultGallery
+  const images = gallery.map((img, i) => ({
+    src: img.image_url,
+    alt: img.alt_text || "Imagen de galeria",
+    aspect: aspects[i % aspects.length],
+  }))
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,

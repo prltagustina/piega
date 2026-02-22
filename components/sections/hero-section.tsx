@@ -4,7 +4,21 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
-export function HeroSection() {
+type HeroData = {
+  subtitle?: string
+  title_line1?: string
+  title_line2?: string
+  description?: string
+  image_url?: string
+  cta_primary_text?: string
+  cta_secondary_text?: string
+} | null
+
+type SettingsData = {
+  booking_url?: string
+} | null
+
+export function HeroSection({ hero, settings }: { hero: HeroData; settings: SettingsData }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -24,7 +38,7 @@ export function HeroSection() {
       {/* Parallax background image */}
       <motion.div className="absolute inset-0" style={{ y: imageY }}>
         <Image
-          src="/images/hero.jpg"
+          src={hero?.image_url || "/images/hero.jpg"}
           alt="Interior del salón Piega Hair & Beauty"
           fill
           className="object-cover scale-110"
@@ -54,7 +68,7 @@ export function HeroSection() {
           className="text-xs uppercase tracking-[0.4em] mb-6"
           style={{ color: "var(--site-accent)" }}
         >
-          Salón de belleza premium
+          {hero?.subtitle || "Salón de belleza premium"}
         </motion.p>
 
         <motion.h1
@@ -68,9 +82,9 @@ export function HeroSection() {
           className="text-6xl md:text-8xl lg:text-9xl font-heading font-medium leading-[0.95] tracking-tight text-balance"
           style={{ color: "var(--site-fg)" }}
         >
-          El arte de
+          {hero?.title_line1 || "El arte de"}
           <br />
-          <span style={{ color: "var(--site-accent)" }}>ser vos</span>
+          <span style={{ color: "var(--site-accent)" }}>{hero?.title_line2 || "ser vos"}</span>
         </motion.h1>
 
         <motion.p
@@ -80,8 +94,7 @@ export function HeroSection() {
           className="mt-8 text-sm md:text-base font-light max-w-md leading-relaxed"
           style={{ color: "var(--site-fg-muted)" }}
         >
-          Un espacio donde el estilo se encuentra con la sofisticación.
-          Experiencias de belleza personalizadas para cada persona.
+          {hero?.description || "Un espacio donde el estilo se encuentra con la sofisticación. Experiencias de belleza personalizadas para cada persona."}
         </motion.p>
 
         <motion.div
@@ -91,14 +104,14 @@ export function HeroSection() {
           className="mt-10 flex flex-col sm:flex-row gap-4"
         >
           <a
-            href="#reservar"
+            href={settings?.booking_url || "#reservar"}
             className="px-10 py-4 text-xs uppercase tracking-[0.25em] font-medium transition-all duration-300"
             style={{
               backgroundColor: "var(--site-accent)",
               color: "var(--site-bg)",
             }}
           >
-            Reservar turno
+            {hero?.cta_primary_text || "Reservar turno"}
           </a>
           <a
             href="#servicios"
@@ -108,7 +121,7 @@ export function HeroSection() {
               color: "var(--site-fg)",
             }}
           >
-            Nuestros servicios
+            {hero?.cta_secondary_text || "Nuestros servicios"}
           </a>
         </motion.div>
 

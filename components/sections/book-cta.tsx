@@ -5,7 +5,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
 
-export function BookCTA() {
+type SettingsData = {
+  phone?: string
+  booking_url?: string
+} | null
+
+export function BookCTA({ settings }: { settings?: SettingsData }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -69,7 +74,7 @@ export function BookCTA() {
 
         <ScrollReveal delay={0.3}>
           <motion.a
-            href="https://www.agendapro.com"
+            href={settings?.booking_url || "https://www.agendapro.com"}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-10 inline-flex items-center gap-3 px-12 py-5 text-sm uppercase tracking-[0.25em] font-medium transition-all duration-300"
@@ -105,13 +110,13 @@ export function BookCTA() {
             className="mt-6 text-xs font-light"
             style={{ color: "var(--site-fg-muted)" }}
           >
-            También podés llamarnos al{" "}
+            {"También podés llamarnos al "}
             <a
-              href="tel:+5493426000000"
+              href={`tel:${settings?.phone || "+5493426000000"}`}
               className="site-link"
               style={{ color: "var(--site-accent)" }}
             >
-              +54 9 342 600 0000
+              {settings?.phone || "+54 9 342 600 0000"}
             </a>
           </p>
         </ScrollReveal>

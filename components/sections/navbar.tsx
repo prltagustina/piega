@@ -11,7 +11,13 @@ const navLinks = [
   { label: "Galería", href: "#galeria" },
 ];
 
-export function Navbar() {
+type SettingsData = {
+  site_name?: string
+  tagline?: string
+  booking_url?: string
+} | null
+
+export function Navbar({ settings }: { settings?: SettingsData }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -35,17 +41,18 @@ export function Navbar() {
       >
         <nav className="flex items-center justify-between px-6 md:px-12 lg:px-16 py-5">
           {/* Logo */}
-          <a href="#inicio" className="flex items-center gap-2.5">
-            <img
-              src="/images/logo-piega.png"
-              alt="Piega Hair & Beauty Club"
-              className="h-10 md:h-12 w-auto"
-            />
+          <a href="#inicio" className="flex flex-col items-start">
             <span
-              className="text-[9px] md:text-[10px] font-heading font-medium leading-[1.4] tracking-[0.08em]"
+              className="text-2xl md:text-3xl font-serif font-medium tracking-wide"
+              style={{ color: "var(--site-fg)" }}
+            >
+              {settings?.site_name || "Piega"}
+            </span>
+            <span
+              className="text-[9px] uppercase tracking-[0.35em] -mt-1"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              Hair &<br />Beauty<br />Club
+              {settings?.tagline || "hair & beauty"}
             </span>
           </a>
 
@@ -66,7 +73,7 @@ export function Navbar() {
           {/* Book button */}
           <div className="flex items-center gap-6">
             <a
-              href="#reservar"
+              href={settings?.booking_url || "#reservar"}
               className="hidden md:inline-flex text-xs uppercase tracking-[0.2em] px-6 py-3 border font-light transition-colors duration-300 hover:text-[var(--site-bg)]"
               style={{
                 borderColor: "var(--site-accent)",
@@ -131,7 +138,7 @@ export function Navbar() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * i, duration: 0.4 }}
-                className="text-3xl font-heading font-medium tracking-wide"
+                className="text-3xl font-serif font-medium tracking-wide"
                 style={{ color: "var(--site-fg)" }}
                 onClick={() => setMenuOpen(false)}
               >
