@@ -2,14 +2,14 @@ import { createClient } from "@/lib/supabase/server"
 import { GalleryManager } from "./gallery-manager"
 
 export default async function AdminGalleryPage() {
-  let images: Array<Record<string, unknown>> = []
+  let images: { id: string; image_url: string; alt_text: string; sort_order: number; is_active: boolean }[] = []
   try {
     const supabase = await createClient()
     const { data } = await supabase
       .from("gallery_images")
       .select("*")
       .order("sort_order", { ascending: true })
-    images = data ?? []
+    if (data) images = data as typeof images
   } catch {
     // Supabase not available
   }
