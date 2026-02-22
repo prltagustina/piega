@@ -18,6 +18,12 @@ export function Footer() {
               className="h-12 w-auto"
             />
             <p
+              className="text-[9px] font-heading font-medium uppercase tracking-[0.35em] mt-0.5"
+              style={{ color: "var(--site-fg-muted)" }}
+            >
+              hair & beauty club
+            </p>
+            <p
               className="mt-4 text-xs font-light leading-relaxed max-w-xs"
               style={{ color: "var(--site-fg-muted)" }}
             >
