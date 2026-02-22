@@ -24,7 +24,7 @@ export function AdminHeader() {
     <header className="flex h-14 items-center gap-4 border-b border-border/50 px-4 md:px-6">
       <SidebarTrigger />
       <Separator orientation="vertical" className="h-6" />
-      <h1 className="text-lg font-medium text-foreground">{title}</h1>
+      <h1 className="text-lg font-heading font-medium text-foreground">{title}</h1>
       <div className="ml-auto">
         <Link
           href="/"

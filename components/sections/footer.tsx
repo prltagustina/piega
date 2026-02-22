@@ -1,6 +1,7 @@
 "use client";
 
 import { ScrollReveal } from "./scroll-reveal";
+import Image from "next/image";
 
 type SettingsData = {
   site_name?: string
@@ -37,18 +38,21 @@ export function Footer({ settings, services: propServices }: { settings: Setting
         {/* Brand */}
         <ScrollReveal className="md:col-span-1">
           <div>
-            <span
-              className="text-3xl font-serif font-medium tracking-wide"
-              style={{ color: "var(--site-fg)" }}
-            >
-              {settings?.site_name || "Piega"}
-            </span>
-            <p
-              className="text-[9px] uppercase tracking-[0.35em]"
-              style={{ color: "var(--site-fg-muted)" }}
-            >
-              {settings?.tagline || "hair & beauty"}
-            </p>
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/images/logo-piega.png"
+                alt="Piega"
+                width={140}
+                height={46}
+                className="h-9 w-auto"
+              />
+              <span
+                className="text-[8px] md:text-[9px] font-heading font-medium leading-[1.3] tracking-[0.04em]"
+                style={{ color: "var(--site-fg)" }}
+              >
+                Hair &<br />Beauty<br />Club
+              </span>
+            </div>
             <p
               className="mt-4 text-xs font-light leading-relaxed max-w-xs"
               style={{ color: "var(--site-fg-muted)" }}
@@ -174,7 +178,7 @@ export function Footer({ settings, services: propServices }: { settings: Setting
           className="text-xs font-light"
           style={{ color: "var(--site-fg-muted)" }}
         >
-          2026 Piega Hair & Beauty. Todos los derechos reservados.
+          2026 Piega Hair & Beauty Club. Todos los derechos reservados.
         </p>
         <p
           className="text-xs font-light"
