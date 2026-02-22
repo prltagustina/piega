@@ -50,7 +50,7 @@ export function BookCTA() {
 
         <ScrollReveal delay={0.1}>
           <h2
-            className="text-4xl md:text-6xl lg:text-8xl font-serif font-semibold leading-tight max-w-3xl text-balance"
+            className="text-4xl md:text-6xl lg:text-8xl font-heading font-medium leading-tight max-w-3xl text-balance"
             style={{ color: "var(--site-fg)" }}
           >
             Tu momento de belleza te espera

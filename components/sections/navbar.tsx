@@ -37,16 +37,16 @@ export function Navbar() {
           {/* Logo */}
           <a href="#inicio" className="flex flex-col items-start">
             <span
-              className="text-2xl md:text-3xl font-serif font-medium tracking-wide"
+              className="text-2xl md:text-3xl font-heading font-medium tracking-wide"
               style={{ color: "var(--site-fg)" }}
             >
               Piega
             </span>
             <span
-              className="text-[9px] uppercase tracking-[0.35em] -mt-1"
+              className="text-[9px] font-heading font-medium uppercase tracking-[0.35em] -mt-1"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              hair & beauty
+              hair & beauty club
             </span>
           </a>
 
@@ -132,7 +132,7 @@ export function Navbar() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * i, duration: 0.4 }}
-                className="text-3xl font-serif font-medium tracking-wide"
+                className="text-3xl font-heading font-medium tracking-wide"
                 style={{ color: "var(--site-fg)" }}
                 onClick={() => setMenuOpen(false)}
               >

@@ -53,7 +53,7 @@ export function AboutSection() {
 
           <ScrollReveal delay={0.2}>
             <h2
-              className="text-4xl md:text-6xl font-serif font-semibold leading-tight"
+              className="text-4xl md:text-6xl font-heading font-medium leading-tight"
               style={{ color: "var(--site-fg)" }}
             >
               Un espacio pensado para vos
@@ -92,7 +92,7 @@ export function AboutSection() {
               ].map((stat) => (
                 <div key={stat.label}>
                   <p
-                    className="text-3xl md:text-4xl font-serif font-medium"
+                    className="text-3xl md:text-4xl font-heading font-medium"
                     style={{ color: "var(--site-accent-secondary)" }}
                   >
                     {stat.number}

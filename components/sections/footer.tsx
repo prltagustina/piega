@@ -13,16 +13,16 @@ export function Footer() {
         <ScrollReveal className="md:col-span-1">
           <div>
             <span
-              className="text-3xl font-serif font-medium tracking-wide"
+              className="text-3xl font-heading font-medium tracking-wide"
               style={{ color: "var(--site-fg)" }}
             >
               Piega
             </span>
             <p
-              className="text-[9px] uppercase tracking-[0.35em]"
+              className="text-[9px] font-heading font-medium uppercase tracking-[0.35em]"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              hair & beauty
+              hair & beauty club
             </p>
             <p
               className="mt-4 text-xs font-light leading-relaxed max-w-xs"
@@ -44,15 +44,21 @@ export function Footer() {
               Navegación
             </h4>
             <ul className="flex flex-col gap-3">
-              {["Inicio", "Servicios", "El Salón", "Equipo", "Galería"].map(
+              {[
+                { label: "Inicio", href: "#inicio" },
+                { label: "Servicios", href: "#servicios" },
+                { label: "El Salon", href: "#salon" },
+                { label: "Equipo", href: "#equipo" },
+                { label: "Galeria", href: "#galeria" },
+              ].map(
                 (item) => (
-                  <li key={item}>
+                  <li key={item.label}>
                     <a
-                      href={`#${item.toLowerCase().replace(" ", "-")}`}
+                      href={item.href}
                       className="site-link text-sm font-light"
                       style={{ color: "var(--site-fg-muted)" }}
                     >
-                      {item}
+                      {item.label}
                     </a>
                   </li>
                 ),
@@ -149,7 +155,7 @@ export function Footer() {
           className="text-xs font-light"
           style={{ color: "var(--site-fg-muted)" }}
         >
-          2026 Piega Hair & Beauty. Todos los derechos reservados.
+          2026 Piega Hair & Beauty Club. Todos los derechos reservados.
         </p>
         <p
           className="text-xs font-light"

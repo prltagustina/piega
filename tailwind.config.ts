@@ -82,6 +82,7 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-sans)', 'Montserrat', 'system-ui', 'sans-serif'],
         serif: ['var(--font-serif)', 'Cormorant Garamond', 'Georgia', 'serif'],
+        heading: ['"Aeonik Fono"', 'var(--font-serif)', 'Cormorant Garamond', 'Georgia', 'serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',

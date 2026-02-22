@@ -60,7 +60,7 @@ export function GallerySection() {
             Galería
           </p>
           <h2
-            className="text-4xl md:text-6xl lg:text-7xl font-serif font-semibold"
+            className="text-4xl md:text-6xl lg:text-7xl font-heading font-medium"
             style={{ color: "var(--site-fg)" }}
           >
             Nuestro trabajo

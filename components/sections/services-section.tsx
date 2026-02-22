@@ -57,7 +57,7 @@ export function ServicesSection() {
           Nuestros Servicios
         </p>
         <h2
-          className="text-4xl md:text-6xl lg:text-7xl font-serif font-semibold leading-tight max-w-2xl"
+          className="text-4xl md:text-6xl lg:text-7xl font-heading font-medium leading-tight max-w-2xl"
           style={{ color: "var(--site-fg)" }}
         >
           Experiencias que transforman
@@ -85,7 +85,7 @@ export function ServicesSection() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3
-                      className="text-2xl md:text-3xl lg:text-4xl font-serif font-medium transition-colors duration-300"
+                      className="text-2xl md:text-3xl lg:text-4xl font-heading font-medium transition-colors duration-300"
                       style={{
                         color:
                           activeIndex === i
