@@ -12,17 +12,19 @@ export function Footer() {
         {/* Brand */}
         <ScrollReveal className="md:col-span-1">
           <div>
-            <img
-              src="/images/logo-piega.png"
-              alt="Piega Hair & Beauty Club"
-              className="h-12 w-auto"
-            />
-            <p
-              className="text-[9px] font-heading font-medium tracking-[0.35em] mt-0.5"
-              style={{ color: "var(--site-fg-muted)" }}
-            >
-              Hair & Beauty Club
-            </p>
+            <div className="flex items-center gap-2.5">
+              <img
+                src="/images/logo-piega.png"
+                alt="Piega Hair & Beauty Club"
+                className="h-12 w-auto"
+              />
+              <span
+                className="text-[10px] font-heading font-medium leading-[1.4] tracking-[0.08em]"
+                style={{ color: "var(--site-fg-muted)" }}
+              >
+                Hair &<br />Beauty<br />Club
+              </span>
+            </div>
             <p
               className="mt-4 text-xs font-light leading-relaxed max-w-xs"
               style={{ color: "var(--site-fg-muted)" }}
