@@ -35,7 +35,7 @@ export function TeamSection() {
               Nuestro Equipo
             </p>
             <h2
-              className="text-4xl md:text-6xl lg:text-7xl font-serif font-semibold leading-tight"
+              className="text-4xl md:text-6xl lg:text-7xl font-heading font-medium leading-tight"
               style={{ color: "var(--site-fg)" }}
             >
               Artistas del estilo
@@ -98,7 +98,7 @@ export function TeamSection() {
 
               <div className="mt-4">
                 <h3
-                  className="text-2xl md:text-3xl font-serif font-medium"
+                  className="text-2xl md:text-3xl font-heading font-medium"
                   style={{ color: "var(--site-fg)" }}
                 >
                   {member.name}

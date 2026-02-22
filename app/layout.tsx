@@ -18,7 +18,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: "Piega Hair & Beauty",
+  title: "Piega Hair & Beauty Club",
   description: "Salón de belleza premium",
 }
 
