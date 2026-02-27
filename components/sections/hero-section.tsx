@@ -42,12 +42,12 @@ export function HeroSection({
       className="relative h-screen overflow-hidden"
     >
       {/* Parallax background image */}
-      <motion.div className="absolute inset-0" style={{ y: imageY }}>
+      <motion.div className="absolute top-[-10%] bottom-[-10%] left-0 right-0 h-[120%]" style={{ y: imageY }}>
         <Image
           src={hero?.image_url || "/images/hero.jpg"}
           alt="Interior del salón Piega Hair & Beauty"
           fill
-          className="object-cover scale-110"
+          className="object-cover"
           priority
           sizes="100vw"
         />
@@ -93,7 +93,7 @@ export function HeroSection({
             delay: 0.5,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
-          className="text-6xl md:text-8xl lg:text-9xl font-heading font-medium leading-[0.95] tracking-tight text-balance"
+          className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-heading font-medium leading-[0.95] tracking-tight text-balance"
           style={{ color: "var(--site-fg)" }}
         >
           {hero?.title_line1 || "Love your"}
