@@ -82,7 +82,9 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  quality={75}
                   sizes="(max-width: 768px) 50vw, 33vw"
+                  loading="lazy"
                 />
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -113,7 +115,9 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  quality={75}
                   sizes="(max-width: 768px) 50vw, 33vw"
+                  loading="lazy"
                 />
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -144,7 +148,9 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  quality={75}
                   sizes="33vw"
+                  loading="lazy"
                 />
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"

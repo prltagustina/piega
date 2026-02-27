@@ -67,7 +67,9 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
                     alt={member.name}
                     fill
                     className="object-cover"
+                    quality={75}
                     sizes="(max-width: 768px) 100vw, 33vw"
+                    loading="lazy"
                   />
                 </motion.div>
 

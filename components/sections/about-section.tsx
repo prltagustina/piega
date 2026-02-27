@@ -48,7 +48,9 @@ export function AboutSection({ about }: { about: AboutData }) {
                 alt="Interior del salón Piega"
                 fill
                 className="object-cover"
+                quality={75}
                 sizes="(max-width: 1024px) 100vw, 50vw"
+                loading="lazy"
               />
             </motion.div>
           </div>
