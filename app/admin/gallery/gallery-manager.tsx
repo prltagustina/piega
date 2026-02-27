@@ -2,6 +2,7 @@
 
 import { createGalleryImage, updateGalleryImage, deleteGalleryImage } from "@/app/admin/actions"
 import { SubmitButton } from "@/components/admin/submit-button"
+import { ImageUpload } from "@/components/admin/image-upload"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -53,10 +54,11 @@ export function GalleryManager({ images }: { images: GalleryImage[] }) {
               }}
               className="flex flex-col gap-4"
             >
-              <div className="grid gap-2">
-                <Label>URL de Imagen</Label>
-                <Input name="image_url" required placeholder="/images/nueva-foto.jpg" />
-              </div>
+              <ImageUpload
+                name="image_url"
+                label="Imagen"
+                folder="gallery"
+              />
               <div className="grid gap-2">
                 <Label>Texto Alternativo</Label>
                 <Input name="alt_text" placeholder="Descripcion de la imagen" />
@@ -127,10 +129,12 @@ export function GalleryManager({ images }: { images: GalleryImage[] }) {
                         className="flex flex-col gap-4"
                       >
                         <input type="hidden" name="id" value={editingImage.id} />
-                        <div className="grid gap-2">
-                          <Label>URL de Imagen</Label>
-                          <Input name="image_url" defaultValue={editingImage.image_url} required />
-                        </div>
+                        <ImageUpload
+                          name="image_url"
+                          label="Imagen"
+                          currentUrl={editingImage.image_url}
+                          folder="gallery"
+                        />
                         <div className="grid gap-2">
                           <Label>Texto Alternativo</Label>
                           <Input name="alt_text" defaultValue={editingImage.alt_text} />

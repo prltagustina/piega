@@ -1,5 +1,5 @@
 import React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Cormorant_Garamond, Montserrat } from "next/font/google"
 
 import "./globals.css"
@@ -9,17 +9,31 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-serif",
+  display: "swap",
 })
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   variable: "--font-sans",
+  display: "swap",
 })
+
+export const viewport: Viewport = {
+  themeColor: "#1c1520",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+}
 
 export const metadata: Metadata = {
   title: "Piega Hair & Beauty Club",
-  description: "Salon de belleza premium - Hair & Beauty Club",
+  description: "Salon de belleza premium en Santa Fe. Corte, color, tratamientos capilares, spa y maquillaje profesional. Reserva tu turno online.",
+  openGraph: {
+    title: "Piega Hair & Beauty Club",
+    description: "Salon de belleza premium. Experiencias de belleza que transforman.",
+    type: "website",
+  },
 }
 
 export default function RootLayout({
