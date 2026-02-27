@@ -34,20 +34,18 @@ export function HeroSection({ hero, settings }: { hero: HeroData; settings: Sett
       ref={ref}
       id="inicio"
       className="relative h-screen overflow-hidden"
-      style={{ position: "relative" }}
     >
       {/* Parallax background image */}
-      <motion.div className="absolute inset-0" style={{ y: imageY }}>
+      <motion.div className="absolute inset-0 w-full h-full" style={{ y: imageY }}>
         <Image
           src={hero?.image_url || "/images/hero.webp"}
-          alt="Interior del salón Piega Hair & Beauty"
+          alt="Interior del salon Piega Hair & Beauty"
           fill
           className="object-cover scale-105"
           priority
           quality={75}
           sizes="100vw"
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAQMDBAMAAAAAAAAAAAAAAQACAwQFEQYSITETQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEEA/ANBs2oKS7UsdTQyiSJ+cHGOxkdhEQf/Z"
+          unoptimized={!!hero?.image_url}
         />
       </motion.div>
 

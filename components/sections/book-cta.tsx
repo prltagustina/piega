@@ -24,10 +24,9 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
       ref={ref}
       id="reservar"
       className="relative py-32 md:py-44 overflow-hidden"
-      style={{ position: "relative" }}
     >
       {/* Parallax background */}
-      <motion.div className="absolute inset-0" style={{ y: bgY }}>
+      <motion.div className="absolute inset-0 w-full h-full" style={{ y: bgY }}>
         <Image
           src="/images/hero.webp"
           alt="Ambiente del salon"
