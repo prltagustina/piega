@@ -45,6 +45,7 @@ export function Footer({ settings, services: propServices }: { settings: Setting
                 width={140}
                 height={46}
                 className="h-9 w-auto"
+                loading="lazy"
               />
               <span
                 className="text-[8px] md:text-[9px] font-heading font-medium leading-[1.3] tracking-[0.04em]"

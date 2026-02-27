@@ -2,6 +2,7 @@
 
 import { createTeamMember, updateTeamMember, deleteTeamMember } from "@/app/admin/actions"
 import { SubmitButton } from "@/components/admin/submit-button"
+import { ImageUpload } from "@/components/admin/image-upload"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -67,10 +68,11 @@ export function TeamManager({ members }: { members: Member[] }) {
                 <Label>Rol</Label>
                 <Input name="role" placeholder="Ej: Estilista Senior" />
               </div>
-              <div className="grid gap-2">
-                <Label>URL de Imagen</Label>
-                <Input name="image_url" placeholder="/images/team-member.jpg" />
-              </div>
+              <ImageUpload
+                name="image_url"
+                label="Foto del Miembro"
+                folder="team"
+              />
               <div className="grid gap-2">
                 <Label>Orden</Label>
                 <Input name="sort_order" type="number" defaultValue={members.length + 1} />
@@ -147,10 +149,12 @@ export function TeamManager({ members }: { members: Member[] }) {
                           <Label>Rol</Label>
                           <Input name="role" defaultValue={editingMember.role} />
                         </div>
-                        <div className="grid gap-2">
-                          <Label>URL de Imagen</Label>
-                          <Input name="image_url" defaultValue={editingMember.image_url} />
-                        </div>
+                        <ImageUpload
+                          name="image_url"
+                          label="Foto del Miembro"
+                          currentUrl={editingMember.image_url}
+                          folder="team"
+                        />
                         <div className="grid gap-2">
                           <Label>Orden</Label>
                           <Input name="sort_order" type="number" defaultValue={editingMember.sort_order} />
