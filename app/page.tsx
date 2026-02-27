@@ -1,4 +1,4 @@
-export const revalidate = 60
+export const dynamic = "force-dynamic"
 
 import { createPublicClient } from "@/lib/supabase/public"
 import { Navbar } from "@/components/sections/navbar"
