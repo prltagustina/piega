@@ -1,6 +1,7 @@
 "use client"
 
-import { createTeamMember, updateTeamMember, deleteTeamMember } from "@/app/admin/actions"
+import { createTeamMember, updateTeamMember, deleteTeamMember, reorderItem } from "@/app/admin/actions"
+import { ImageUploader } from "@/components/admin/image-uploader"
 import { SubmitButton } from "@/components/admin/submit-button"
 import { Button } from "@/components/ui/button"
 import {
@@ -18,7 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Plus, Pencil, Trash2 } from "lucide-react"
+import { Plus, Pencil, Trash2, ChevronUp, ChevronDown } from "lucide-react"
 import { useState } from "react"
 import Image from "next/image"
 
@@ -34,6 +35,8 @@ type Member = {
 export function TeamManager({ members }: { members: Member[] }) {
   const [editingMember, setEditingMember] = useState<Member | null>(null)
   const [showCreate, setShowCreate] = useState(false)
+  const [createImageUrl, setCreateImageUrl] = useState("")
+  const [editImageUrl, setEditImageUrl] = useState("")
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
@@ -41,14 +44,17 @@ export function TeamManager({ members }: { members: Member[] }) {
         <p className="text-muted-foreground text-sm">
           {members.length} miembros del equipo
         </p>
-        <Dialog open={showCreate} onOpenChange={setShowCreate}>
+        <Dialog open={showCreate} onOpenChange={(open) => {
+          setShowCreate(open)
+          if (!open) setCreateImageUrl("")
+        }}>
           <DialogTrigger asChild>
             <Button className="bg-primary text-primary-foreground">
               <Plus className="h-4 w-4 mr-2" />
               Nuevo Miembro
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-card border-border">
+          <DialogContent className="bg-card border-border max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-foreground">Agregar Miembro</DialogTitle>
             </DialogHeader>
@@ -56,6 +62,7 @@ export function TeamManager({ members }: { members: Member[] }) {
               action={async (formData) => {
                 await createTeamMember(formData)
                 setShowCreate(false)
+                setCreateImageUrl("")
               }}
               className="flex flex-col gap-4"
             >
@@ -68,13 +75,16 @@ export function TeamManager({ members }: { members: Member[] }) {
                 <Input name="role" placeholder="Ej: Estilista Senior" />
               </div>
               <div className="grid gap-2">
-                <Label>URL de Imagen</Label>
-                <Input name="image_url" placeholder="/images/team-member.jpg" />
+                <Label>Foto</Label>
+                <ImageUploader
+                  name="image_url"
+                  value={createImageUrl}
+                  aspectRatio={3 / 4}
+                  folder="team"
+                  onUploaded={setCreateImageUrl}
+                />
               </div>
-              <div className="grid gap-2">
-                <Label>Orden</Label>
-                <Input name="sort_order" type="number" defaultValue={members.length + 1} />
-              </div>
+              <input type="hidden" name="sort_order" value={members.length + 1} />
               <div className="flex items-center gap-2">
                 <Switch name="is_active" defaultChecked />
                 <Label>Activo</Label>
@@ -86,9 +96,43 @@ export function TeamManager({ members }: { members: Member[] }) {
       </div>
 
       <div className="grid gap-3 md:grid-cols-2">
-        {members.map((member) => (
+        {members.map((member, idx) => (
           <Card key={member.id} className="border-border/50 bg-card overflow-hidden">
             <CardHeader className="flex flex-row items-center gap-3 py-3 px-4">
+              <div className="flex flex-col gap-0.5 flex-shrink-0">
+                <form action={reorderItem}>
+                  <input type="hidden" name="table" value="team_members" />
+                  <input type="hidden" name="id" value={member.id} />
+                  <input type="hidden" name="direction" value="up" />
+                  <input type="hidden" name="revalidate" value="/admin/team" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-5 w-5"
+                    type="submit"
+                    disabled={idx === 0}
+                  >
+                    <ChevronUp className="h-3 w-3" />
+                    <span className="sr-only">Subir</span>
+                  </Button>
+                </form>
+                <form action={reorderItem}>
+                  <input type="hidden" name="table" value="team_members" />
+                  <input type="hidden" name="id" value={member.id} />
+                  <input type="hidden" name="direction" value="down" />
+                  <input type="hidden" name="revalidate" value="/admin/team" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-5 w-5"
+                    type="submit"
+                    disabled={idx === members.length - 1}
+                  >
+                    <ChevronDown className="h-3 w-3" />
+                    <span className="sr-only">Bajar</span>
+                  </Button>
+                </form>
+              </div>
               <div className="relative h-10 w-10 rounded-full overflow-hidden bg-secondary flex-shrink-0">
                 {member.image_url && (
                   <Image
@@ -113,20 +157,28 @@ export function TeamManager({ members }: { members: Member[] }) {
                 />
                 <Dialog
                   open={editingMember?.id === member.id}
-                  onOpenChange={(open) => !open && setEditingMember(null)}
+                  onOpenChange={(open) => {
+                    if (!open) {
+                      setEditingMember(null)
+                      setEditImageUrl("")
+                    }
+                  }}
                 >
                   <DialogTrigger asChild>
                     <Button
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8"
-                      onClick={() => setEditingMember(member)}
+                      onClick={() => {
+                        setEditingMember(member)
+                        setEditImageUrl(member.image_url)
+                      }}
                     >
                       <Pencil className="h-3.5 w-3.5" />
                       <span className="sr-only">Editar</span>
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-card border-border">
+                  <DialogContent className="bg-card border-border max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle className="text-foreground">Editar Miembro</DialogTitle>
                     </DialogHeader>
@@ -135,6 +187,7 @@ export function TeamManager({ members }: { members: Member[] }) {
                         action={async (formData) => {
                           await updateTeamMember(formData)
                           setEditingMember(null)
+                          setEditImageUrl("")
                         }}
                         className="flex flex-col gap-4"
                       >
@@ -148,13 +201,16 @@ export function TeamManager({ members }: { members: Member[] }) {
                           <Input name="role" defaultValue={editingMember.role} />
                         </div>
                         <div className="grid gap-2">
-                          <Label>URL de Imagen</Label>
-                          <Input name="image_url" defaultValue={editingMember.image_url} />
+                          <Label>Foto</Label>
+                          <ImageUploader
+                            name="image_url"
+                            value={editImageUrl}
+                            aspectRatio={3 / 4}
+                            folder="team"
+                            onUploaded={setEditImageUrl}
+                          />
                         </div>
-                        <div className="grid gap-2">
-                          <Label>Orden</Label>
-                          <Input name="sort_order" type="number" defaultValue={editingMember.sort_order} />
-                        </div>
+                        <input type="hidden" name="sort_order" value={editingMember.sort_order} />
                         <div className="flex items-center gap-2">
                           <Switch name="is_active" defaultChecked={editingMember.is_active} />
                           <Label>Activo</Label>

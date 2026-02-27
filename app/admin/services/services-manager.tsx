@@ -1,11 +1,10 @@
 "use client"
 
-import { createService, updateService, deleteService } from "@/app/admin/actions"
+import { createService, updateService, deleteService, reorderItem } from "@/app/admin/actions"
 import { SubmitButton } from "@/components/admin/submit-button"
 import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -20,7 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Plus, Pencil, Trash2 } from "lucide-react"
+import { Plus, Pencil, Trash2, ChevronUp, ChevronDown } from "lucide-react"
 import { useState } from "react"
 
 type Service = {
@@ -75,11 +74,8 @@ export function ServicesManager({ services }: { services: Service[] }) {
                   <Label>Precio</Label>
                   <Input name="price" placeholder="Desde $5.000" />
                 </div>
-                <div className="grid gap-2">
-                  <Label>Orden</Label>
-                  <Input name="sort_order" type="number" defaultValue={services.length + 1} />
-                </div>
               </div>
+              <input type="hidden" name="sort_order" value={services.length + 1} />
               <div className="flex items-center gap-2">
                 <Switch name="is_active" defaultChecked />
                 <Label>Activo</Label>
@@ -91,13 +87,44 @@ export function ServicesManager({ services }: { services: Service[] }) {
       </div>
 
       <div className="flex flex-col gap-3">
-        {services.map((service) => (
+        {services.map((service, idx) => (
           <Card key={service.id} className="border-border/50 bg-card">
             <CardHeader className="flex flex-row items-center justify-between py-3 px-4">
               <div className="flex items-center gap-3">
-                <span className="text-xs text-muted-foreground w-6 text-center">
-                  {service.sort_order}
-                </span>
+                <div className="flex flex-col gap-0.5">
+                  <form action={reorderItem}>
+                    <input type="hidden" name="table" value="services" />
+                    <input type="hidden" name="id" value={service.id} />
+                    <input type="hidden" name="direction" value="up" />
+                    <input type="hidden" name="revalidate" value="/admin/services" />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-5 w-5"
+                      type="submit"
+                      disabled={idx === 0}
+                    >
+                      <ChevronUp className="h-3 w-3" />
+                      <span className="sr-only">Subir</span>
+                    </Button>
+                  </form>
+                  <form action={reorderItem}>
+                    <input type="hidden" name="table" value="services" />
+                    <input type="hidden" name="id" value={service.id} />
+                    <input type="hidden" name="direction" value="down" />
+                    <input type="hidden" name="revalidate" value="/admin/services" />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-5 w-5"
+                      type="submit"
+                      disabled={idx === services.length - 1}
+                    >
+                      <ChevronDown className="h-3 w-3" />
+                      <span className="sr-only">Bajar</span>
+                    </Button>
+                  </form>
+                </div>
                 <div>
                   <CardTitle className="text-sm text-foreground">
                     {service.title}
@@ -152,11 +179,8 @@ export function ServicesManager({ services }: { services: Service[] }) {
                             <Label>Precio</Label>
                             <Input name="price" defaultValue={editingService.price} />
                           </div>
-                          <div className="grid gap-2">
-                            <Label>Orden</Label>
-                            <Input name="sort_order" type="number" defaultValue={editingService.sort_order} />
-                          </div>
                         </div>
+                        <input type="hidden" name="sort_order" value={editingService.sort_order} />
                         <div className="flex items-center gap-2">
                           <Switch name="is_active" defaultChecked={editingService.is_active} />
                           <Label>Activo</Label>

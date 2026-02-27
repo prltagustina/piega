@@ -2,6 +2,7 @@
 
 import { handleHeroUpdate } from "@/app/admin/action-wrappers"
 import { FormCard } from "@/components/admin/form-card"
+import { ImageUploader } from "@/components/admin/image-uploader"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -49,8 +50,13 @@ export function HeroForm({ hero }: { hero: HeroData }) {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="image_url">URL de Imagen</Label>
-          <Input id="image_url" name="image_url" defaultValue={hero.image_url} />
+          <Label>Imagen de Fondo</Label>
+          <ImageUploader
+            name="image_url"
+            value={hero.image_url}
+            aspectRatio={16 / 9}
+            folder="hero"
+          />
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">

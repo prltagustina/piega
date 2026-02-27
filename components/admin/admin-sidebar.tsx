@@ -29,13 +29,17 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 
-const navItems = [
-  { title: "Vista General", href: "/admin", icon: LayoutDashboard },
-  { title: "Hero", href: "/admin/hero", icon: Palette },
+/* Secciones ordenadas igual que la web publica:
+   Hero > Sobre Nosotros > Servicios > Nuestro Trabajo > Equipo */
+const sectionItems = [
+  { title: "Inicio (Hero)", href: "/admin/hero", icon: Palette },
   { title: "Sobre Nosotros", href: "/admin/about", icon: FileText },
   { title: "Servicios", href: "/admin/services", icon: Sparkles },
+  { title: "Nuestro Trabajo", href: "/admin/gallery", icon: ImageIcon },
   { title: "Equipo", href: "/admin/team", icon: Users },
-  { title: "Galeria", href: "/admin/gallery", icon: ImageIcon },
+]
+
+const systemItems = [
   { title: "Configuracion", href: "/admin/settings", icon: Settings },
 ]
 
@@ -69,20 +73,54 @@ export function AdminSidebar({ user }: { user: User }) {
 
       <SidebarContent>
         <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname === "/admin"}>
+                  <Link href="/admin">
+                    <LayoutDashboard className="h-4 w-4" />
+                    <span>Vista General</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
           <SidebarGroupLabel className="text-muted-foreground">
-            Gestionar Contenido
+            Secciones del Sitio
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navItems.map((item) => (
+              {sectionItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
-                    isActive={
-                      item.href === "/admin"
-                        ? pathname === "/admin"
-                        : pathname.startsWith(item.href)
-                    }
+                    isActive={pathname.startsWith(item.href)}
+                  >
+                    <Link href={item.href}>
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-muted-foreground">
+            Sistema
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {systemItems.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname.startsWith(item.href)}
                   >
                     <Link href={item.href}>
                       <item.icon className="h-4 w-4" />

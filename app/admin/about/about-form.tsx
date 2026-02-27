@@ -2,6 +2,7 @@
 
 import { handleAboutUpdate } from "@/app/admin/action-wrappers"
 import { FormCard } from "@/components/admin/form-card"
+import { ImageUploader } from "@/components/admin/image-uploader"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -53,8 +54,13 @@ export function AboutForm({ about }: { about: AboutData }) {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="image_url">URL de Imagen</Label>
-          <Input id="image_url" name="image_url" defaultValue={about.image_url} />
+          <Label>Imagen</Label>
+          <ImageUploader
+            name="image_url"
+            value={about.image_url}
+            aspectRatio={4 / 5}
+            folder="about"
+          />
         </div>
 
         <div className="grid gap-2">
