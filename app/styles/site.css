@@ -40,6 +40,11 @@
   scroll-behavior: smooth;
 }
 
+/* Offset for fixed navbar on anchor links */
+.site-page section[id] {
+  scroll-margin-top: 80px;
+}
+
 /* Hero parallax image */
 .hero-image-wrapper {
   position: relative;
