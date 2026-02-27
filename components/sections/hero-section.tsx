@@ -5,20 +5,26 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 type HeroData = {
-  subtitle?: string
-  title_line1?: string
-  title_line2?: string
-  description?: string
-  image_url?: string
-  cta_primary_text?: string
-  cta_secondary_text?: string
-} | null
+  subtitle?: string;
+  title_line1?: string;
+  title_line2?: string;
+  description?: string;
+  image_url?: string;
+  cta_primary_text?: string;
+  cta_secondary_text?: string;
+} | null;
 
 type SettingsData = {
-  booking_url?: string
-} | null
+  booking_url?: string;
+} | null;
 
-export function HeroSection({ hero, settings }: { hero: HeroData; settings: SettingsData }) {
+export function HeroSection({
+  hero,
+  settings,
+}: {
+  hero: HeroData;
+  settings: SettingsData;
+}) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -68,7 +74,7 @@ export function HeroSection({ hero, settings }: { hero: HeroData; settings: Sett
           className="text-xs uppercase tracking-[0.4em] mb-6"
           style={{ color: "var(--site-accent)" }}
         >
-          {hero?.subtitle || "Salón de belleza premium"}
+          {hero?.subtitle || "Una nueva experiencia en Santa Fe"}
         </motion.p>
 
         <motion.h1
@@ -82,9 +88,11 @@ export function HeroSection({ hero, settings }: { hero: HeroData; settings: Sett
           className="text-6xl md:text-8xl lg:text-9xl font-heading font-medium leading-[0.95] tracking-tight text-balance"
           style={{ color: "var(--site-fg)" }}
         >
-          {hero?.title_line1 || "El arte de"}
+          {hero?.title_line1 || "Love your"}
           <br />
-          <span style={{ color: "var(--site-accent)" }}>{hero?.title_line2 || "ser vos"}</span>
+          <span style={{ color: "var(--site-accent)" }}>
+            {hero?.title_line2 || "beauty"}
+          </span>
         </motion.h1>
 
         <motion.p
@@ -94,7 +102,8 @@ export function HeroSection({ hero, settings }: { hero: HeroData; settings: Sett
           className="mt-8 text-sm md:text-base font-light max-w-md leading-relaxed"
           style={{ color: "var(--site-fg-muted)" }}
         >
-          {hero?.description || "Un espacio donde el estilo se encuentra con la sofisticación. Experiencias de belleza personalizadas para cada persona."}
+          {hero?.description ||
+            "Un espacio donde el estilo se encuentra con la sofisticación. Experiencias de belleza personalizadas para cada persona."}
         </motion.p>
 
         <motion.div
