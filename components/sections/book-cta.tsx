@@ -32,7 +32,9 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
           alt="Ambiente del salón"
           fill
           className="object-cover scale-110"
+          quality={70}
           sizes="100vw"
+          loading="lazy"
         />
       </motion.div>
 

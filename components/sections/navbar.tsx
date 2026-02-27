@@ -8,8 +8,8 @@ const navLinks = [
   { label: "Inicio", href: "#inicio" },
   { label: "Servicios", href: "#servicios" },
   { label: "El Salón", href: "#salon" },
-  { label: "Equipo", href: "#equipo" },
   { label: "Galería", href: "#galeria" },
+  { label: "Equipo", href: "#equipo" },
 ];
 
 type SettingsData = {
@@ -143,13 +143,20 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
                 transition={{ delay: 0.1 * i, duration: 0.4 }}
                 className="text-3xl font-heading font-medium tracking-wide"
                 style={{ color: "var(--site-fg)" }}
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMenuOpen(false);
+                  setTimeout(() => {
+                    const target = document.querySelector(link.href);
+                    target?.scrollIntoView({ behavior: "smooth" });
+                  }, 350);
+                }}
               >
                 {link.label}
               </motion.a>
             ))}
             <motion.a
-              href="#reservar"
+              href={settings?.booking_url || "#reservar"}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.4 }}
@@ -158,7 +165,19 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
                 borderColor: "var(--site-accent)",
                 color: "var(--site-accent)",
               }}
-              onClick={() => setMenuOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                setMenuOpen(false);
+                const href = settings?.booking_url || "#reservar";
+                if (href.startsWith("#")) {
+                  setTimeout(() => {
+                    const target = document.querySelector(href);
+                    target?.scrollIntoView({ behavior: "smooth" });
+                  }, 350);
+                } else {
+                  window.open(href, "_blank", "noopener,noreferrer");
+                }
+              }}
             >
               Reservar turno
             </motion.a>
