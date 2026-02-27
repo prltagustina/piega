@@ -34,11 +34,11 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-[var(--site-bg)]/90 backdrop-blur-md"
-            : "bg-transparent"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 backdrop-blur-md"
+        style={{
+          backgroundColor: scrolled ? "rgba(28, 21, 32, 0.92)" : "transparent",
+          backdropFilter: scrolled ? "blur(12px)" : "none",
+        }}
       >
         <nav className="flex items-center justify-between px-6 md:px-12 lg:px-16 py-5">
           {/* Logo */}

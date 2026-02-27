@@ -24,15 +24,16 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
       ref={ref}
       id="reservar"
       className="relative py-32 md:py-44 overflow-hidden"
+      style={{ position: "relative" }}
     >
       {/* Parallax background */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <Image
           src="/images/hero.jpg"
-          alt="Ambiente del salón"
+          alt="Ambiente del salon"
           fill
-          className="object-cover scale-110"
-          quality={70}
+          className="object-cover scale-105"
+          quality={75}
           sizes="100vw"
           loading="lazy"
         />

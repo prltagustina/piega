@@ -63,7 +63,7 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
                   transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                 >
                   <Image
-                    src={member.image_url || "/placeholder.svg"}
+                    src={member.image_url || "/images/team.jpg"}
                     alt={member.name}
                     fill
                     className="object-cover"

@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic"
-
 import { createPublicClient } from "@/lib/supabase/public"
 import { Navbar } from "@/components/sections/navbar"
 import { HeroSection } from "@/components/sections/hero-section"
@@ -10,6 +8,8 @@ import { GallerySection } from "@/components/sections/gallery-section"
 import { TeamSection } from "@/components/sections/team-section"
 import { BookCTA } from "@/components/sections/book-cta"
 import { Footer } from "@/components/sections/footer"
+
+export const revalidate = 60
 
 async function getSiteData() {
   const supabase = createPublicClient()
@@ -46,7 +46,7 @@ export default async function Home() {
   const { hero, settings, services, about, team, gallery } = await getSiteData()
 
   return (
-    <main>
+    <main className="site-page">
       <Navbar settings={settings} />
       <HeroSection hero={hero} settings={settings} />
       <Marquee />

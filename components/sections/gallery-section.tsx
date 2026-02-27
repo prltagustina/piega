@@ -78,7 +78,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                 transition={{ duration: 0.4 }}
               >
                 <Image
-                  src={img.src || "/placeholder.svg"}
+                  src={img.src || "/images/salon.jpg"}
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -111,7 +111,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                 transition={{ duration: 0.4 }}
               >
                 <Image
-                  src={img.src || "/placeholder.svg"}
+                  src={img.src || "/images/salon.jpg"}
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -144,7 +144,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                 transition={{ duration: 0.4 }}
               >
                 <Image
-                  src={img.src || "/placeholder.svg"}
+                  src={img.src || "/images/salon.jpg"}
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"

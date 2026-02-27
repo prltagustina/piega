@@ -34,6 +34,7 @@ export function HeroSection({ hero, settings }: { hero: HeroData; settings: Sett
       ref={ref}
       id="inicio"
       className="relative h-screen overflow-hidden"
+      style={{ position: "relative" }}
     >
       {/* Parallax background image */}
       <motion.div className="absolute inset-0" style={{ y: imageY }}>
@@ -41,7 +42,7 @@ export function HeroSection({ hero, settings }: { hero: HeroData; settings: Sett
           src={hero?.image_url || "/images/hero.jpg"}
           alt="Interior del salón Piega Hair & Beauty"
           fill
-          className="object-cover scale-110"
+          className="object-cover scale-105"
           priority
           quality={75}
           sizes="100vw"

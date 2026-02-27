@@ -2,13 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Aeonik Fono Medium - Custom brand font for headings */
+/* Aeonik Fono - Custom brand font for headings */
 @font-face {
   font-family: 'Aeonik Fono';
-  src: url('/fonts/AeonikFono-Medium.woff2') format('woff2'),
-       url('/fonts/AeonikFono-Medium.woff') format('woff'),
-       url('/fonts/AeonikFono-Medium.otf') format('opentype');
+  src: url('/fonts/AeonikFono-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik Fono';
+  src: url('/fonts/AeonikFono-Medium.otf') format('opentype');
   font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik Fono';
+  src: url('/fonts/AeonikFono-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik Fono';
+  src: url('/fonts/AeonikFono-Light.otf') format('opentype');
+  font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
