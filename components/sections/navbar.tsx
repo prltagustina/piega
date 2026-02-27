@@ -8,8 +8,8 @@ const navLinks = [
   { label: "Inicio", href: "#inicio" },
   { label: "Servicios", href: "#servicios" },
   { label: "El Salón", href: "#salon" },
-  { label: "Equipo", href: "#equipo" },
   { label: "Galería", href: "#galeria" },
+  { label: "Equipo", href: "#equipo" },
 ];
 
 type SettingsData = {
@@ -27,6 +27,22 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    const element = document.getElementById(targetId);
+    if (element) {
+      setMenuOpen(false);
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <>
@@ -65,6 +81,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="site-link text-xs uppercase tracking-[0.2em] font-light"
                 style={{ color: "var(--site-fg-muted)" }}
               >
@@ -143,7 +160,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
                 transition={{ delay: 0.1 * i, duration: 0.4 }}
                 className="text-3xl font-heading font-medium tracking-wide"
                 style={{ color: "var(--site-fg)" }}
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, link.href)}
               >
                 {link.label}
               </motion.a>
