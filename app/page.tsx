@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { createPublicClient } from "@/lib/supabase/public"
 import { Navbar } from "@/components/sections/navbar"
 import { HeroSection } from "@/components/sections/hero-section"
