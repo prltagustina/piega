@@ -39,7 +39,7 @@ export function HeroSection({ hero, settings }: { hero: HeroData; settings: Sett
       {/* Parallax background image */}
       <motion.div className="absolute inset-0" style={{ y: imageY }}>
         <Image
-          src={hero?.image_url || "/images/hero.jpg"}
+          src={hero?.image_url || "/images/hero.webp"}
           alt="Interior del salón Piega Hair & Beauty"
           fill
           className="object-cover scale-105"

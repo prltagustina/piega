@@ -29,7 +29,7 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
       {/* Parallax background */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <Image
-          src="/images/hero.jpg"
+          src="/images/hero.webp"
           alt="Ambiente del salon"
           fill
           className="object-cover scale-105"
