@@ -8,11 +8,11 @@ import { ExternalLink } from "lucide-react"
 
 const pageTitles: Record<string, string> = {
   "/admin": "Vista General",
-  "/admin/hero": "Seccion Hero",
+  "/admin/hero": "Inicio (Hero)",
   "/admin/about": "Sobre Nosotros",
   "/admin/services": "Servicios",
   "/admin/team": "Equipo",
-  "/admin/gallery": "Galeria",
+  "/admin/gallery": "Nuestro Trabajo",
   "/admin/settings": "Configuracion del Sitio",
 }
 

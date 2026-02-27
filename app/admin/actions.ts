@@ -247,6 +247,67 @@ export async function updateGalleryImage(formData: FormData) {
   revalidatePath("/")
 }
 
+// ============================================
+// Reorder Items (generic for services, team, gallery)
+// ============================================
+export async function reorderItem(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("No autorizado")
+
+  const table = formData.get("table") as string
+  const id = formData.get("id") as string
+  const direction = formData.get("direction") as string // "up" or "down"
+  const revalidateRoute = formData.get("revalidate") as string
+
+  const allowedTables = ["services", "team_members", "gallery_images"]
+  if (!allowedTables.includes(table)) throw new Error("Tabla no permitida")
+
+  // Get current item
+  const { data: currentItem } = await supabase
+    .from(table)
+    .select("id, sort_order")
+    .eq("id", id)
+    .single()
+
+  if (!currentItem) throw new Error("Item no encontrado")
+
+  // Get neighbor: for "up" get the item with next smaller sort_order, for "down" next larger
+  let neighborQuery = supabase
+    .from(table)
+    .select("id, sort_order")
+
+  if (direction === "up") {
+    neighborQuery = neighborQuery
+      .lt("sort_order", currentItem.sort_order)
+      .order("sort_order", { ascending: false })
+  } else {
+    neighborQuery = neighborQuery
+      .gt("sort_order", currentItem.sort_order)
+      .order("sort_order", { ascending: true })
+  }
+
+  const { data: neighbor } = await neighborQuery.limit(1).single()
+
+  if (!neighbor) return // Already at boundary
+
+  // Swap sort_order values
+  const { error: e1 } = await supabase
+    .from(table)
+    .update({ sort_order: neighbor.sort_order, updated_at: new Date().toISOString() })
+    .eq("id", currentItem.id)
+
+  const { error: e2 } = await supabase
+    .from(table)
+    .update({ sort_order: currentItem.sort_order, updated_at: new Date().toISOString() })
+    .eq("id", neighbor.id)
+
+  if (e1 || e2) throw new Error("Error al reordenar")
+
+  if (revalidateRoute) revalidatePath(revalidateRoute)
+  revalidatePath("/")
+}
+
 export async function deleteGalleryImage(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
