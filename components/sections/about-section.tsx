@@ -67,7 +67,7 @@ export function AboutSection({ about }: { about: AboutData }) {
 
           <ScrollReveal delay={0.2}>
             <h2
-              className="text-4xl md:text-6xl font-heading font-medium leading-tight"
+              className="text-3xl sm:text-4xl md:text-6xl font-heading font-medium leading-tight"
               style={{ color: "var(--site-fg)" }}
             >
               {about?.title || "Un espacio pensado para vos"}
@@ -93,7 +93,7 @@ export function AboutSection({ about }: { about: AboutData }) {
           </ScrollReveal>
 
           <ScrollReveal delay={0.5}>
-            <div className="flex gap-12 mt-4">
+            <div className="flex flex-wrap gap-8 sm:gap-12 mt-4">
               {[
                 { number: about?.stat1_number || "10+", label: about?.stat1_label || "Años de experiencia" },
                 { number: about?.stat2_number || "5k+", label: about?.stat2_label || "Clientes felices" },

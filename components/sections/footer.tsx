@@ -34,9 +34,9 @@ export function Footer({ settings, services: propServices }: { settings: Setting
       className="py-16 md:py-20 px-6 md:px-12 lg:px-16 border-t"
       style={{ borderColor: "var(--site-border)" }}
     >
-      <div className="grid md:grid-cols-4 gap-12 md:gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-8">
         {/* Brand */}
-        <ScrollReveal className="md:col-span-1">
+        <ScrollReveal className="col-span-2 md:col-span-1">
           <div>
             <div className="flex items-center gap-2.5">
               <Image
@@ -146,7 +146,7 @@ export function Footer({ settings, services: propServices }: { settings: Setting
               </a>
 
               {/* Social */}
-              <div className="flex gap-6 mt-4">
+              <div className="flex flex-wrap gap-4 sm:gap-6 mt-4">
                 {[
                   { label: "Instagram", url: settings?.instagram_url || "#" },
                   { label: "WhatsApp", url: settings?.whatsapp_url || "#" },

@@ -26,12 +26,12 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
       className="relative py-32 md:py-44 overflow-hidden"
     >
       {/* Parallax background */}
-      <motion.div className="absolute inset-0" style={{ y: bgY }}>
+      <motion.div className="absolute top-[-10%] bottom-[-10%] left-0 right-0 h-[120%]" style={{ y: bgY }}>
         <Image
           src="/images/hero.jpg"
           alt="Ambiente del salón"
           fill
-          className="object-cover scale-110"
+          className="object-cover"
           sizes="100vw"
         />
       </motion.div>
@@ -55,7 +55,7 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
 
         <ScrollReveal delay={0.1}>
           <h2
-            className="text-4xl md:text-6xl lg:text-8xl font-heading font-medium leading-tight max-w-3xl text-balance"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-heading font-medium leading-tight max-w-3xl text-balance"
             style={{ color: "var(--site-fg)" }}
           >
             Tu momento de belleza te espera
@@ -77,7 +77,7 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
             href={settings?.booking_url || "https://www.agendapro.com"}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-10 inline-flex items-center gap-3 px-12 py-5 text-sm uppercase tracking-[0.25em] font-medium transition-all duration-300"
+            className="mt-10 inline-flex items-center gap-3 px-8 sm:px-12 py-4 sm:py-5 text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] font-medium transition-all duration-300"
             style={{
               backgroundColor: "var(--site-accent)",
               color: "var(--site-bg)",
