@@ -46,7 +46,7 @@ export default async function Home() {
   const { hero, settings, services, about, team, gallery } = await getSiteData()
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Navbar settings={settings} />
       <HeroSection hero={hero} settings={settings} />
       <Marquee />

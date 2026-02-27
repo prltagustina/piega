@@ -74,7 +74,15 @@ export function HeroSection({
           className="text-xs uppercase tracking-[0.4em] mb-6"
           style={{ color: "var(--site-accent)" }}
         >
-          {hero?.subtitle || "Una nueva experiencia en Santa Fe"}
+          {hero?.subtitle ? (
+            <span dangerouslySetInnerHTML={{ __html: hero.subtitle.replace(/(experiencia)\s+(en)/i, '$1<br class="md:hidden" /> $2') }} />
+          ) : (
+            <>
+              Una nueva experiencia
+              <br className="md:hidden" />
+              {" "}en Santa Fe
+            </>
+          )}
         </motion.p>
 
         <motion.h1
