@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useIsMobileDevice } from "@/hooks/use-is-mobile-device";
 
 type HeroData = {
   subtitle?: string
@@ -20,14 +21,15 @@ type SettingsData = {
 
 export function HeroSection({ hero, settings }: { hero: HeroData; settings: SettingsData }) {
   const ref = useRef<HTMLElement>(null);
+  const isMobile = useIsMobileDevice();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile ? "0%" : "25%"]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0.45, 0.8]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile ? "0%" : "50%"]);
 
   return (
     <section
@@ -35,15 +37,14 @@ export function HeroSection({ hero, settings }: { hero: HeroData; settings: Sett
       id="inicio"
       className="relative h-screen overflow-hidden"
     >
-      {/* Parallax background image */}
-      <motion.div className="absolute inset-0" style={{ y: imageY }}>
+      {/* Background image - static on mobile, parallax on desktop */}
+      <motion.div className="absolute inset-0" style={isMobile ? undefined : { y: imageY }}>
         <Image
           src={hero?.image_url || "/images/hero.jpg"}
-          alt="Interior del salón Piega Hair & Beauty"
+          alt="Interior del salon Piega Hair & Beauty"
           fill
-          className="object-cover scale-110"
+          className="object-cover"
           priority
-          quality={75}
           sizes="100vw"
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUH/8QAIhAAAQMDBAMAAAAAAAAAAAAAAQACAwQFEQYSITETQVH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEEA/ANBs2oKS7UsdTQyiSJ+cHGOxkdhEQf/Z"
@@ -62,7 +63,7 @@ export function HeroSection({ hero, settings }: { hero: HeroData; settings: Sett
       {/* Content */}
       <motion.div
         className="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center"
-        style={{ y: textY }}
+        style={isMobile ? undefined : { y: textY }}
       >
         <motion.p
           initial={{ opacity: 0, y: 30 }}

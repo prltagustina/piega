@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
+import { useIsMobileDevice } from "@/hooks/use-is-mobile-device";
 
 type AboutData = {
   subtitle?: string
@@ -20,6 +21,7 @@ type AboutData = {
 } | null
 
 export function AboutSection({ about }: { about: AboutData }) {
+  const isMobile = useIsMobileDevice();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -41,14 +43,13 @@ export function AboutSection({ about }: { about: AboutData }) {
           <div className="relative aspect-[4/5] overflow-hidden">
             <motion.div
               className="absolute inset-0"
-              style={{ scale: imageScale, y: imageY }}
+              style={isMobile ? undefined : { scale: imageScale, y: imageY }}
             >
               <Image
                 src={about?.image_url || "/images/salon.jpg"}
                 alt="Interior del salón Piega"
                 fill
                 className="object-cover"
-                quality={75}
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 loading="lazy"
               />

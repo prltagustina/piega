@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
+import { useIsMobileDevice } from "@/hooks/use-is-mobile-device";
 
 type GalleryImage = {
   id: string
@@ -30,6 +31,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
     alt: img.alt_text || "Imagen de galeria",
     aspect: aspects[i % aspects.length],
   }))
+  const isMobile = useIsMobileDevice();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -68,7 +70,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
         {/* Column 1 */}
         <motion.div
           className="flex flex-col gap-3 md:gap-4"
-          style={{ y: col1Y }}
+          style={isMobile ? undefined : { y: col1Y }}
         >
           {images.slice(0, 2).map((img, i) => (
             <ScrollReveal key={img.src} delay={i * 0.1}>
@@ -82,7 +84,6 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  quality={75}
                   sizes="(max-width: 768px) 50vw, 33vw"
                   loading="lazy"
                 />
@@ -101,7 +102,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
         {/* Column 2 */}
         <motion.div
           className="flex flex-col gap-3 md:gap-4 mt-8 md:mt-16"
-          style={{ y: col2Y }}
+          style={isMobile ? undefined : { y: col2Y }}
         >
           {images.slice(2, 4).map((img, i) => (
             <ScrollReveal key={img.src} delay={i * 0.1 + 0.15}>
@@ -115,7 +116,6 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  quality={75}
                   sizes="(max-width: 768px) 50vw, 33vw"
                   loading="lazy"
                 />
@@ -148,7 +148,6 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  quality={75}
                   sizes="33vw"
                   loading="lazy"
                 />

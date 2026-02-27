@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
+import { useIsMobileDevice } from "@/hooks/use-is-mobile-device";
 
 type SettingsData = {
   phone?: string
@@ -12,6 +13,7 @@ type SettingsData = {
 
 export function BookCTA({ settings }: { settings?: SettingsData }) {
   const ref = useRef<HTMLElement>(null);
+  const isMobile = useIsMobileDevice();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -25,14 +27,13 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
       id="reservar"
       className="relative py-32 md:py-44 overflow-hidden"
     >
-      {/* Parallax background */}
-      <motion.div className="absolute inset-0" style={{ y: bgY }}>
+      {/* Background - static on mobile, parallax on desktop */}
+      <motion.div className="absolute inset-0" style={isMobile ? undefined : { y: bgY }}>
         <Image
           src="/images/hero.jpg"
-          alt="Ambiente del salón"
+          alt="Ambiente del salon"
           fill
-          className="object-cover scale-110"
-          quality={75}
+          className="object-cover"
           sizes="100vw"
           loading="lazy"
         />

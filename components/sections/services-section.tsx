@@ -112,7 +112,6 @@ export function ServicesSection({ services: propServices }: { services: ServiceD
               alt="Estilista profesional en acción"
               fill
               className="object-cover"
-              quality={75}
               sizes="(max-width: 1024px) 0px, 50vw"
               loading="lazy"
             />
