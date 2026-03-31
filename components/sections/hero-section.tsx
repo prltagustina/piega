@@ -121,7 +121,9 @@ export function HeroSection({
           className="mt-10 flex flex-col sm:flex-row gap-4"
         >
           <a
-            href={settings?.booking_url || "#reservar"}
+            href={settings?.booking_url || "https://piega.site.agendapro.com/ar"}
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-10 py-4 text-xs uppercase tracking-[0.25em] font-medium transition-all duration-300"
             style={{
               backgroundColor: "var(--site-accent)",
@@ -142,24 +144,6 @@ export function HeroSection({
           </a>
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.8, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{
-              duration: 1.5,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            }}
-            className="w-[1px] h-12"
-            style={{ backgroundColor: "var(--site-accent)", opacity: 0.5 }}
-          />
-        </motion.div>
       </motion.div>
     </section>
   );
