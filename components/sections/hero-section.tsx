@@ -121,7 +121,7 @@ export function HeroSection({
           className="mt-10 flex flex-col sm:flex-row gap-4"
         >
           <a
-            href={settings?.booking_url || "https://piega.site.agendapro.com/ar"}
+            href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
             target="_blank"
             rel="noopener noreferrer"
             className="px-10 py-4 text-xs uppercase tracking-[0.25em] font-medium transition-all duration-300"

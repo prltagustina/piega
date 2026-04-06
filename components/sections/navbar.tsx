@@ -101,7 +101,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
           {/* Book button */}
           <div className="flex items-center gap-6">
             <a
-              href={settings?.booking_url || "https://piega.site.agendapro.com/ar"}
+              href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden md:inline-flex text-xs uppercase tracking-[0.2em] px-6 py-3 border font-light transition-colors duration-300 hover:text-[var(--site-bg)]"
@@ -176,7 +176,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
               </motion.a>
             ))}
             <motion.a
-              href={settings?.booking_url || "https://piega.site.agendapro.com/ar"}
+              href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}

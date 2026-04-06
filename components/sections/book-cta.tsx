@@ -74,7 +74,7 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
 
         <ScrollReveal delay={0.3}>
           <motion.a
-            href={settings?.booking_url || "https://piega.site.agendapro.com/ar"}
+            href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-10 inline-flex items-center gap-3 px-8 sm:px-12 py-4 sm:py-5 text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] font-medium transition-all duration-300"
