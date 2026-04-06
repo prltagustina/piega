@@ -131,11 +131,11 @@ export function Footer({ settings, services: propServices }: { settings: Setting
                 {settings?.address || "Av. Ejemplo 1234, Santa Fe"}
               </p>
               <a
-                href={`tel:${settings?.phone || "+5493426000000"}`}
+                href={`tel:${settings?.phone || "+549342596445"}`}
                 className="site-link text-sm font-light"
                 style={{ color: "var(--site-fg-muted)" }}
               >
-                {settings?.phone || "+54 9 342 600 0000"}
+                {settings?.phone || "+54 9 342 596 445"}
               </a>
               <a
                 href={`mailto:${settings?.email || "hola@piega.com.ar"}`}

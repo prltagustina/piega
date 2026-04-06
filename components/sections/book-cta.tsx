@@ -112,11 +112,11 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
           >
             {"También podés llamarnos al "}
             <a
-              href={`tel:${settings?.phone || "+5493426000000"}`}
+              href={`tel:${settings?.phone || "+549342596445"}`}
               className="site-link"
               style={{ color: "var(--site-accent)" }}
             >
-              {settings?.phone || "+54 9 342 600 0000"}
+              {settings?.phone || "+54 9 342 596 445"}
             </a>
           </p>
         </ScrollReveal>
