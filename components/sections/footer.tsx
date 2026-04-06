@@ -73,19 +73,23 @@ export function Footer({ settings, services: propServices }: { settings: Setting
               Navegación
             </h4>
             <ul className="flex flex-col gap-3">
-              {["Inicio", "Servicios", "El Salón", "Galería", "Equipo"].map(
-                (item) => (
-                  <li key={item}>
+              {[
+                { label: "Inicio", href: "#inicio" },
+                { label: "Servicios", href: "#servicios" },
+                { label: "El Salón", href: "#salon" },
+                { label: "Galería", href: "#galeria" },
+                { label: "Equipo", href: "#equipo" },
+              ].map((item) => (
+                  <li key={item.label}>
                     <a
-                      href={`#${item.toLowerCase().replace(" ", "-")}`}
+                      href={item.href}
                       className="site-link text-sm font-light"
                       style={{ color: "var(--site-fg-muted)" }}
                     >
-                      {item}
+                      {item.label}
                     </a>
                   </li>
-                ),
-              )}
+                ))}
             </ul>
           </div>
         </ScrollReveal>
