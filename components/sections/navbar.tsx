@@ -104,18 +104,19 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
               href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex text-xs uppercase tracking-[0.2em] px-6 py-3 border font-light transition-colors duration-300 hover:text-[var(--site-bg)]"
+              className="hidden md:inline-flex text-xs uppercase tracking-[0.2em] px-6 py-3 border font-light transition-all duration-300"
               style={{
                 borderColor: "var(--site-accent)",
-                color: "var(--site-accent)",
+                color: scrolled ? "var(--site-bg)" : "var(--site-accent)",
+                backgroundColor: scrolled ? "var(--site-accent)" : "transparent",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = "var(--site-pink)";
                 e.currentTarget.style.color = "var(--site-bg)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.color = "var(--site-pink)";
+                e.currentTarget.style.backgroundColor = scrolled ? "var(--site-accent)" : "transparent";
+                e.currentTarget.style.color = scrolled ? "var(--site-bg)" : "var(--site-pink)";
               }}
             >
               Reservar
