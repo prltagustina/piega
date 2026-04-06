@@ -73,7 +73,7 @@ export function Footer({ settings, services: propServices }: { settings: Setting
               Navegación
             </h4>
             <ul className="flex flex-col gap-3">
-              {["Inicio", "Servicios", "El Salón", "Equipo", "Galería"].map(
+              {["Inicio", "Servicios", "El Salón", "Galería", "Equipo"].map(
                 (item) => (
                   <li key={item}>
                     <a

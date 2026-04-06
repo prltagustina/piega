@@ -8,8 +8,8 @@ const navLinks = [
   { label: "Inicio", href: "#inicio" },
   { label: "Servicios", href: "#servicios" },
   { label: "El Salón", href: "#salon" },
-  { label: "Equipo", href: "#equipo" },
   { label: "Galería", href: "#galeria" },
+  { label: "Equipo", href: "#equipo" },
 ];
 
 type SettingsData = {
