@@ -186,7 +186,8 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
               className="mt-4 text-sm uppercase tracking-[0.2em] px-8 py-3 border"
               style={{
                 borderColor: "var(--site-accent)",
-                color: "var(--site-accent)",
+                color: "var(--site-bg)",
+                backgroundColor: "var(--site-accent)",
               }}
               onClick={() => setMenuOpen(false)}
             >
