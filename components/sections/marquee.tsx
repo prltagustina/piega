@@ -1,16 +1,23 @@
 "use client"
 
-export function Marquee() {
-  const items = [
-    "Corte & Estilo",
-    "Color & Mechas",
-    "Tratamientos Capilares",
-    "Spa & Relax",
-    "Maquillaje",
-    "Novias",
-    "Alisado",
-    "Manicura",
-  ]
+type ServiceData = {
+  id: string
+  title: string
+}
+
+const defaultItems = [
+  "Corte & Estilo",
+  "Color & Mechas",
+  "Tratamientos Capilares",
+  "Spa & Bienestar",
+  "Maquillaje Profesional",
+  "Novias & Eventos",
+]
+
+export function Marquee({ services }: { services?: ServiceData[] }) {
+  const items = services && services.length > 0 
+    ? services.map(s => s.title) 
+    : defaultItems
 
   return (
     <div

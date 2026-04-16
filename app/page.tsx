@@ -49,7 +49,7 @@ export default async function Home() {
     <main className="overflow-x-hidden w-full max-w-[100vw]">
       <Navbar settings={settings} />
       <HeroSection hero={hero} settings={settings} />
-      <Marquee />
+      <Marquee services={services} />
       <ServicesSection services={services} />
       <AboutSection about={about} />
       <GallerySection gallery={gallery} />
