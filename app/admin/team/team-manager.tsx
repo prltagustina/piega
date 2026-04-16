@@ -203,6 +203,7 @@ export function TeamManager({ members }: { members: Member[] }) {
                         <div className="grid gap-2">
                           <Label>Foto</Label>
                           <ImageUploader
+                            key={editingMember.id}
                             name="image_url"
                             value={editImageUrl}
                             aspectRatio={3 / 4}
