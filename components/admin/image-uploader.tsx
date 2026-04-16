@@ -99,20 +99,24 @@ export function ImageUploader({
   const uploadDataUrl = async (dataUrl: string, fileName: string) => {
     setUploading(true)
     setError(null)
+    console.log("[v0] Starting upload for file:", fileName, "to folder:", folder)
     try {
       const res = await fetch(dataUrl)
       const blob = await res.blob()
+      console.log("[v0] Blob created, size:", blob.size, "type:", blob.type)
       const ext = fileName.split(".").pop() || "jpg"
       const uniqueName = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
+      console.log("[v0] Unique name:", uniqueName)
 
       const supabase = createClient()
-      const { error: uploadError } = await supabase.storage
+      const { error: uploadError, data: uploadData } = await supabase.storage
         .from("images")
         .upload(uniqueName, blob, {
           cacheControl: "3600",
           upsert: false,
         })
 
+      console.log("[v0] Upload result - error:", uploadError, "data:", uploadData)
       if (uploadError) throw uploadError
 
       const { data: urlData } = supabase.storage
@@ -120,12 +124,15 @@ export function ImageUploader({
         .getPublicUrl(uniqueName)
 
       const publicUrl = urlData.publicUrl
+      console.log("[v0] Public URL generated:", publicUrl)
       setPreview(publicUrl)
       if (hiddenInputRef.current) {
         hiddenInputRef.current.value = publicUrl
       }
       onUploaded?.(publicUrl)
+      console.log("[v0] Upload complete, onUploaded called with:", publicUrl)
     } catch (err) {
+      console.error("[v0] Upload error:", err)
       setError(err instanceof Error ? err.message : "Error al subir la imagen")
     } finally {
       setUploading(false)
