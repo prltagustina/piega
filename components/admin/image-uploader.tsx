@@ -109,6 +109,15 @@ export function ImageUploader({
       console.log("[v0] Unique name:", uniqueName)
 
       const supabase = createClient()
+      
+      // Check if user is authenticated
+      const { data: { session } } = await supabase.auth.getSession()
+      console.log("[v0] Current session:", session ? "Authenticated as " + session.user.email : "NOT AUTHENTICATED")
+      
+      if (!session) {
+        throw new Error("Debes iniciar sesión para subir imágenes")
+      }
+      
       const { error: uploadError, data: uploadData } = await supabase.storage
         .from("images")
         .upload(uniqueName, blob, {
