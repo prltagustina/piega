@@ -46,8 +46,13 @@ export function ImageUploader({
 
   const handleFileSelect = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log("[v0] handleFileSelect triggered")
       const file = e.target.files?.[0]
-      if (!file) return
+      if (!file) {
+        console.log("[v0] No file selected")
+        return
+      }
+      console.log("[v0] File selected:", file.name, "size:", file.size, "type:", file.type)
       setError(null)
 
       if (!file.type.startsWith("image/")) {
@@ -150,7 +155,11 @@ export function ImageUploader({
   }
 
   const handleCropConfirm = useCallback(() => {
-    if (!rawImage) return
+    console.log("[v0] handleCropConfirm triggered")
+    if (!rawImage) {
+      console.log("[v0] No rawImage available")
+      return
+    }
 
     const canvas = document.createElement("canvas")
     const maxDim = 1600
