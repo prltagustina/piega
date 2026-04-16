@@ -42,14 +42,19 @@ export function HeroSection({
       className="relative h-screen overflow-hidden"
     >
       {/* Parallax background image */}
-      <motion.div className="absolute top-[-10%] bottom-[-10%] left-0 right-0 h-[120%]" style={{ y: imageY }}>
+      <motion.div 
+        className="absolute inset-0 w-full h-full md:top-[-10%] md:bottom-[-10%] md:h-[120%]" 
+        style={{ y: imageY }}
+      >
         <Image
           src={hero?.image_url || "/images/hero.jpg"}
           alt="Interior del salón Piega Hair & Beauty"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
-          sizes="100vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
+          quality={85}
+          unoptimized
         />
       </motion.div>
 

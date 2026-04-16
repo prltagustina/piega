@@ -42,8 +42,8 @@ export function ImageUploader({
       setError("Solo se permiten archivos de imagen")
       return
     }
-    if (file.size > 5 * 1024 * 1024) {
-      setError("La imagen no puede superar 5MB")
+    if (file.size > 7 * 1024 * 1024) {
+      setError("La imagen no puede superar 7MB")
       return
     }
 
@@ -161,7 +161,7 @@ export function ImageUploader({
             <>
               <Upload className="h-6 w-6" />
               <span className="text-xs">Seleccionar imagen</span>
-              <span className="text-[10px] text-muted-foreground/60">JPG, PNG, WebP (max 5MB)</span>
+              <span className="text-[10px] text-muted-foreground/60">JPG, PNG, WebP (max 7MB)</span>
             </>
           )}
         </button>
