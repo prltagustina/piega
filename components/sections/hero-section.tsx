@@ -47,9 +47,11 @@ export function HeroSection({
           src={hero?.image_url || "/images/hero.jpg"}
           alt="Interior del salón Piega Hair & Beauty"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
           sizes="100vw"
+          quality={90}
+          unoptimized={hero?.image_url?.includes('supabase') ? true : false}
         />
       </motion.div>
 
