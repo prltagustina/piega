@@ -38,6 +38,10 @@ export function ImageUploader({
 
   useEffect(() => {
     setPreview(value)
+    // Also update the hidden input when value changes externally
+    if (hiddenInputRef.current) {
+      hiddenInputRef.current.value = value
+    }
   }, [value])
 
   const handleFileSelect = useCallback(
@@ -220,7 +224,7 @@ export function ImageUploader({
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      <input type="hidden" name={name} ref={hiddenInputRef} defaultValue={preview} />
+      <input type="hidden" name={name} ref={hiddenInputRef} value={preview} onChange={() => {}} />
       <input
         ref={fileInputRef}
         type="file"
