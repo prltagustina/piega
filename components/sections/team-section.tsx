@@ -107,24 +107,24 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
 
       {/* Horizontal scroll container */}
       <div className="relative">
-        {/* Navigation buttons */}
+        {/* Navigation buttons - hidden on mobile, visible from sm up */}
         <button
           onClick={() => scroll("left")}
-          className={`absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-[var(--site-bg)]/90 backdrop-blur-sm border border-[var(--site-border)] text-[var(--site-fg)] transition-all duration-300 hover:bg-[var(--site-accent)] hover:text-[var(--site-bg)] ${
+          className={`absolute left-2 sm:left-3 md:left-6 lg:left-10 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 hidden sm:flex items-center justify-center rounded-full bg-[var(--site-bg)]/90 backdrop-blur-sm border border-[var(--site-border)] text-[var(--site-fg)] transition-all duration-300 hover:bg-[var(--site-accent)] hover:text-[var(--site-bg)] ${
             canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
           aria-label="Anterior"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
         </button>
         <button
           onClick={() => scroll("right")}
-          className={`absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-[var(--site-bg)]/90 backdrop-blur-sm border border-[var(--site-border)] text-[var(--site-fg)] transition-all duration-300 hover:bg-[var(--site-accent)] hover:text-[var(--site-bg)] ${
+          className={`absolute right-2 sm:right-3 md:right-6 lg:right-10 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 hidden sm:flex items-center justify-center rounded-full bg-[var(--site-bg)]/90 backdrop-blur-sm border border-[var(--site-border)] text-[var(--site-fg)] transition-all duration-300 hover:bg-[var(--site-accent)] hover:text-[var(--site-bg)] ${
             canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
           aria-label="Siguiente"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
         </button>
 
         {/* Scrollable container */}
@@ -135,7 +135,7 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className={`flex gap-6 overflow-x-auto scrollbar-hide pl-6 md:pl-12 lg:pl-16 pr-6 md:pr-12 lg:pr-16 pb-4 ${
+          className={`flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 pb-4 ${
             isDragging ? "cursor-grabbing select-none" : "cursor-grab"
           }`}
           style={{
@@ -146,7 +146,7 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
           {team.map((member, i) => (
             <ScrollReveal key={member.id || member.name} delay={i * 0.1}>
               <motion.div
-                className="team-card flex-shrink-0 w-[280px] sm:w-[320px] md:w-[380px] lg:w-[420px] group"
+                className="team-card flex-shrink-0 w-[260px] sm:w-[280px] md:w-[340px] lg:w-[380px] xl:w-[420px] group"
                 style={{ scrollSnapAlign: "start" }}
                 whileHover="hover"
               >
