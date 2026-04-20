@@ -15,16 +15,17 @@ async function getSiteData() {
   const supabase = createPublicClient()
 
   if (!supabase) {
-    return { hero: null, settings: null, services: [], about: null, team: [], gallery: [] }
+    return { hero: null, settings: null, services: [], about: null, aboutImages: [], team: [], gallery: [] }
   }
 
   try {
-    const [heroRes, settingsRes, servicesRes, aboutRes, teamRes, galleryRes] =
+    const [heroRes, settingsRes, servicesRes, aboutRes, aboutImagesRes, teamRes, galleryRes] =
       await Promise.all([
         supabase.from("hero_section").select("*").single(),
         supabase.from("site_settings").select("*").single(),
         supabase.from("services").select("*").order("sort_order"),
         supabase.from("about_section").select("*").single(),
+        supabase.from("about_images").select("*").order("sort_order"),
         supabase.from("team_members").select("*").order("sort_order"),
         supabase.from("gallery_images").select("*").order("sort_order"),
       ])
@@ -34,16 +35,17 @@ async function getSiteData() {
       settings: settingsRes.data,
       services: servicesRes.data ?? [],
       about: aboutRes.data,
+      aboutImages: aboutImagesRes.data ?? [],
       team: teamRes.data ?? [],
       gallery: galleryRes.data ?? [],
     }
   } catch {
-    return { hero: null, settings: null, services: [], about: null, team: [], gallery: [] }
+    return { hero: null, settings: null, services: [], about: null, aboutImages: [], team: [], gallery: [] }
   }
 }
 
 export default async function Home() {
-  const { hero, settings, services, about, team, gallery } = await getSiteData()
+  const { hero, settings, services, about, aboutImages, team, gallery } = await getSiteData()
 
   return (
     <main className="overflow-x-hidden w-full max-w-[100vw]">
@@ -51,7 +53,7 @@ export default async function Home() {
       <HeroSection hero={hero} settings={settings} />
       <Marquee services={services} />
       <ServicesSection services={services} />
-      <AboutSection about={about} />
+      <AboutSection about={about} aboutImages={aboutImages} />
       <GallerySection gallery={gallery} />
       <TeamSection team={team} />
       <BookCTA settings={settings} />

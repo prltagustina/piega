@@ -102,6 +102,7 @@ export async function createService(formData: FormData) {
     title: formData.get("title") as string,
     description: formData.get("description") as string,
     price: formData.get("price") as string,
+    image_url: formData.get("image_url") as string || "",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
     is_active: formData.get("is_active") === "on",
   })
@@ -122,6 +123,7 @@ export async function updateService(formData: FormData) {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       price: formData.get("price") as string,
+      image_url: formData.get("image_url") as string || "",
       sort_order: parseInt(formData.get("sort_order") as string) || 0,
       is_active: formData.get("is_active") === "on",
       updated_at: new Date().toISOString(),
@@ -320,5 +322,98 @@ export async function deleteGalleryImage(formData: FormData) {
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/gallery")
+  revalidatePath("/")
+}
+
+// ============================================
+// Contact Section
+// ============================================
+export async function updateContactSection(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("No autorizado")
+
+  const id = formData.get("id") as string
+  
+  if (id) {
+    const { error } = await supabase
+      .from("contact_section")
+      .update({
+        subtitle: formData.get("subtitle") as string,
+        title: formData.get("title") as string,
+        description: formData.get("description") as string,
+        image_url: formData.get("image_url") as string,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", id)
+
+    if (error) throw new Error(error.message)
+  } else {
+    const { error } = await supabase.from("contact_section").insert({
+      subtitle: formData.get("subtitle") as string,
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      image_url: formData.get("image_url") as string,
+    })
+
+    if (error) throw new Error(error.message)
+  }
+
+  revalidatePath("/admin/contact")
+  revalidatePath("/")
+}
+
+// ============================================
+// About Images CRUD (for carousel)
+// ============================================
+export async function createAboutImage(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("No autorizado")
+
+  const { error } = await supabase.from("about_images").insert({
+    image_url: formData.get("image_url") as string,
+    alt_text: formData.get("alt_text") as string,
+    sort_order: parseInt(formData.get("sort_order") as string) || 0,
+    is_active: true,
+  })
+
+  if (error) throw new Error(error.message)
+  revalidatePath("/admin/about")
+  revalidatePath("/")
+}
+
+export async function updateAboutImage(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("No autorizado")
+
+  const { error } = await supabase
+    .from("about_images")
+    .update({
+      image_url: formData.get("image_url") as string,
+      alt_text: formData.get("alt_text") as string,
+      sort_order: parseInt(formData.get("sort_order") as string) || 0,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", formData.get("id") as string)
+
+  if (error) throw new Error(error.message)
+  revalidatePath("/admin/about")
+  revalidatePath("/")
+}
+
+export async function deleteAboutImage(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("No autorizado")
+
+  const { error } = await supabase
+    .from("about_images")
+    .delete()
+    .eq("id", formData.get("id") as string)
+
+  if (error) throw new Error(error.message)
+  revalidatePath("/admin/about")
   revalidatePath("/")
 }

@@ -15,14 +15,14 @@
   --site-gray: #C7C7C7;
 
   /* Semantic tokens mapped to brand palette */
-  --site-bg: #1c1520;
-  --site-bg-warm: #241c2a;
+  --site-bg: #5C5278;
+  --site-bg-warm: #6b6189;
   --site-fg: #F7E9D4;
-  --site-fg-muted: #b8a8a0;
+  --site-fg-muted: #d4ccc4;
   --site-accent: #F0B4B9;
   --site-accent-light: #f5cdd0;
   --site-accent-secondary: #A8D5BA;
-  --site-border: rgba(240, 180, 185, 0.15);
+  --site-border: rgba(240, 180, 185, 0.2);
 }
 
 .site-page {
@@ -142,4 +142,14 @@ section {
 
 .marquee-track:hover {
   animation-play-state: paused;
+}
+
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

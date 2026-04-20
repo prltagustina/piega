@@ -24,19 +24,21 @@ import {
   LogOut,
   FileText,
   Palette,
+  Phone,
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 
 /* Secciones ordenadas igual que la web publica:
-   Hero > Sobre Nosotros > Servicios > Nuestro Trabajo > Equipo */
+   Hero > Sobre Nosotros > Servicios > Nuestro Trabajo > Equipo > Contacto */
 const sectionItems = [
   { title: "Inicio (Hero)", href: "/admin/hero", icon: Palette },
   { title: "Sobre Nosotros", href: "/admin/about", icon: FileText },
   { title: "Servicios", href: "/admin/services", icon: Sparkles },
   { title: "Nuestro Trabajo", href: "/admin/gallery", icon: ImageIcon },
   { title: "Equipo", href: "/admin/team", icon: Users },
+  { title: "Contacto", href: "/admin/contact", icon: Phone },
 ]
 
 const systemItems = [

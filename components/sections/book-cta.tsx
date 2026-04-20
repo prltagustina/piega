@@ -39,7 +39,7 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
       {/* Overlay */}
       <div
         className="absolute inset-0"
-        style={{ backgroundColor: "rgba(28,21,32,0.85)" }}
+        style={{ backgroundColor: "rgba(92,82,120,0.85)" }}
       />
 
       {/* Content */}
