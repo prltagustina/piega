@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
@@ -30,6 +30,22 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
     alt: img.alt_text || "Imagen de galeria",
     aspect: aspects[i % aspects.length],
   }))
+  
+  // Distribute images into 3 columns dynamically (no limit)
+  const columns = useMemo(() => {
+    const col1: typeof images = []
+    const col2: typeof images = []
+    const col3: typeof images = []
+    
+    images.forEach((img, i) => {
+      if (i % 3 === 0) col1.push(img)
+      else if (i % 3 === 1) col2.push(img)
+      else col3.push(img)
+    })
+    
+    return { col1, col2, col3 }
+  }, [images])
+  
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -63,15 +79,15 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
         </div>
       </ScrollReveal>
 
-      {/* Masonry grid with parallax columns */}
+      {/* Masonry grid with parallax columns - no image limit */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
         {/* Column 1 */}
         <motion.div
           className="flex flex-col gap-3 md:gap-4"
           style={{ y: col1Y }}
         >
-          {images.slice(0, 2).map((img, i) => (
-            <ScrollReveal key={img.src} delay={i * 0.1}>
+          {columns.col1.map((img, i) => (
+            <ScrollReveal key={`col1-${i}`} delay={i * 0.1}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -88,7 +104,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(28,21,32,0.6) 0%, transparent 50%)",
+                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
                   }}
                 />
               </motion.div>
@@ -101,8 +117,8 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
           className="flex flex-col gap-3 md:gap-4 mt-8 md:mt-16"
           style={{ y: col2Y }}
         >
-          {images.slice(2, 4).map((img, i) => (
-            <ScrollReveal key={img.src} delay={i * 0.1 + 0.15}>
+          {columns.col2.map((img, i) => (
+            <ScrollReveal key={`col2-${i}`} delay={i * 0.1 + 0.15}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -119,7 +135,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(28,21,32,0.6) 0%, transparent 50%)",
+                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
                   }}
                 />
               </motion.div>
@@ -132,8 +148,8 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
           className="hidden md:flex flex-col gap-3 md:gap-4"
           style={{ y: col3Y }}
         >
-          {images.slice(4, 6).map((img, i) => (
-            <ScrollReveal key={img.src} delay={i * 0.1 + 0.3}>
+          {columns.col3.map((img, i) => (
+            <ScrollReveal key={`col3-${i}`} delay={i * 0.1 + 0.3}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -150,7 +166,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(28,21,32,0.6) 0%, transparent 50%)",
+                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
                   }}
                 />
               </motion.div>
