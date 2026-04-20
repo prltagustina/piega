@@ -2,6 +2,7 @@
 
 import { createService, updateService, deleteService, reorderItem } from "@/app/admin/actions"
 import { SubmitButton } from "@/components/admin/submit-button"
+import { ImageUploader } from "@/components/admin/image-uploader"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -29,6 +30,7 @@ type Service = {
   price: string
   sort_order: number
   is_active: boolean
+  image_url?: string
 }
 
 export function ServicesManager({ services }: { services: Service[] }) {
@@ -69,11 +71,18 @@ export function ServicesManager({ services }: { services: Service[] }) {
                 <Label>Descripcion</Label>
                 <Textarea name="description" rows={3} />
               </div>
-              <div className="grid gap-4 grid-cols-2">
-                <div className="grid gap-2">
-                  <Label>Precio</Label>
-                  <Input name="price" placeholder="Desde $5.000" />
-                </div>
+              <div className="grid gap-2">
+                <Label>Precio</Label>
+                <Input name="price" placeholder="Desde $5.000" />
+              </div>
+              <div className="grid gap-2">
+                <Label>Imagen del servicio</Label>
+                <ImageUploader
+                  name="image_url"
+                  value=""
+                  aspectRatio={3 / 4}
+                  folder="services"
+                />
               </div>
               <input type="hidden" name="sort_order" value={services.length + 1} />
               <div className="flex items-center gap-2">
@@ -174,11 +183,18 @@ export function ServicesManager({ services }: { services: Service[] }) {
                           <Label>Descripcion</Label>
                           <Textarea name="description" defaultValue={editingService.description} rows={3} />
                         </div>
-                        <div className="grid gap-4 grid-cols-2">
-                          <div className="grid gap-2">
-                            <Label>Precio</Label>
-                            <Input name="price" defaultValue={editingService.price} />
-                          </div>
+                        <div className="grid gap-2">
+                          <Label>Precio</Label>
+                          <Input name="price" defaultValue={editingService.price} />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label>Imagen del servicio</Label>
+                          <ImageUploader
+                            name="image_url"
+                            value={editingService.image_url || ""}
+                            aspectRatio={3 / 4}
+                            folder="services"
+                          />
                         </div>
                         <input type="hidden" name="sort_order" value={editingService.sort_order} />
                         <div className="flex items-center gap-2">
