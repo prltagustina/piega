@@ -31,7 +31,8 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
     aspect: aspects[i % aspects.length],
   }))
   
-  // Distribute images into 3 columns dynamically (no limit)
+  // Distribute images into columns dynamically (no limit)
+  // For mobile: 2 columns, for desktop: 3 columns
   const columns = useMemo(() => {
     const col1: typeof images = []
     const col2: typeof images = []
@@ -44,6 +45,19 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
     })
     
     return { col1, col2, col3 }
+  }, [images])
+  
+  // For mobile: distribute all images into 2 columns
+  const mobileColumns = useMemo(() => {
+    const col1: typeof images = []
+    const col2: typeof images = []
+    
+    images.forEach((img, i) => {
+      if (i % 2 === 0) col1.push(img)
+      else col2.push(img)
+    })
+    
+    return { col1, col2 }
   }, [images])
   
   const sectionRef = useRef<HTMLElement>(null);
@@ -79,11 +93,76 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
         </div>
       </ScrollReveal>
 
-      {/* Masonry grid with parallax columns - no image limit */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+      {/* Mobile: 2 columns showing ALL images */}
+      <div className="grid grid-cols-2 gap-3 md:hidden">
+        {/* Mobile Column 1 */}
+        <motion.div
+          className="flex flex-col gap-3"
+          style={{ y: col1Y }}
+        >
+          {mobileColumns.col1.map((img, i) => (
+            <ScrollReveal key={`mobile-col1-${i}`} delay={i * 0.05}>
+              <motion.div
+                className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
+                whileHover={{ scale: 0.98 }}
+                transition={{ duration: 0.4 }}
+              >
+                <Image
+                  src={img.src || "/placeholder.svg"}
+                  alt={img.alt}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="50vw"
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
+                  }}
+                />
+              </motion.div>
+            </ScrollReveal>
+          ))}
+        </motion.div>
+
+        {/* Mobile Column 2 */}
+        <motion.div
+          className="flex flex-col gap-3 mt-8"
+          style={{ y: col2Y }}
+        >
+          {mobileColumns.col2.map((img, i) => (
+            <ScrollReveal key={`mobile-col2-${i}`} delay={i * 0.05 + 0.1}>
+              <motion.div
+                className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
+                whileHover={{ scale: 0.98 }}
+                transition={{ duration: 0.4 }}
+              >
+                <Image
+                  src={img.src || "/placeholder.svg"}
+                  alt={img.alt}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="50vw"
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
+                  }}
+                />
+              </motion.div>
+            </ScrollReveal>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Desktop: 3 columns with parallax */}
+      <div className="hidden md:grid md:grid-cols-3 gap-4">
         {/* Column 1 */}
         <motion.div
-          className="flex flex-col gap-3 md:gap-4"
+          className="flex flex-col gap-4"
           style={{ y: col1Y }}
         >
           {columns.col1.map((img, i) => (
@@ -98,7 +177,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="(max-width: 768px) 50vw, 33vw"
+                  sizes="33vw"
                 />
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -114,7 +193,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
 
         {/* Column 2 */}
         <motion.div
-          className="flex flex-col gap-3 md:gap-4 mt-8 md:mt-16"
+          className="flex flex-col gap-4 mt-16"
           style={{ y: col2Y }}
         >
           {columns.col2.map((img, i) => (
@@ -129,7 +208,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="(max-width: 768px) 50vw, 33vw"
+                  sizes="33vw"
                 />
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -143,9 +222,9 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
           ))}
         </motion.div>
 
-        {/* Column 3 (hidden on mobile) */}
+        {/* Column 3 */}
         <motion.div
-          className="hidden md:flex flex-col gap-3 md:gap-4"
+          className="flex flex-col gap-4"
           style={{ y: col3Y }}
         >
           {columns.col3.map((img, i) => (

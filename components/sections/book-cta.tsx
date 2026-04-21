@@ -110,9 +110,11 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
             className="mt-6 text-xs font-light"
             style={{ color: "var(--site-fg-muted)" }}
           >
-            {"También podés llamarnos al "}
+            {"También podés escribirnos al "}
             <a
-              href={`tel:${settings?.phone || "+549342596445"}`}
+              href={`https://wa.me/${(settings?.phone || "+549342596445").replace(/\D/g, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="site-link"
               style={{ color: "var(--site-accent)" }}
             >
