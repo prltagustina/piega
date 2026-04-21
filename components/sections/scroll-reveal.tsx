@@ -1,7 +1,7 @@
 "use client"
 
 import type { ReactNode } from "react"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 
 interface ScrollRevealProps {
   children: ReactNode
@@ -16,29 +16,35 @@ export function ScrollReveal({
   direction = "up",
   className = "",
 }: ScrollRevealProps) {
-  // Reduced movement distance for smoother feel, especially on mobile
+  const prefersReducedMotion = useReducedMotion()
+
   const directionMap = {
-    up: { y: 20, x: 0 },
-    down: { y: -20, x: 0 },
-    left: { y: 0, x: 20 },
-    right: { y: 0, x: -20 },
+    up: { y: 18, x: 0 },
+    down: { y: -18, x: 0 },
+    left: { y: 0, x: 18 },
+    right: { y: 0, x: -18 },
   }
 
   const offset = directionMap[direction]
+  const safeDelay = Math.min(delay, 0.26)
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: offset.y, x: offset.x }}
+      initial={
+        prefersReducedMotion
+          ? { opacity: 1, y: 0, x: 0 }
+          : { opacity: 0, y: offset.y, x: offset.x }
+      }
       whileInView={{ opacity: 1, y: 0, x: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.18 }}
       transition={{
-        duration: 0.5,
-        delay,
-        ease: [0.25, 0.46, 0.45, 0.94], // Smooth easing curve
+        duration: prefersReducedMotion ? 0 : 0.58,
+        delay: prefersReducedMotion ? 0 : safeDelay,
+        ease: [0.25, 0.46, 0.45, 0.94],
       }}
       className={className}
       style={{ 
-        willChange: "auto",
+        willChange: "opacity, transform",
         transform: "translateZ(0)",
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",

@@ -133,14 +133,15 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className={`flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-6 md:px-12 lg:px-16 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"
+          className={`flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-8 md:px-16 lg:px-24 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"
             }`}
           style={{
             scrollSnapType: "x mandatory",
             WebkitOverflowScrolling: "touch",
             touchAction: "pan-x pinch-zoom",
             overscrollBehaviorX: "contain",
-            scrollPaddingLeft: "1.5rem",
+            scrollPaddingLeft: "2rem",
+            scrollPaddingRight: "2rem",
           }}
         >
           {team.map((member, i) => (

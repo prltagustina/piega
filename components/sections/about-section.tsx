@@ -40,10 +40,19 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
   // Carousel state
   const [currentIndex, setCurrentIndex] = useState(0);
   
-  // Build images array: use aboutImages if available, otherwise fallback to single image
-  const images = aboutImages && aboutImages.length > 0 
-    ? aboutImages.map(img => ({ src: img.image_url, alt: img.alt_text || "Imagen del salon" }))
-    : [{ src: about?.image_url || "/images/salon.jpg", alt: "Interior del salon Piega" }];
+  // Prioritize the image already saved on the main about section, then append carousel images.
+  const images = [
+    ...(about?.image_url
+      ? [{ src: about.image_url, alt: about?.title || "Interior del salon Piega" }]
+      : []),
+    ...((aboutImages ?? [])
+      .filter((img) => img.image_url && img.image_url !== about?.image_url)
+      .map((img) => ({ src: img.image_url, alt: img.alt_text || "Imagen del salon" }))),
+  ]
+
+  if (images.length === 0) {
+    images.push({ src: "/images/salon.jpg", alt: "Interior del salon Piega" })
+  }
 
   const goToNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % images.length);

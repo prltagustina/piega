@@ -15,16 +15,23 @@ export default async function AdminLayout({
   children: React.ReactNode
 }) {
   let user = null
+  let missingConfig = false
   try {
     const supabase = await createClient()
     const { data } = await supabase.auth.getUser()
     user = data.user
-  } catch {
-    // Supabase not available
+  } catch (error) {
+    if (error instanceof Error && error.message === "Supabase env vars missing") {
+      missingConfig = true
+    }
   }
 
   if (!user) {
-    redirect("/auth/login")
+    redirect(
+      missingConfig
+        ? "/auth/login?reason=missing-config"
+        : "/auth/login?reason=auth-required"
+    )
   }
 
   return (

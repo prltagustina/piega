@@ -1,11 +1,15 @@
 "use client"
 
 import { createService, updateService, deleteService, reorderItem } from "@/app/admin/actions"
+import { handleServicesDefaultImageUpdate } from "@/app/admin/action-wrappers"
+import { FormCard } from "@/components/admin/form-card"
 import { SubmitButton } from "@/components/admin/submit-button"
 import { ImageUploader } from "@/components/admin/image-uploader"
 import { Button } from "@/components/ui/button"
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -33,12 +37,69 @@ type Service = {
   image_url?: string
 }
 
-export function ServicesManager({ services }: { services: Service[] }) {
+type Settings = {
+  id: string
+  services_default_image?: string | null
+} | null
+
+export function ServicesManager({
+  services,
+  settings,
+  settingsError,
+}: {
+  services: Service[]
+  settings: Settings
+  settingsError?: string | null
+}) {
   const [editingService, setEditingService] = useState<Service | null>(null)
   const [showCreate, setShowCreate] = useState(false)
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-2xl font-heading font-semibold text-foreground">
+          Servicios
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Gestiona los servicios y la imagen base que se muestra en la web cuando no hay ninguno seleccionado.
+        </p>
+      </div>
+
+      {settings ? (
+        <FormCard
+          title="Imagen por Defecto de la Seccion"
+          description="Esta imagen se muestra en la seccion de servicios cuando no hay ningun servicio seleccionado."
+          action={handleServicesDefaultImageUpdate}
+          submitLabel="Guardar imagen"
+        >
+          <input type="hidden" name="id" value={settings.id} />
+          <ImageUploader
+            name="services_default_image"
+            value={settings.services_default_image || ""}
+            aspectRatio={3 / 4}
+            folder="services"
+          />
+        </FormCard>
+      ) : (
+        <Card className="border-border/50 bg-card">
+          <CardHeader>
+            <CardTitle className="text-foreground">
+              Imagen por Defecto de la Seccion
+            </CardTitle>
+            <CardDescription>
+              Esta opcion deberia verse en la pestaña de Servicios.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              {settingsError?.includes("services_default_image")
+                ? "Falta crear la columna services_default_image en Supabase. Corre la migracion scripts/004_add_services_default_image.sql y luego recarga esta pagina."
+                : "No pudimos cargar la configuracion del sitio, por eso el editor de la imagen no aparece todavia."}
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
       <div className="flex items-center justify-between">
         <div>
           <p className="text-muted-foreground text-sm">

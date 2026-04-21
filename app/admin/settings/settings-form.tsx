@@ -2,7 +2,6 @@
 
 import { handleSettingsUpdate } from "@/app/admin/action-wrappers"
 import { FormCard } from "@/components/admin/form-card"
-import { ImageUploader } from "@/components/admin/image-uploader"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
@@ -17,7 +16,6 @@ type Settings = {
   whatsapp_url: string
   facebook_url: string
   booking_url: string
-  services_default_image?: string
 }
 
 export function SettingsForm({ settings }: { settings: Settings }) {
@@ -77,17 +75,6 @@ export function SettingsForm({ settings }: { settings: Settings }) {
               <Input id="booking_url" name="booking_url" defaultValue={settings.booking_url} placeholder="https://..." />
             </div>
           </div>
-        </div>
-
-        <div className="border-t border-border/50 pt-4 mt-2">
-          <p className="text-sm font-medium text-foreground mb-4">Imagen por Defecto de Servicios</p>
-          <p className="text-xs text-muted-foreground mb-4">Esta imagen se muestra cuando ningun servicio esta seleccionado</p>
-          <ImageUploader
-            name="services_default_image"
-            value={settings.services_default_image || ""}
-            aspectRatio={3 / 4}
-            folder="services"
-          />
         </div>
       </FormCard>
     </div>

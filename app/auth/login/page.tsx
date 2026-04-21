@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { Lock, Mail, Eye, EyeOff } from "lucide-react"
 import Image from "next/image"
@@ -23,25 +23,40 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const hasSupabaseConfig = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
+  const loginReason = searchParams.get("reason")
+
+  const helperMessage = hasSupabaseConfig
+    ? loginReason === "auth-required"
+      ? "Inicia sesion para acceder al panel de administracion."
+      : null
+    : "Falta configurar Supabase en este entorno. Agrega NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY para habilitar el ingreso al panel."
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    const supabase = createClient()
     setIsLoading(true)
     setError(null)
 
     try {
+      const supabase = createClient()
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
       if (error) throw error
-      router.push("/admin")
+      router.replace("/admin")
+      router.refresh()
     } catch (error: unknown) {
       setError(
         error instanceof Error
           ? error.message === "Invalid login credentials"
             ? "Credenciales incorrectas. Verifica tu email y contrasena."
+            : error.message === "Supabase env vars missing"
+              ? "No se puede iniciar sesion porque faltan las variables de entorno de Supabase."
             : error.message
           : "Ocurrio un error inesperado"
       )
@@ -130,6 +145,11 @@ export default function LoginPage() {
                       </button>
                     </div>
                   </div>
+                  {helperMessage && (
+                    <p className="text-sm rounded-md bg-secondary p-2 text-secondary-foreground">
+                      {helperMessage}
+                    </p>
+                  )}
                   {error && (
                     <p className="text-sm text-destructive rounded-md bg-destructive/10 p-2">
                       {error}
@@ -138,7 +158,7 @@ export default function LoginPage() {
                   <Button
                     type="submit"
                     className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-                    disabled={isLoading}
+                    disabled={isLoading || !hasSupabaseConfig}
                   >
                     {isLoading ? "Ingresando..." : "Ingresar"}
                   </Button>

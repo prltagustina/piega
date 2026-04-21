@@ -10,6 +10,7 @@ type GalleryImage = {
   image_url: string
   alt_text: string
   sort_order: number
+  is_active?: boolean
 }
 
 const aspects = ["aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square"]
@@ -24,8 +25,15 @@ const defaultGallery: GalleryImage[] = [
 ]
 
 export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage[] }) {
-  const gallery = propGallery.length > 0 ? propGallery : defaultGallery
+  const gallery =
+    propGallery.length > 0
+      ? propGallery
+          .filter((img) => (img.is_active ?? true) && img.image_url)
+          .sort((a, b) => a.sort_order - b.sort_order)
+      : defaultGallery
+
   const images = gallery.map((img, i) => ({
+    id: img.id,
     src: img.image_url,
     alt: img.alt_text || "Imagen de galeria",
     aspect: aspects[i % aspects.length],
@@ -102,7 +110,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
           style={{ y: col1Y }}
         >
           {mobileColumns.col1.map((img, i) => (
-            <ScrollReveal key={`mobile-col1-${i}`} delay={i * 0.05}>
+            <ScrollReveal key={img.id} delay={i * 0.05}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -133,7 +141,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
           style={{ y: col2Y }}
         >
           {mobileColumns.col2.map((img, i) => (
-            <ScrollReveal key={`mobile-col2-${i}`} delay={i * 0.05 + 0.1}>
+            <ScrollReveal key={img.id} delay={i * 0.05 + 0.1}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -167,7 +175,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
           style={{ y: col1Y }}
         >
           {columns.col1.map((img, i) => (
-            <ScrollReveal key={`col1-${i}`} delay={i * 0.1}>
+            <ScrollReveal key={img.id} delay={i * 0.1}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -198,7 +206,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
           style={{ y: col2Y }}
         >
           {columns.col2.map((img, i) => (
-            <ScrollReveal key={`col2-${i}`} delay={i * 0.1 + 0.15}>
+            <ScrollReveal key={img.id} delay={i * 0.1 + 0.15}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -229,7 +237,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
           style={{ y: col3Y }}
         >
           {columns.col3.map((img, i) => (
-            <ScrollReveal key={`col3-${i}`} delay={i * 0.1 + 0.3}>
+            <ScrollReveal key={img.id} delay={i * 0.1 + 0.3}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}

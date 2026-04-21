@@ -81,12 +81,31 @@ export async function updateSiteSettings(formData: FormData) {
       whatsapp_url: formData.get("whatsapp_url") as string,
       facebook_url: formData.get("facebook_url") as string,
       booking_url: formData.get("booking_url") as string,
-      services_default_image: formData.get("services_default_image") as string || "/images/services.jpg",
       updated_at: new Date().toISOString(),
     })
     .eq("id", formData.get("id") as string)
 
   if (error) throw new Error(error.message)
+  revalidatePath("/admin/settings")
+  revalidatePath("/")
+}
+
+export async function updateServicesDefaultImage(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("No autorizado")
+
+  const { error } = await supabase
+    .from("site_settings")
+    .update({
+      services_default_image:
+        (formData.get("services_default_image") as string) || "/images/services.jpg",
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", formData.get("id") as string)
+
+  if (error) throw new Error(error.message)
+  revalidatePath("/admin/services")
   revalidatePath("/admin/settings")
   revalidatePath("/")
 }
