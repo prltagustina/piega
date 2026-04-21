@@ -91,7 +91,7 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
               </AnimatePresence>
             </motion.div>
             
-            {/* Navigation buttons */}
+            {/* Navigation buttons - positioned outside parallax for stable positioning */}
             {showNavigation && (
               <>
                 <button
@@ -108,27 +108,29 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
                 >
                   <ChevronRight className="w-6 h-6" />
                 </button>
-                
-                {/* Dots indicator - fixed position outside parallax container */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-                  {images.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentIndex(i)}
-                      className="h-2 rounded-full transition-all duration-500 ease-out"
-                      style={{
-                        width: i === currentIndex ? "24px" : "8px",
-                        backgroundColor: i === currentIndex 
-                          ? "var(--site-accent)" 
-                          : "rgba(255,255,255,0.5)",
-                      }}
-                      aria-label={`Ir a imagen ${i + 1}`}
-                    />
-                  ))}
-                </div>
               </>
             )}
           </div>
+          
+          {/* Dots indicator - positioned completely outside the image container for stable positioning */}
+          {showNavigation && (
+            <div className="flex justify-center gap-2 mt-4">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  className="h-2 rounded-full transition-all duration-500 ease-out"
+                  style={{
+                    width: i === currentIndex ? "24px" : "8px",
+                    backgroundColor: i === currentIndex 
+                      ? "var(--site-accent)" 
+                      : "var(--site-fg-muted)",
+                  }}
+                  aria-label={`Ir a imagen ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </ScrollReveal>
 
         {/* Text content */}

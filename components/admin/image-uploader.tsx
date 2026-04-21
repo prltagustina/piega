@@ -32,12 +32,18 @@ export function ImageUploader({
   // Sync preview with value prop when it changes
   useEffect(() => {
     setPreview(value)
+    // Also update hidden input when value prop changes
+    if (hiddenInputRef.current) {
+      hiddenInputRef.current.value = value
+    }
   }, [value])
   
   // Update hidden input when preview changes
   const updateHiddenInput = useCallback((url: string) => {
     if (hiddenInputRef.current) {
       hiddenInputRef.current.value = url
+      // Dispatch input event to ensure form picks up the change
+      hiddenInputRef.current.dispatchEvent(new Event('input', { bubbles: true }))
     }
   }, [])
 
@@ -101,12 +107,13 @@ export function ImageUploader({
 
   const handleRemove = () => {
     setPreview("")
+    updateHiddenInput("")
     onUploaded?.("")
   }
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      <input type="hidden" name={name} value={preview} readOnly />
+      <input ref={hiddenInputRef} type="hidden" name={name} defaultValue={preview} />
       <input
         ref={fileInputRef}
         type="file"

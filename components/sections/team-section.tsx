@@ -106,7 +106,7 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
       </div>
 
       {/* Horizontal scroll container */}
-      <div className="relative px-6 md:px-12 lg:px-16">
+      <div className="relative">
         {/* Navigation buttons - hidden on mobile, visible from sm up */}
         <button
           onClick={() => scroll("left")}
@@ -127,7 +127,7 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
         </button>
 
-        {/* Scrollable container - touch-action prevents layout shift on mobile */}
+        {/* Scrollable container - proper padding and touch handling to prevent layout shift */}
         <div
           ref={scrollContainerRef}
           onScroll={checkScroll}
@@ -135,14 +135,15 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className={`flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 ${
+          className={`flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-6 md:px-12 lg:px-16 ${
             isDragging ? "cursor-grabbing select-none" : "cursor-grab"
           }`}
           style={{
             scrollSnapType: "x mandatory",
             WebkitOverflowScrolling: "touch",
-            touchAction: "pan-x",
+            touchAction: "pan-x pinch-zoom",
             overscrollBehaviorX: "contain",
+            scrollPaddingLeft: "1.5rem",
           }}
         >
           {team.map((member, i) => (
