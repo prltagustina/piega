@@ -70,25 +70,49 @@
     position: relative;
     width: 100%;
     -webkit-text-size-adjust: 100%;
-    touch-action: pan-y;
+    touch-action: manipulation;
   }
   
-  /* Smooth animations - prevent flickering on mobile */
-  @media (prefers-reduced-motion: no-preference) {
-    * {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
+  /* Hide scrollbars for horizontal scrollable areas */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Smooth animations - GPU acceleration for animated elements */
+  [style*="transform"],
+  [style*="opacity"] {
+    will-change: auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  /* Optimize for mobile - reduce motion when appropriate */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
   
-  /* Optimize for mobile scrolling */
+  /* Mobile-specific optimizations */
   @media (max-width: 768px) {
-    .scrollbar-hide {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    /* Prevent flickering on scroll */
+    body {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
     }
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
+    
+    /* Smoother scrolling on iOS */
+    main {
+      -webkit-overflow-scrolling: touch;
     }
   }
 }

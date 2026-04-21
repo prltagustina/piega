@@ -66,9 +66,10 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
     offset: ["start end", "end start"],
   });
 
-  const col1Y = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
-  const col2Y = useTransform(scrollYProgress, [0, 1], ["-3%", "3%"]);
-  const col3Y = useTransform(scrollYProgress, [0, 1], ["4%", "-4%"]);
+  // Reduced parallax values for smoother mobile performance
+  const col1Y = useTransform(scrollYProgress, [0, 1], ["3%", "-3%"]);
+  const col2Y = useTransform(scrollYProgress, [0, 1], ["-2%", "2%"]);
+  const col3Y = useTransform(scrollYProgress, [0, 1], ["2%", "-2%"]);
 
   return (
     <section
