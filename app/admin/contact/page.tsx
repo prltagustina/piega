@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { ContactForm } from "./contact-form"
 
+export const dynamic = 'force-dynamic'
+
 export default async function ContactPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

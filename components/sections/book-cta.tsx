@@ -10,7 +10,14 @@ type SettingsData = {
   booking_url?: string
 } | null
 
-export function BookCTA({ settings }: { settings?: SettingsData }) {
+type ContactData = {
+  subtitle?: string
+  title?: string
+  description?: string
+  image_url?: string
+} | null
+
+export function BookCTA({ settings, contact }: { settings?: SettingsData; contact?: ContactData }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -28,8 +35,8 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
       {/* Parallax background */}
       <motion.div className="absolute top-[-10%] bottom-[-10%] left-0 right-0 h-[120%]" style={{ y: bgY }}>
         <Image
-          src="/images/hero.jpg"
-          alt="Ambiente del salón"
+          src={contact?.image_url || "/images/hero.jpg"}
+          alt="Ambiente del salon"
           fill
           className="object-cover"
           sizes="100vw"
@@ -49,7 +56,7 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
             className="text-xs uppercase tracking-[0.4em] mb-6"
             style={{ color: "var(--site-accent)" }}
           >
-            Reserva tu experiencia
+            {contact?.subtitle || "Reserva tu experiencia"}
           </p>
         </ScrollReveal>
 
@@ -58,7 +65,7 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
             className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-heading font-medium leading-tight max-w-3xl text-balance"
             style={{ color: "var(--site-fg)" }}
           >
-            Tu momento de belleza te espera
+            {contact?.title || "Tu momento de belleza te espera"}
           </h2>
         </ScrollReveal>
 
@@ -67,8 +74,7 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
             className="mt-6 text-sm md:text-base font-light max-w-md leading-relaxed"
             style={{ color: "var(--site-fg-muted)" }}
           >
-            Agendá tu turno de manera simple y rápida. Elegís el servicio, el
-            profesional y el horario que más te convenga.
+            {contact?.description || "Agenda tu turno de manera simple y rapida. Elegis el servicio, el profesional y el horario que mas te convenga."}
           </p>
         </ScrollReveal>
 
@@ -110,9 +116,11 @@ export function BookCTA({ settings }: { settings?: SettingsData }) {
             className="mt-6 text-xs font-light"
             style={{ color: "var(--site-fg-muted)" }}
           >
-            {"También podés llamarnos al "}
+            {"También podés escribirnos al "}
             <a
-              href={`tel:${settings?.phone || "+549342596445"}`}
+              href={`https://wa.me/${(settings?.phone || "+549342596445").replace(/\D/g, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="site-link"
               style={{ color: "var(--site-accent)" }}
             >

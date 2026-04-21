@@ -65,17 +65,19 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
         {/* Image with parallax and carousel */}
         <ScrollReveal direction="left">
           <div className="relative aspect-[4/5] overflow-hidden group">
+            {/* Parallax container for scaling effect */}
             <motion.div
               className="absolute inset-0"
               style={{ scale: imageScale, y: imageY }}
             >
+              {/* Image carousel with smooth transitions */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentIndex}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
                   className="absolute inset-0"
                 >
                   <Image
@@ -89,7 +91,7 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
               </AnimatePresence>
             </motion.div>
             
-            {/* Navigation buttons */}
+            {/* Navigation buttons - positioned outside parallax for stable positioning */}
             {showNavigation && (
               <>
                 <button
@@ -106,25 +108,29 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
                 >
                   <ChevronRight className="w-6 h-6" />
                 </button>
-                
-                {/* Dots indicator */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                  {images.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentIndex(i)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        i === currentIndex 
-                          ? "bg-[var(--site-accent)] w-6" 
-                          : "bg-[var(--site-fg)]/50 hover:bg-[var(--site-fg)]/80"
-                      }`}
-                      aria-label={`Ir a imagen ${i + 1}`}
-                    />
-                  ))}
-                </div>
               </>
             )}
           </div>
+          
+          {/* Dots indicator - positioned completely outside the image container for stable positioning */}
+          {showNavigation && (
+            <div className="flex justify-center gap-2 mt-4">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  className="h-2 rounded-full transition-all duration-500 ease-out"
+                  style={{
+                    width: i === currentIndex ? "24px" : "8px",
+                    backgroundColor: i === currentIndex 
+                      ? "var(--site-accent)" 
+                      : "var(--site-fg-muted)",
+                  }}
+                  aria-label={`Ir a imagen ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </ScrollReveal>
 
         {/* Text content */}
