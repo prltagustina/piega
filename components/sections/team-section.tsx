@@ -133,10 +133,10 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className={`flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-8 md:px-16 lg:px-24 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"
+          className={`flex items-start gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-8 md:px-16 lg:px-24 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"
             }`}
           style={{
-            scrollSnapType: "x mandatory",
+            scrollSnapType: "x proximity",
             WebkitOverflowScrolling: "touch",
             touchAction: "pan-x pinch-zoom",
             overscrollBehaviorX: "contain",
@@ -145,10 +145,14 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
           }}
         >
           {team.map((member, i) => (
-            <ScrollReveal key={member.id || member.name} delay={i * 0.1}>
+            <ScrollReveal
+              key={member.id || member.name}
+              delay={i * 0.1}
+              className="flex-shrink-0"
+            >
               <motion.div
-                className="team-card flex-shrink-0 w-[260px] sm:w-[280px] md:w-[340px] lg:w-[380px] xl:w-[420px] group"
-                style={{ scrollSnapAlign: "start" }}
+                className="team-card group w-[82vw] min-w-[260px] max-w-[320px] sm:w-[280px] sm:min-w-[280px] sm:max-w-[280px] md:w-[340px] md:min-w-[340px] md:max-w-[340px] lg:w-[380px] lg:min-w-[380px] lg:max-w-[380px] xl:w-[420px] xl:min-w-[420px] xl:max-w-[420px]"
+                style={{ scrollSnapAlign: "start", scrollSnapStop: "always" }}
                 whileHover="hover"
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
