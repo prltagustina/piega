@@ -14,6 +14,10 @@ type ServiceData = {
   image_url?: string
 }
 
+type SettingsData = {
+  services_default_image?: string
+} | null
+
 const defaultServices: ServiceData[] = [
   { id: "1", title: "Corte & Estilo", description: "Cortes personalizados que realzan tu belleza natural. Nuestros estilistas analizan la textura, forma del rostro y estilo de vida para crear el look perfecto.", price: "Desde $5.500", sort_order: 1, image_url: "/images/services.jpg" },
   { id: "2", title: "Color & Mechas", description: "Tecnicas de coloracion de vanguardia. Balayage, highlights, global color y mas. Trabajamos con productos premium para un resultado impecable.", price: "Desde $12.000", sort_order: 2, image_url: "/images/gallery-1.jpg" },
@@ -23,14 +27,17 @@ const defaultServices: ServiceData[] = [
   { id: "6", title: "Novias & Eventos", description: "Paquetes exclusivos para tu dia especial. Incluyen prueba previa, peinado, maquillaje y atencion personalizada.", price: "Consultar", sort_order: 6, image_url: "/images/team.jpg" },
 ]
 
-export function ServicesSection({ services: propServices }: { services: ServiceData[] }) {
+export function ServicesSection({ services: propServices, settings }: { services: ServiceData[]; settings?: SettingsData }) {
   const services = propServices.length > 0 ? propServices : defaultServices
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  
+  // Get the default image from settings or fallback to static image
+  const defaultImage = settings?.services_default_image || "/images/services.jpg";
   
   // Get the current image to display (active service image or default)
   const currentImage = activeIndex !== null && services[activeIndex]?.image_url 
     ? services[activeIndex].image_url 
-    : "/images/services.jpg";
+    : defaultImage;
 
   return (
     <section id="servicios" className="py-24 md:py-32 px-6 md:px-12 lg:px-16">

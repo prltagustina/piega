@@ -72,4 +72,23 @@
     -webkit-text-size-adjust: 100%;
     touch-action: pan-y;
   }
+  
+  /* Smooth animations - prevent flickering on mobile */
+  @media (prefers-reduced-motion: no-preference) {
+    * {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+  }
+  
+  /* Optimize for mobile scrolling */
+  @media (max-width: 768px) {
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
