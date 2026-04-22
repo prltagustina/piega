@@ -31,10 +31,9 @@ export function HeroSection({
     offset: ["start start", "end start"],
   });
 
-  // Reduced parallax values for smoother mobile experience
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0.45, 0.8]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   return (
     <section

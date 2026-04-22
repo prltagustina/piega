@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect, useCallback } from "react"
+import { useState, useRef, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Upload, X, Loader2 } from "lucide-react"
@@ -27,25 +27,10 @@ export function ImageUploader({
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const hiddenInputRef = useRef<HTMLInputElement>(null)
 
-  // Sync preview with value prop when it changes
   useEffect(() => {
     setPreview(value)
-    // Also update hidden input when value prop changes
-    if (hiddenInputRef.current) {
-      hiddenInputRef.current.value = value
-    }
   }, [value])
-  
-  // Update hidden input when preview changes
-  const updateHiddenInput = useCallback((url: string) => {
-    if (hiddenInputRef.current) {
-      hiddenInputRef.current.value = url
-      // Dispatch input event to ensure form picks up the change
-      hiddenInputRef.current.dispatchEvent(new Event('input', { bubbles: true }))
-    }
-  }, [])
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -94,7 +79,6 @@ export function ImageUploader({
 
       const publicUrl = urlData.publicUrl
       setPreview(publicUrl)
-      updateHiddenInput(publicUrl)
       onUploaded?.(publicUrl)
     } catch (err) {
       console.error("Error uploading:", err)
@@ -107,13 +91,12 @@ export function ImageUploader({
 
   const handleRemove = () => {
     setPreview("")
-    updateHiddenInput("")
     onUploaded?.("")
   }
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      <input ref={hiddenInputRef} type="hidden" name={name} defaultValue={preview} />
+      <input type="hidden" name={name} value={preview} readOnly />
       <input
         ref={fileInputRef}
         type="file"

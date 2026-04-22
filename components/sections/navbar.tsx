@@ -13,10 +13,10 @@ const navLinks = [
 ];
 
 type SettingsData = {
-  site_name?: string;
-  tagline?: string;
-  booking_url?: string;
-} | null;
+  site_name?: string
+  tagline?: string
+  booking_url?: string
+} | null
 
 export function Navbar({ settings }: { settings?: SettingsData }) {
   const [scrolled, setScrolled] = useState(false);
@@ -28,16 +28,28 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // FIX: scroll lock simple (sin romper layout)
+  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.top = `-${window.scrollY}px`;
     } else {
+      const scrollY = document.body.style.top;
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.top = "";
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      }
     }
-
     return () => {
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.top = "";
     };
   }, [menuOpen]);
 
@@ -53,28 +65,22 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
             : "bg-transparent"
         }`}
       >
-        <nav className="flex items-center justify-between gap-3 px-4 py-4 sm:px-6 sm:py-5 md:px-12 lg:px-16">
+        <nav className="flex items-center justify-between px-6 md:px-12 lg:px-16 py-5">
           {/* Logo */}
-          <a
-            href="#inicio"
-            className="flex min-w-0 items-center gap-2 sm:gap-2.5"
-          >
+          <a href="#inicio" className="flex items-center gap-2.5">
             <Image
               src="/images/logo-piega.png"
               alt="Piega"
               width={120}
               height={40}
-              className="h-6 w-auto shrink-0 sm:h-7 md:h-9"
+              className="h-7 md:h-9 w-auto"
               priority
             />
             <span
-              className="font-heading text-[7px] font-medium leading-[1.3] tracking-[0.04em] max-[340px]:hidden sm:text-[8px] md:text-[9px]"
+              className="text-[8px] md:text-[9px] font-heading font-medium leading-[1.3] tracking-[0.04em]"
               style={{ color: "var(--site-fg)" }}
             >
-              Hair &<br />
-              Beauty
-              <br />
-              Club
+              Hair &<br />Beauty<br />Club
             </span>
           </a>
 
@@ -93,33 +99,24 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
           </div>
 
           {/* Book button */}
-          <div className="flex shrink-0 items-center gap-3 sm:gap-6">
+          <div className="flex items-center gap-6">
             <a
-              href={
-                settings?.booking_url ||
-                "https://piega.site.agendapro.com/ar/sucursal/486410"
-              }
+              href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden md:inline-flex text-xs uppercase tracking-[0.2em] px-6 py-3 border font-light transition-all duration-300"
               style={{
                 borderColor: "var(--site-accent)",
                 color: scrolled ? "var(--site-bg)" : "var(--site-accent)",
-                backgroundColor: scrolled
-                  ? "var(--site-accent)"
-                  : "transparent",
+                backgroundColor: scrolled ? "var(--site-accent)" : "transparent",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = "var(--site-pink)";
                 e.currentTarget.style.color = "var(--site-bg)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = scrolled
-                  ? "var(--site-accent)"
-                  : "transparent";
-                e.currentTarget.style.color = scrolled
-                  ? "var(--site-bg)"
-                  : "var(--site-pink)";
+                e.currentTarget.style.backgroundColor = scrolled ? "var(--site-accent)" : "transparent";
+                e.currentTarget.style.color = scrolled ? "var(--site-bg)" : "var(--site-pink)";
               }}
             >
               Reservar
@@ -128,11 +125,9 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
             {/* Hamburger */}
             <button
               type="button"
-              className="flex shrink-0 flex-col gap-1.5 p-2 lg:hidden"
+              className="lg:hidden flex flex-col gap-1.5 p-2"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-              aria-controls="mobile-menu"
-              aria-expanded={menuOpen}
             >
               <motion.span
                 animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
@@ -160,12 +155,11 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            id="mobile-menu"
-            className="fixed inset-0 z-[999] flex flex-col items-center justify-center gap-8 px-6 text-center"
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8"
             style={{ backgroundColor: "var(--site-bg)" }}
           >
             {navLinks.map((link, i) => (
@@ -175,25 +169,21 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * i, duration: 0.4 }}
-                className="font-heading text-2xl font-medium tracking-wide sm:text-3xl"
+                className="text-3xl font-heading font-medium tracking-wide"
                 style={{ color: "var(--site-fg)" }}
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}
               </motion.a>
             ))}
-
             <motion.a
-              href={
-                settings?.booking_url ||
-                "https://piega.site.agendapro.com/ar/sucursal/486410"
-              }
+              href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.4 }}
-              className="mt-2 border px-6 py-3 text-center text-sm uppercase tracking-[0.2em] sm:mt-4 sm:px-8"
+              className="mt-4 text-sm uppercase tracking-[0.2em] px-8 py-3 border"
               style={{
                 borderColor: "var(--site-accent)",
                 color: "var(--site-bg)",

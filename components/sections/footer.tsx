@@ -135,9 +135,7 @@ export function Footer({ settings, services: propServices }: { settings: Setting
                 {settings?.address || "Av. Ejemplo 1234, Santa Fe"}
               </p>
               <a
-                href={settings?.whatsapp_url || `https://wa.me/${(settings?.phone || "+549342596445").replace(/\D/g, "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`tel:${settings?.phone || "+549342596445"}`}
                 className="site-link text-sm font-light"
                 style={{ color: "var(--site-fg-muted)" }}
               >

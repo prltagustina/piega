@@ -1,19 +1,12 @@
 import { createClient } from "@/lib/supabase/server"
 import { AboutForm } from "./about-form"
-import { AboutImagesManager } from "./about-images-manager"
 
 export default async function AdminAboutPage() {
   let about = null
-  let aboutImages: { id: string; image_url: string; alt_text: string; sort_order: number }[] = []
-  
   try {
     const supabase = await createClient()
-    const [aboutRes, imagesRes] = await Promise.all([
-      supabase.from("about_section").select("*").single(),
-      supabase.from("about_images").select("*").order("sort_order"),
-    ])
-    about = aboutRes.data
-    aboutImages = imagesRes.data ?? []
+    const { data } = await supabase.from("about_section").select("*").single()
+    about = data
   } catch {
     // Supabase not available
   }
@@ -26,10 +19,5 @@ export default async function AdminAboutPage() {
     )
   }
 
-  return (
-    <div className="flex flex-col gap-8">
-      <AboutForm about={about} />
-      <AboutImagesManager images={aboutImages} />
-    </div>
-  )
+  return <AboutForm about={about} />
 }

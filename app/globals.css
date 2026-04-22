@@ -5,7 +5,9 @@
 /* Aeonik Fono Medium - Custom brand font for headings */
 @font-face {
   font-family: 'Aeonik Fono';
-  src: url('/fonts/AeonikFono-Medium.otf') format('opentype');
+  src: url('/fonts/AeonikFono-Medium.woff2') format('woff2'),
+       url('/fonts/AeonikFono-Medium.woff') format('woff'),
+       url('/fonts/AeonikFono-Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -19,34 +21,34 @@
 
 @layer base {
   :root {
-    /* PIEGA Brand Palette - Pantone 5275 C Violeta as background */
-    --background: 252 19% 40%;
-    --foreground: 35 55% 90%;
-    --card: 252 19% 35%;
-    --card-foreground: 35 55% 90%;
-    --popover: 252 19% 35%;
-    --popover-foreground: 35 55% 90%;
+    /* PIEGA Brand Palette - Pink as primary */
+    --background: 280 15% 11%;
+    --foreground: 32 65% 92%;
+    --card: 280 18% 14%;
+    --card-foreground: 32 65% 92%;
+    --popover: 280 18% 14%;
+    --popover-foreground: 32 65% 92%;
     --primary: 355 68% 82%;
-    --primary-foreground: 252 19% 30%;
-    --secondary: 252 15% 45%;
-    --secondary-foreground: 35 55% 90%;
-    --muted: 252 15% 50%;
-    --muted-foreground: 35 30% 75%;
+    --primary-foreground: 280 15% 11%;
+    --secondary: 280 12% 20%;
+    --secondary-foreground: 32 65% 92%;
+    --muted: 280 10% 18%;
+    --muted-foreground: 15 18% 67%;
     --accent: 148 38% 75%;
-    --accent-foreground: 252 19% 30%;
+    --accent-foreground: 280 15% 11%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 355 30% 50%;
-    --input: 252 15% 45%;
+    --border: 355 30% 30%;
+    --input: 280 12% 22%;
     --ring: 355 68% 82%;
     --radius: 0.5rem;
-    --sidebar-background: 252 19% 32%;
-    --sidebar-foreground: 35 55% 90%;
+    --sidebar-background: 280 18% 13%;
+    --sidebar-foreground: 32 65% 92%;
     --sidebar-primary: 355 68% 82%;
-    --sidebar-primary-foreground: 252 19% 30%;
-    --sidebar-accent: 252 15% 40%;
-    --sidebar-accent-foreground: 35 55% 90%;
-    --sidebar-border: 355 25% 45%;
+    --sidebar-primary-foreground: 280 15% 11%;
+    --sidebar-accent: 280 12% 18%;
+    --sidebar-accent-foreground: 32 65% 92%;
+    --sidebar-border: 355 20% 25%;
     --sidebar-ring: 355 68% 82%;
   }
 }
@@ -68,43 +70,6 @@
     position: relative;
     width: 100%;
     -webkit-text-size-adjust: 100%;
-    touch-action: manipulation;
-  }
-  
-  /* Hide scrollbars for horizontal scrollable areas */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Smooth animations - GPU acceleration for animated elements */
-  [style*="transform"],
-  [style*="opacity"] {
-    will-change: auto;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  
-  /* Optimize for mobile - reduce motion when appropriate */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-  
-  /* Mobile-specific optimizations */
-  @media (max-width: 768px) {
-    /* Smoother scrolling on iOS */
-    main {
-      -webkit-overflow-scrolling: touch;
-    }
+    touch-action: pan-y;
   }
 }

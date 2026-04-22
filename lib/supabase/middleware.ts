@@ -8,13 +8,6 @@ export async function updateSession(request: NextRequest) {
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!url || !key) {
-    if (request.nextUrl.pathname.startsWith("/admin")) {
-      const loginUrl = request.nextUrl.clone()
-      loginUrl.pathname = "/auth/login"
-      loginUrl.searchParams.set("reason", "missing-config")
-      return NextResponse.redirect(loginUrl)
-    }
-
     return supabaseResponse
   }
 
@@ -42,7 +35,6 @@ export async function updateSession(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/admin") && !user) {
     const loginUrl = request.nextUrl.clone()
     loginUrl.pathname = "/auth/login"
-    loginUrl.searchParams.set("reason", "auth-required")
     return NextResponse.redirect(loginUrl)
   }
 

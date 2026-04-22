@@ -15,20 +15,18 @@ async function getSiteData() {
   const supabase = createPublicClient()
 
   if (!supabase) {
-    return { hero: null, settings: null, services: [], about: null, aboutImages: [], team: [], gallery: [], contact: null }
+    return { hero: null, settings: null, services: [], about: null, team: [], gallery: [] }
   }
 
   try {
-    const [heroRes, settingsRes, servicesRes, aboutRes, aboutImagesRes, teamRes, galleryRes, contactRes] =
+    const [heroRes, settingsRes, servicesRes, aboutRes, teamRes, galleryRes] =
       await Promise.all([
         supabase.from("hero_section").select("*").single(),
         supabase.from("site_settings").select("*").single(),
         supabase.from("services").select("*").order("sort_order"),
         supabase.from("about_section").select("*").single(),
-        supabase.from("about_images").select("*").order("sort_order"),
         supabase.from("team_members").select("*").order("sort_order"),
         supabase.from("gallery_images").select("*").order("sort_order"),
-        supabase.from("contact_section").select("*").single(),
       ])
 
     return {
@@ -36,29 +34,27 @@ async function getSiteData() {
       settings: settingsRes.data,
       services: servicesRes.data ?? [],
       about: aboutRes.data,
-      aboutImages: aboutImagesRes.data ?? [],
       team: teamRes.data ?? [],
       gallery: galleryRes.data ?? [],
-      contact: contactRes.data,
     }
   } catch {
-    return { hero: null, settings: null, services: [], about: null, aboutImages: [], team: [], gallery: [], contact: null }
+    return { hero: null, settings: null, services: [], about: null, team: [], gallery: [] }
   }
 }
 
 export default async function Home() {
-  const { hero, settings, services, about, aboutImages, team, gallery, contact } = await getSiteData()
+  const { hero, settings, services, about, team, gallery } = await getSiteData()
 
   return (
     <main className="overflow-x-hidden w-full max-w-[100vw]">
       <Navbar settings={settings} />
       <HeroSection hero={hero} settings={settings} />
       <Marquee services={services} />
-      <ServicesSection services={services} settings={settings} />
-      <AboutSection about={about} aboutImages={aboutImages} />
+      <ServicesSection services={services} />
+      <AboutSection about={about} />
       <GallerySection gallery={gallery} />
       <TeamSection team={team} />
-      <BookCTA settings={settings} contact={contact} />
+      <BookCTA settings={settings} />
       <Footer settings={settings} services={services} />
     </main>
   )

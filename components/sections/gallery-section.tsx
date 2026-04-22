@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
@@ -10,7 +10,6 @@ type GalleryImage = {
   image_url: string
   alt_text: string
   sort_order: number
-  is_active?: boolean
 }
 
 const aspects = ["aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square"]
@@ -25,59 +24,21 @@ const defaultGallery: GalleryImage[] = [
 ]
 
 export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage[] }) {
-  const gallery =
-    propGallery.length > 0
-      ? propGallery
-          .filter((img) => (img.is_active ?? true) && img.image_url)
-          .sort((a, b) => a.sort_order - b.sort_order)
-      : defaultGallery
-
+  const gallery = propGallery.length > 0 ? propGallery : defaultGallery
   const images = gallery.map((img, i) => ({
-    id: img.id,
     src: img.image_url,
     alt: img.alt_text || "Imagen de galeria",
     aspect: aspects[i % aspects.length],
   }))
-  
-  // Distribute images into columns dynamically (no limit)
-  // For mobile: 2 columns, for desktop: 3 columns
-  const columns = useMemo(() => {
-    const col1: typeof images = []
-    const col2: typeof images = []
-    const col3: typeof images = []
-    
-    images.forEach((img, i) => {
-      if (i % 3 === 0) col1.push(img)
-      else if (i % 3 === 1) col2.push(img)
-      else col3.push(img)
-    })
-    
-    return { col1, col2, col3 }
-  }, [images])
-  
-  // For mobile: distribute all images into 2 columns
-  const mobileColumns = useMemo(() => {
-    const col1: typeof images = []
-    const col2: typeof images = []
-    
-    images.forEach((img, i) => {
-      if (i % 2 === 0) col1.push(img)
-      else col2.push(img)
-    })
-    
-    return { col1, col2 }
-  }, [images])
-  
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
 
-  // Reduced parallax values for smoother mobile performance
-  const col1Y = useTransform(scrollYProgress, [0, 1], ["3%", "-3%"]);
-  const col2Y = useTransform(scrollYProgress, [0, 1], ["-2%", "2%"]);
-  const col3Y = useTransform(scrollYProgress, [0, 1], ["2%", "-2%"]);
+  const col1Y = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
+  const col2Y = useTransform(scrollYProgress, [0, 1], ["-3%", "3%"]);
+  const col3Y = useTransform(scrollYProgress, [0, 1], ["4%", "-4%"]);
 
   return (
     <section
@@ -102,80 +63,15 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
         </div>
       </ScrollReveal>
 
-      {/* Mobile: 2 columns showing ALL images */}
-      <div className="grid grid-cols-2 gap-3 md:hidden">
-        {/* Mobile Column 1 */}
-        <motion.div
-          className="flex flex-col gap-3"
-          style={{ y: col1Y }}
-        >
-          {mobileColumns.col1.map((img, i) => (
-            <ScrollReveal key={img.id} delay={i * 0.05}>
-              <motion.div
-                className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
-                whileHover={{ scale: 0.98 }}
-                transition={{ duration: 0.4 }}
-              >
-                <Image
-                  src={img.src || "/placeholder.svg"}
-                  alt={img.alt}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="50vw"
-                />
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background:
-                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
-                  }}
-                />
-              </motion.div>
-            </ScrollReveal>
-          ))}
-        </motion.div>
-
-        {/* Mobile Column 2 */}
-        <motion.div
-          className="flex flex-col gap-3 mt-8"
-          style={{ y: col2Y }}
-        >
-          {mobileColumns.col2.map((img, i) => (
-            <ScrollReveal key={img.id} delay={i * 0.05 + 0.1}>
-              <motion.div
-                className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
-                whileHover={{ scale: 0.98 }}
-                transition={{ duration: 0.4 }}
-              >
-                <Image
-                  src={img.src || "/placeholder.svg"}
-                  alt={img.alt}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="50vw"
-                />
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background:
-                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
-                  }}
-                />
-              </motion.div>
-            </ScrollReveal>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Desktop: 3 columns with parallax */}
-      <div className="hidden md:grid md:grid-cols-3 gap-4">
+      {/* Masonry grid with parallax columns */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
         {/* Column 1 */}
         <motion.div
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-3 md:gap-4"
           style={{ y: col1Y }}
         >
-          {columns.col1.map((img, i) => (
-            <ScrollReveal key={img.id} delay={i * 0.1}>
+          {images.slice(0, 2).map((img, i) => (
+            <ScrollReveal key={img.src} delay={i * 0.1}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -186,13 +82,13 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="33vw"
+                  sizes="(max-width: 768px) 50vw, 33vw"
                 />
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
+                      "linear-gradient(to top, rgba(28,21,32,0.6) 0%, transparent 50%)",
                   }}
                 />
               </motion.div>
@@ -202,11 +98,11 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
 
         {/* Column 2 */}
         <motion.div
-          className="flex flex-col gap-4 mt-16"
+          className="flex flex-col gap-3 md:gap-4 mt-8 md:mt-16"
           style={{ y: col2Y }}
         >
-          {columns.col2.map((img, i) => (
-            <ScrollReveal key={img.id} delay={i * 0.1 + 0.15}>
+          {images.slice(2, 4).map((img, i) => (
+            <ScrollReveal key={img.src} delay={i * 0.1 + 0.15}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -217,13 +113,13 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   alt={img.alt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="33vw"
+                  sizes="(max-width: 768px) 50vw, 33vw"
                 />
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
+                      "linear-gradient(to top, rgba(28,21,32,0.6) 0%, transparent 50%)",
                   }}
                 />
               </motion.div>
@@ -231,13 +127,13 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
           ))}
         </motion.div>
 
-        {/* Column 3 */}
+        {/* Column 3 (hidden on mobile) */}
         <motion.div
-          className="flex flex-col gap-4"
+          className="hidden md:flex flex-col gap-3 md:gap-4"
           style={{ y: col3Y }}
         >
-          {columns.col3.map((img, i) => (
-            <ScrollReveal key={img.id} delay={i * 0.1 + 0.3}>
+          {images.slice(4, 6).map((img, i) => (
+            <ScrollReveal key={img.src} delay={i * 0.1 + 0.3}>
               <motion.div
                 className={`relative ${img.aspect} overflow-hidden group cursor-pointer`}
                 whileHover={{ scale: 0.98 }}
@@ -254,7 +150,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(92,82,120,0.7) 0%, transparent 50%)",
+                      "linear-gradient(to top, rgba(28,21,32,0.6) 0%, transparent 50%)",
                   }}
                 />
               </motion.div>
