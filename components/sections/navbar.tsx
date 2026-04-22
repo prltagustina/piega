@@ -22,24 +22,52 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Detect scroll
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // FIX: scroll lock simple (sin romper layout)
+  // ✅ Scroll lock PRO (igual al navbar viejo)
   useEffect(() => {
     if (menuOpen) {
+      const scrollY = window.scrollY;
+
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.top = `-${scrollY}px`;
     } else {
+      const scrollY = document.body.style.top;
+
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.top = "";
+
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      }
     }
 
     return () => {
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+      document.body.style.top = "";
     };
   }, [menuOpen]);
+
+  // ✅ Cerrar con ESC
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
 
   return (
     <>
@@ -92,7 +120,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
             ))}
           </div>
 
-          {/* Book button */}
+          {/* Book button + hamburger */}
           <div className="flex shrink-0 items-center gap-3 sm:gap-6">
             <a
               href={
@@ -160,12 +188,12 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
             id="mobile-menu"
-            className="fixed inset-0 z-[999] flex flex-col items-center justify-center gap-8 px-6 text-center"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 px-6 text-center"
             style={{ backgroundColor: "var(--site-bg)" }}
           >
             {navLinks.map((link, i) => (
