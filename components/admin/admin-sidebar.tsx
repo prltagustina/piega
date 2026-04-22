@@ -29,6 +29,7 @@ import {
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
+import { useSidebar } from "@/components/ui/sidebar"
 
 /* Secciones ordenadas igual que la web publica:
    Hero > Sobre Nosotros > Servicios > Nuestro Trabajo > Equipo > Contacto */
@@ -46,8 +47,11 @@ const systemItems = [
 ]
 
 export function AdminSidebar({ user }: { user: User }) {
+  const { isMobile, setOpenMobile } = useSidebar()
+
   const pathname = usePathname()
   const router = useRouter()
+  const { isMobile, setOpenMobile } = useSidebar()
 
   const handleLogout = async () => {
     const supabase = createClient()
@@ -79,7 +83,7 @@ export function AdminSidebar({ user }: { user: User }) {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={pathname === "/admin"}>
-                  <Link href="/admin">
+                  <Link href="/admin" onClick={() => isMobile <Link href="/admin"><Link href="/admin"> setOpenMobile(false)}>
                     <LayoutDashboard className="h-4 w-4" />
                     <span>Vista General</span>
                   </Link>
@@ -101,7 +105,7 @@ export function AdminSidebar({ user }: { user: User }) {
                     asChild
                     isActive={pathname.startsWith(item.href)}
                   >
-                    <Link href={item.href}>
+                    <Link href={item.href} onClick={() => isMobile <Link href={item.href}><Link href={item.href}> setOpenMobile(false)}>
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
                     </Link>
@@ -124,7 +128,7 @@ export function AdminSidebar({ user }: { user: User }) {
                     asChild
                     isActive={pathname.startsWith(item.href)}
                   >
-                    <Link href={item.href}>
+                    <Link href={item.href} onClick={() => isMobile <Link href={item.href}><Link href={item.href}> setOpenMobile(false)}>
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
                     </Link>

@@ -5,9 +5,7 @@
 /* Aeonik Fono Medium - Custom brand font for headings */
 @font-face {
   font-family: 'Aeonik Fono';
-  src: url('/fonts/AeonikFono-Medium.woff2') format('woff2'),
-       url('/fonts/AeonikFono-Medium.woff') format('woff'),
-       url('/fonts/AeonikFono-Medium.otf') format('opentype');
+  src: url('/fonts/AeonikFono-Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -104,12 +102,6 @@
   
   /* Mobile-specific optimizations */
   @media (max-width: 768px) {
-    /* Prevent flickering on scroll */
-    body {
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0);
-    }
-    
     /* Smoother scrolling on iOS */
     main {
       -webkit-overflow-scrolling: touch;

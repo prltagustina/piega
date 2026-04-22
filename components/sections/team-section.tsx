@@ -23,6 +23,7 @@ const defaultTeam: TeamMember[] = [
 export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
   const team = propTeam.length > 0 ? propTeam : defaultTeam
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canHover, setCanHover] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
@@ -44,6 +45,16 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
     window.addEventListener("resize", checkScroll);
     return () => window.removeEventListener("resize", checkScroll);
   }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)")
+    const updateHoverSupport = () => setCanHover(mediaQuery.matches)
+
+    updateHoverSupport()
+    mediaQuery.addEventListener("change", updateHoverSupport)
+
+    return () => mediaQuery.removeEventListener("change", updateHoverSupport)
+  }, [])
 
   const scroll = (direction: "left" | "right") => {
     const container = scrollContainerRef.current;
@@ -129,10 +140,10 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
         <div
           ref={scrollContainerRef}
           onScroll={checkScroll}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onMouseMove={handleMouseMove}
+          onMouseDown={canHover ? handleMouseDown : undefined}
+          onMouseUp={canHover ? handleMouseUp : undefined}
+          onMouseLeave={canHover ? handleMouseUp : undefined}
+          onMouseMove={canHover ? handleMouseMove : undefined}
           className={`flex items-start gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-8 md:px-16 lg:px-24 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"
             }`}
           style={{
@@ -153,7 +164,7 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
               <motion.div
                 className="team-card group w-[82vw] min-w-[260px] max-w-[320px] sm:w-[280px] sm:min-w-[280px] sm:max-w-[280px] md:w-[340px] md:min-w-[340px] md:max-w-[340px] lg:w-[380px] lg:min-w-[380px] lg:max-w-[380px] xl:w-[420px] xl:min-w-[420px] xl:max-w-[420px]"
                 style={{ scrollSnapAlign: "start", scrollSnapStop: "always" }}
-                whileHover="hover"
+                whileHover={canHover ? "hover" : undefined}
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <motion.div
