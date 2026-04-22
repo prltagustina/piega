@@ -13,10 +13,10 @@ const navLinks = [
 ];
 
 type SettingsData = {
-  site_name?: string
-  tagline?: string
-  booking_url?: string
-} | null
+  site_name?: string;
+  tagline?: string;
+  booking_url?: string;
+} | null;
 
 export function Navbar({ settings }: { settings?: SettingsData }) {
   const [scrolled, setScrolled] = useState(false);
@@ -67,7 +67,10 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
       >
         <nav className="flex items-center justify-between gap-3 px-4 py-4 sm:px-6 sm:py-5 md:px-12 lg:px-16">
           {/* Logo */}
-          <a href="#inicio" className="flex min-w-0 items-center gap-2 sm:gap-2.5">
+          <a
+            href="#inicio"
+            className="flex min-w-0 items-center gap-2 sm:gap-2.5"
+          >
             <Image
               src="/images/logo-piega.png"
               alt="Piega"
@@ -80,7 +83,10 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
               className="font-heading text-[7px] font-medium leading-[1.3] tracking-[0.04em] max-[340px]:hidden sm:text-[8px] md:text-[9px]"
               style={{ color: "var(--site-fg)" }}
             >
-              Hair &<br />Beauty<br />Club
+              Hair &<br />
+              Beauty
+              <br />
+              Club
             </span>
           </a>
 
@@ -101,22 +107,31 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
           {/* Book button */}
           <div className="flex shrink-0 items-center gap-3 sm:gap-6">
             <a
-              href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
+              href={
+                settings?.booking_url ||
+                "https://piega.site.agendapro.com/ar/sucursal/486410"
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="hidden md:inline-flex text-xs uppercase tracking-[0.2em] px-6 py-3 border font-light transition-all duration-300"
               style={{
                 borderColor: "var(--site-accent)",
                 color: scrolled ? "var(--site-bg)" : "var(--site-accent)",
-                backgroundColor: scrolled ? "var(--site-accent)" : "transparent",
+                backgroundColor: scrolled
+                  ? "var(--site-accent)"
+                  : "transparent",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = "var(--site-pink)";
                 e.currentTarget.style.color = "var(--site-bg)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = scrolled ? "var(--site-accent)" : "transparent";
-                e.currentTarget.style.color = scrolled ? "var(--site-bg)" : "var(--site-pink)";
+                e.currentTarget.style.backgroundColor = scrolled
+                  ? "var(--site-accent)"
+                  : "transparent";
+                e.currentTarget.style.color = scrolled
+                  ? "var(--site-bg)"
+                  : "var(--site-pink)";
               }}
             >
               Reservar
@@ -162,7 +177,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
             id="mobile-menu"
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 px-6 text-center sm:gap-8"
+            className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-6 px-6 text-center sm:gap-8 px-6"
             style={{ backgroundColor: "var(--site-bg)" }}
           >
             {navLinks.map((link, i) => (
@@ -180,7 +195,10 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
               </motion.a>
             ))}
             <motion.a
-              href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
+              href={
+                settings?.booking_url ||
+                "https://piega.site.agendapro.com/ar/sucursal/486410"
+              }
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
