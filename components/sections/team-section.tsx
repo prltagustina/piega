@@ -7,21 +7,41 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type TeamMember = {
-  id: string
-  name: string
-  role: string
-  image_url: string
-}
+  id: string;
+  name: string;
+  role: string;
+  image_url: string;
+};
 
 const defaultTeam: TeamMember[] = [
-  { id: "1", name: "Sofia Martinez", role: "Directora Creativa", image_url: "/images/team.jpg" },
-  { id: "2", name: "Valentina Rossi", role: "Colorista Senior", image_url: "/images/gallery-1.jpg" },
-  { id: "3", name: "Camila Torres", role: "Especialista en Spa", image_url: "/images/gallery-2.jpg" },
-  { id: "4", name: "Lucia Fernandez", role: "Estilista", image_url: "/images/gallery-3.jpg" },
-]
+  {
+    id: "1",
+    name: "Sofia Martinez",
+    role: "Directora Creativa",
+    image_url: "/images/team.jpg",
+  },
+  {
+    id: "2",
+    name: "Valentina Rossi",
+    role: "Colorista Senior",
+    image_url: "/images/gallery-1.jpg",
+  },
+  {
+    id: "3",
+    name: "Camila Torres",
+    role: "Especialista en Spa",
+    image_url: "/images/gallery-2.jpg",
+  },
+  {
+    id: "4",
+    name: "Lucia Fernandez",
+    role: "Estilista",
+    image_url: "/images/gallery-3.jpg",
+  },
+];
 
 export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
-  const team = propTeam.length > 0 ? propTeam : defaultTeam
+  const team = propTeam.length > 0 ? propTeam : defaultTeam;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canHover, setCanHover] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -35,7 +55,8 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
     if (container) {
       setCanScrollLeft(container.scrollLeft > 0);
       setCanScrollRight(
-        container.scrollLeft < container.scrollWidth - container.clientWidth - 10
+        container.scrollLeft <
+          container.scrollWidth - container.clientWidth - 10,
       );
     }
   };
@@ -47,20 +68,22 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
   }, []);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)")
-    const updateHoverSupport = () => setCanHover(mediaQuery.matches)
+    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const updateHoverSupport = () => setCanHover(mediaQuery.matches);
 
-    updateHoverSupport()
-    mediaQuery.addEventListener("change", updateHoverSupport)
+    updateHoverSupport();
+    mediaQuery.addEventListener("change", updateHoverSupport);
 
-    return () => mediaQuery.removeEventListener("change", updateHoverSupport)
-  }, [])
+    return () => mediaQuery.removeEventListener("change", updateHoverSupport);
+  }, []);
 
   const scroll = (direction: "left" | "right") => {
     const container = scrollContainerRef.current;
     if (container) {
-      const cardWidth = container.querySelector(".team-card")?.clientWidth || 400;
-      const scrollAmount = direction === "left" ? -cardWidth - 24 : cardWidth + 24;
+      const cardWidth =
+        container.querySelector(".team-card")?.clientWidth || 400;
+      const scrollAmount =
+        direction === "left" ? -cardWidth - 24 : cardWidth + 24;
       container.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
@@ -109,8 +132,8 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
               className="text-sm font-light max-w-sm leading-relaxed"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              Un equipo de profesionales apasionados por la belleza y el
-              bienestar, dedicados a realzar tu mejor version.
+              Un equipo de profesionales apasionadas por la belleza y el
+              bienestar, dedicadas a realzar tu mejor versión.
             </p>
           </div>
         </ScrollReveal>
@@ -121,16 +144,18 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
         {/* Navigation buttons - hidden on mobile, visible from sm up */}
         <button
           onClick={() => scroll("left")}
-          className={`absolute left-8 md:left-14 lg:left-20 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 hidden sm:flex items-center justify-center rounded-full bg-[var(--site-bg)]/90 backdrop-blur-sm border border-[var(--site-border)] text-[var(--site-fg)] transition-all duration-300 hover:bg-[var(--site-accent)] hover:text-[var(--site-bg)] ${canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
+          className={`absolute left-8 md:left-14 lg:left-20 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 hidden sm:flex items-center justify-center rounded-full bg-[var(--site-bg)]/90 backdrop-blur-sm border border-[var(--site-border)] text-[var(--site-fg)] transition-all duration-300 hover:bg-[var(--site-accent)] hover:text-[var(--site-bg)] ${
+            canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
           aria-label="Anterior"
         >
           <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
         </button>
         <button
           onClick={() => scroll("right")}
-          className={`absolute right-8 md:right-14 lg:right-20 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 hidden sm:flex items-center justify-center rounded-full bg-[var(--site-bg)]/90 backdrop-blur-sm border border-[var(--site-border)] text-[var(--site-fg)] transition-all duration-300 hover:bg-[var(--site-accent)] hover:text-[var(--site-bg)] ${canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
+          className={`absolute right-8 md:right-14 lg:right-20 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 hidden sm:flex items-center justify-center rounded-full bg-[var(--site-bg)]/90 backdrop-blur-sm border border-[var(--site-border)] text-[var(--site-fg)] transition-all duration-300 hover:bg-[var(--site-accent)] hover:text-[var(--site-bg)] ${
+            canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
           aria-label="Siguiente"
         >
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
@@ -144,8 +169,9 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
           onMouseUp={canHover ? handleMouseUp : undefined}
           onMouseLeave={canHover ? handleMouseUp : undefined}
           onMouseMove={canHover ? handleMouseMove : undefined}
-          className={`flex items-start gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-8 md:px-16 lg:px-24 ${isDragging ? "cursor-grabbing select-none" : "cursor-grab"
-            }`}
+          className={`flex items-start gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-8 md:px-16 lg:px-24 ${
+            isDragging ? "cursor-grabbing select-none" : "cursor-grab"
+          }`}
           style={{
             scrollSnapType: "x proximity",
             WebkitOverflowScrolling: "touch",
@@ -172,7 +198,10 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
                     variants={{
                       hover: { scale: 1.05 },
                     }}
-                    transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                    }}
                   >
                     <Image
                       src={member.image_url || "/placeholder.svg"}
