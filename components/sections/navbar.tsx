@@ -28,28 +28,16 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Prevent body scroll when mobile menu is open
+  // FIX: scroll lock simple (sin romper layout)
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
-      document.body.style.top = `-${window.scrollY}px`;
     } else {
-      const scrollY = document.body.style.top;
       document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-      document.body.style.top = "";
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      }
     }
+
     return () => {
       document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-      document.body.style.top = "";
     };
   }, [menuOpen]);
 
@@ -172,12 +160,12 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             id="mobile-menu"
-            className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-6 px-6 text-center sm:gap-8 px-6"
+            className="fixed inset-0 z-[999] flex flex-col items-center justify-center gap-8 px-6 text-center"
             style={{ backgroundColor: "var(--site-bg)" }}
           >
             {navLinks.map((link, i) => (
@@ -194,6 +182,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
                 {link.label}
               </motion.a>
             ))}
+
             <motion.a
               href={
                 settings?.booking_url ||
