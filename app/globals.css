@@ -104,12 +104,6 @@
   
   /* Mobile-specific optimizations */
   @media (max-width: 768px) {
-    /* Prevent flickering on scroll */
-    body {
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0);
-    }
-    
     /* Smoother scrolling on iOS */
     main {
       -webkit-overflow-scrolling: touch;

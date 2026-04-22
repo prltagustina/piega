@@ -65,19 +65,19 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
             : "bg-transparent"
         }`}
       >
-        <nav className="flex items-center justify-between px-6 md:px-12 lg:px-16 py-5">
+        <nav className="flex items-center justify-between gap-3 px-4 py-4 sm:px-6 sm:py-5 md:px-12 lg:px-16">
           {/* Logo */}
-          <a href="#inicio" className="flex items-center gap-2.5">
+          <a href="#inicio" className="flex min-w-0 items-center gap-2 sm:gap-2.5">
             <Image
               src="/images/logo-piega.png"
               alt="Piega"
               width={120}
               height={40}
-              className="h-7 md:h-9 w-auto"
+              className="h-6 w-auto shrink-0 sm:h-7 md:h-9"
               priority
             />
             <span
-              className="text-[8px] md:text-[9px] font-heading font-medium leading-[1.3] tracking-[0.04em]"
+              className="font-heading text-[7px] font-medium leading-[1.3] tracking-[0.04em] max-[340px]:hidden sm:text-[8px] md:text-[9px]"
               style={{ color: "var(--site-fg)" }}
             >
               Hair &<br />Beauty<br />Club
@@ -99,7 +99,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
           </div>
 
           {/* Book button */}
-          <div className="flex items-center gap-6">
+          <div className="flex shrink-0 items-center gap-3 sm:gap-6">
             <a
               href={settings?.booking_url || "https://piega.site.agendapro.com/ar/sucursal/486410"}
               target="_blank"
@@ -125,9 +125,11 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
             {/* Hamburger */}
             <button
               type="button"
-              className="lg:hidden flex flex-col gap-1.5 p-2"
+              className="flex shrink-0 flex-col gap-1.5 p-2 lg:hidden"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-controls="mobile-menu"
+              aria-expanded={menuOpen}
             >
               <motion.span
                 animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
@@ -159,7 +161,8 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8"
+            id="mobile-menu"
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 px-6 text-center sm:gap-8"
             style={{ backgroundColor: "var(--site-bg)" }}
           >
             {navLinks.map((link, i) => (
@@ -169,7 +172,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * i, duration: 0.4 }}
-                className="text-3xl font-heading font-medium tracking-wide"
+                className="font-heading text-2xl font-medium tracking-wide sm:text-3xl"
                 style={{ color: "var(--site-fg)" }}
                 onClick={() => setMenuOpen(false)}
               >
@@ -183,7 +186,7 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.4 }}
-              className="mt-4 text-sm uppercase tracking-[0.2em] px-8 py-3 border"
+              className="mt-2 border px-6 py-3 text-center text-sm uppercase tracking-[0.2em] sm:mt-4 sm:px-8"
               style={{
                 borderColor: "var(--site-accent)",
                 color: "var(--site-bg)",
