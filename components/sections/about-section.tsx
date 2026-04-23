@@ -39,6 +39,73 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
 
   // Carousel state
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchStartY, setTouchStartY] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  // Touch event handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!scrollContainerRef.current) return;
+
+    const touch = e.touches[0];
+    setTouchStartX(touch.clientX);
+    setTouchStartY(touch.clientY);
+    setIsScrolling(false);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!scrollContainerRef.current) return;
+
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = Math.abs(touch.clientY - touchStartY);
+
+    // If this is the first move and horizontal movement is detected, start scrolling
+    if (!isScrolling && Math.abs(deltaX) > 10 && Math.abs(deltaX) > deltaY) {
+      setIsScrolling(true);
+    }
+
+    // If we're scrolling horizontally, handle it manually
+    if (isScrolling) {
+      e.preventDefault();
+      scrollContainerRef.current.scrollLeft = scrollLeft - deltaX;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsScrolling(false);
+  };
+
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return;
+
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+    e.preventDefault();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Increased sensitivity
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
   
   // Prioritize the image already saved on the main about section, then append carousel images.
   const images = [
@@ -102,15 +169,25 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
           <div className="flex flex-col gap-4">
             <div
               ref={scrollContainerRef}
-              className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+              className={`flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory ${
+                isDragging ? 'cursor-grabbing' : 'cursor-grab'
+              } select-none`}
               style={{
                 WebkitOverflowScrolling: "touch",
                 touchAction: "pan-x pinch-zoom",
                 scrollPaddingLeft: "0px",
                 scrollPaddingRight: "0px",
+                userSelect: "none",
               }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseLeave}
             >
-              {images.map((image, index) => (
+              {images.map((image) => (
                 <motion.div
                   key={image.src}
                   data-salon-slide

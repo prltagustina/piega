@@ -384,42 +384,6 @@ export async function updateContactSection(formData: FormData) {
 }
 
 // ============================================
-// Team Section
-// ============================================
-export async function updateTeamSection(formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error("No autorizado")
-
-  const id = formData.get("id") as string
-  
-  if (id) {
-    const { error } = await supabase
-      .from("team_section")
-      .update({
-        subtitle: formData.get("subtitle") as string,
-        title: formData.get("title") as string,
-        description: formData.get("description") as string,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", id)
-
-    if (error) throw new Error(error.message)
-  } else {
-    const { error } = await supabase.from("team_section").insert({
-      subtitle: formData.get("subtitle") as string,
-      title: formData.get("title") as string,
-      description: formData.get("description") as string,
-    })
-
-    if (error) throw new Error(error.message)
-  }
-
-  revalidatePath("/admin/team")
-  revalidatePath("/")
-}
-
-// ============================================
 // About Images CRUD (for carousel)
 // ============================================
 export async function createAboutImage(formData: FormData) {

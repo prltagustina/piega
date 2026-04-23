@@ -6,7 +6,6 @@ import {
   updateSiteSettings,
   updateContactSection,
   updateServicesDefaultImage,
-  updateTeamSection,
 } from "@/app/admin/actions"
 
 export async function handleHeroUpdate(
@@ -51,18 +50,6 @@ export async function handleContactUpdate(
 ): Promise<{ error: string | null; success: boolean }> {
   try {
     await updateContactSection(formData)
-    return { error: null, success: true }
-  } catch (e) {
-    return { error: e instanceof Error ? e.message : "Error desconocido", success: false }
-  }
-}
-
-export async function handleTeamUpdate(
-  _prevState: { error: string | null; success: boolean },
-  formData: FormData
-): Promise<{ error: string | null; success: boolean }> {
-  try {
-    await updateTeamSection(formData)
     return { error: null, success: true }
   } catch (e) {
     return { error: e instanceof Error ? e.message : "Error desconocido", success: false }

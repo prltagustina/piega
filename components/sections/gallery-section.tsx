@@ -55,8 +55,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
     return { col1, col2, col3 }
   }, [images])
   
-  // For mobile: distribute all images into 2 columns (left and right)
-  // If odd number of images, the last one goes to col2
+  // For mobile: distribute all images into 2 columns
   const mobileColumns = useMemo(() => {
     const col1: typeof images = []
     const col2: typeof images = []
@@ -138,7 +137,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
 
         {/* Mobile Column 2 */}
         <motion.div
-          className="flex flex-col gap-3"
+          className="flex flex-col gap-3 mt-8"
           style={{ y: col2Y }}
         >
           {mobileColumns.col2.map((img, i) => (

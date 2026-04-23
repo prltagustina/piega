@@ -5,18 +5,6 @@
       .cls-1 {
         fill: #f9f2e9;
       }
-      
-      @media (prefers-color-scheme: light) {
-        .cls-1 {
-          fill: #1a1a1a;
-        }
-      }
-      
-      @media (prefers-color-scheme: dark) {
-        .cls-1 {
-          fill: #ffffff;
-        }
-      }
     </style>
   </defs>
   <g id="Capa_1-2" data-name="Capa 1">
