@@ -13,6 +13,12 @@ type TeamMember = {
   image_url: string;
 };
 
+type TeamSectionData = {
+  subtitle?: string;
+  title?: string;
+  description?: string;
+} | null;
+
 const defaultTeam: TeamMember[] = [
   {
     id: "1",
@@ -40,8 +46,15 @@ const defaultTeam: TeamMember[] = [
   },
 ];
 
-export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
+export function TeamSection({ team: propTeam, teamSection }: { team: TeamMember[]; teamSection?: TeamSectionData }) {
   const team = propTeam.length > 0 ? propTeam : defaultTeam;
+  
+  // Use provided section data or defaults
+  const sectionData = teamSection || {
+    subtitle: "Nuestro Equipo",
+    title: "Artistas del estilo",
+    description: "Un equipo de profesionales apasionadas por la belleza y el bienestar, dedicadas a realzar tu mejor versión.",
+  };
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canHover, setCanHover] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -119,21 +132,20 @@ export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
                 className="text-xs uppercase tracking-[0.3em] mb-4"
                 style={{ color: "var(--site-accent)" }}
               >
-                Nuestro Equipo
+                {sectionData?.subtitle || "Nuestro Equipo"}
               </p>
               <h2
                 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-medium leading-tight"
                 style={{ color: "var(--site-fg)" }}
               >
-                Artistas del estilo
+                {sectionData?.title || "Artistas del estilo"}
               </h2>
             </div>
             <p
               className="text-sm font-light max-w-sm leading-relaxed"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              Un equipo de profesionales apasionadas por la belleza y el
-              bienestar, dedicadas a realzar tu mejor versión.
+              {sectionData?.description || "Un equipo de profesionales apasionadas por la belleza y el bienestar, dedicadas a realzar tu mejor versión."}
             </p>
           </div>
         </ScrollReveal>
