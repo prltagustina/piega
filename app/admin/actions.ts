@@ -2,6 +2,46 @@
 
 import { createClient } from "@/lib/supabase/server"
 import { revalidatePath } from "next/cache"
+import { z } from "zod"
+
+const requiredTrimString = z.preprocess((value) => {
+  if (typeof value === "string") return value.trim()
+  return ""
+}, z.string().min(1))
+
+const trimString = z.preprocess((value) => {
+  if (typeof value === "string") return value.trim()
+  return ""
+}, z.string())
+
+const optionalTrimString = z.preprocess((value) => {
+  if (typeof value === "string") {
+    const trimmed = value.trim()
+    return trimmed.length > 0 ? trimmed : undefined
+  }
+  return undefined
+}, z.string().optional())
+
+const checkboxBoolean = z.preprocess((value) => value === "on", z.boolean())
+
+const nonNegativeInt = z.preprocess((value) => {
+  const parsed = Number(value)
+  return Number.isInteger(parsed) && parsed >= 0 ? parsed : 0
+}, z.number().int().nonnegative())
+
+const permittedTable = z.enum(["services", "team_members", "gallery_images"])
+const directionEnum = z.enum(["up", "down"])
+
+function parseFormData<T extends z.ZodTypeAny>(schema: T, formData: FormData) {
+  const rawData = Object.fromEntries(
+    Array.from(formData.entries(), ([key, value]) => [
+      key,
+      typeof value === "string" ? value.trim() : value,
+    ])
+  )
+
+  return schema.parse(rawData)
+}
 
 // ============================================
 // Hero Section
@@ -11,19 +51,32 @@ export async function updateHeroSection(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const heroSchema = z.object({
+    id: requiredTrimString,
+    subtitle: trimString,
+    title_line1: trimString,
+    title_line2: trimString,
+    description: trimString,
+    image_url: trimString,
+    cta_primary_text: trimString,
+    cta_secondary_text: trimString,
+  })
+
+  const data = parseFormData(heroSchema, formData)
+
   const { error } = await supabase
     .from("hero_section")
     .update({
-      subtitle: formData.get("subtitle") as string,
-      title_line1: formData.get("title_line1") as string,
-      title_line2: formData.get("title_line2") as string,
-      description: formData.get("description") as string,
-      image_url: formData.get("image_url") as string,
-      cta_primary_text: formData.get("cta_primary_text") as string,
-      cta_secondary_text: formData.get("cta_secondary_text") as string,
+      subtitle: data.subtitle,
+      title_line1: data.title_line1,
+      title_line2: data.title_line2,
+      description: data.description,
+      image_url: data.image_url,
+      cta_primary_text: data.cta_primary_text,
+      cta_secondary_text: data.cta_secondary_text,
       updated_at: new Date().toISOString(),
     })
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/hero")
@@ -38,23 +91,40 @@ export async function updateAboutSection(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const aboutSchema = z.object({
+    id: requiredTrimString,
+    subtitle: trimString,
+    title: trimString,
+    paragraph1: trimString,
+    paragraph2: trimString,
+    image_url: trimString,
+    stat1_number: trimString,
+    stat1_label: trimString,
+    stat2_number: trimString,
+    stat2_label: trimString,
+    stat3_number: trimString,
+    stat3_label: trimString,
+  })
+
+  const data = parseFormData(aboutSchema, formData)
+
   const { error } = await supabase
     .from("about_section")
     .update({
-      subtitle: formData.get("subtitle") as string,
-      title: formData.get("title") as string,
-      paragraph1: formData.get("paragraph1") as string,
-      paragraph2: formData.get("paragraph2") as string,
-      image_url: formData.get("image_url") as string,
-      stat1_number: formData.get("stat1_number") as string,
-      stat1_label: formData.get("stat1_label") as string,
-      stat2_number: formData.get("stat2_number") as string,
-      stat2_label: formData.get("stat2_label") as string,
-      stat3_number: formData.get("stat3_number") as string,
-      stat3_label: formData.get("stat3_label") as string,
+      subtitle: data.subtitle,
+      title: data.title,
+      paragraph1: data.paragraph1,
+      paragraph2: data.paragraph2,
+      image_url: data.image_url,
+      stat1_number: data.stat1_number,
+      stat1_label: data.stat1_label,
+      stat2_number: data.stat2_number,
+      stat2_label: data.stat2_label,
+      stat3_number: data.stat3_number,
+      stat3_label: data.stat3_label,
       updated_at: new Date().toISOString(),
     })
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/about")
@@ -69,21 +139,36 @@ export async function updateSiteSettings(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const siteSettingsSchema = z.object({
+    id: requiredTrimString,
+    site_name: trimString,
+    tagline: trimString,
+    phone: trimString,
+    email: optionalTrimString,
+    address: trimString,
+    instagram_url: optionalTrimString,
+    whatsapp_url: optionalTrimString,
+    facebook_url: optionalTrimString,
+    booking_url: optionalTrimString,
+  })
+
+  const data = parseFormData(siteSettingsSchema, formData)
+
   const { error } = await supabase
     .from("site_settings")
     .update({
-      site_name: formData.get("site_name") as string,
-      tagline: formData.get("tagline") as string,
-      phone: formData.get("phone") as string,
-      email: formData.get("email") as string,
-      address: formData.get("address") as string,
-      instagram_url: formData.get("instagram_url") as string,
-      whatsapp_url: formData.get("whatsapp_url") as string,
-      facebook_url: formData.get("facebook_url") as string,
-      booking_url: formData.get("booking_url") as string,
+      site_name: data.site_name,
+      tagline: data.tagline,
+      phone: data.phone,
+      email: data.email,
+      address: data.address,
+      instagram_url: data.instagram_url,
+      whatsapp_url: data.whatsapp_url,
+      facebook_url: data.facebook_url,
+      booking_url: data.booking_url,
       updated_at: new Date().toISOString(),
     })
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/settings")
@@ -95,14 +180,20 @@ export async function updateServicesDefaultImage(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const defaultImageSchema = z.object({
+    id: requiredTrimString,
+    services_default_image: trimString,
+  })
+
+  const data = parseFormData(defaultImageSchema, formData)
+
   const { error } = await supabase
     .from("site_settings")
     .update({
-      services_default_image:
-        (formData.get("services_default_image") as string) || "/images/services.jpg",
+      services_default_image: data.services_default_image || "/images/services.jpg",
       updated_at: new Date().toISOString(),
     })
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/services")
@@ -118,13 +209,24 @@ export async function createService(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const createServiceSchema = z.object({
+    title: requiredTrimString,
+    description: requiredTrimString,
+    price: requiredTrimString,
+    image_url: trimString,
+    sort_order: nonNegativeInt,
+    is_active: checkboxBoolean,
+  })
+
+  const data = parseFormData(createServiceSchema, formData)
+
   const { error } = await supabase.from("services").insert({
-    title: formData.get("title") as string,
-    description: formData.get("description") as string,
-    price: formData.get("price") as string,
-    image_url: formData.get("image_url") as string || "",
-    sort_order: parseInt(formData.get("sort_order") as string) || 0,
-    is_active: formData.get("is_active") === "on",
+    title: data.title,
+    description: data.description,
+    price: data.price,
+    image_url: data.image_url,
+    sort_order: data.sort_order,
+    is_active: data.is_active,
   })
 
   if (error) throw new Error(error.message)
@@ -137,18 +239,30 @@ export async function updateService(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const updateServiceSchema = z.object({
+    id: requiredTrimString,
+    title: requiredTrimString,
+    description: requiredTrimString,
+    price: requiredTrimString,
+    image_url: trimString,
+    sort_order: nonNegativeInt,
+    is_active: checkboxBoolean,
+  })
+
+  const data = parseFormData(updateServiceSchema, formData)
+
   const { error } = await supabase
     .from("services")
     .update({
-      title: formData.get("title") as string,
-      description: formData.get("description") as string,
-      price: formData.get("price") as string,
-      image_url: formData.get("image_url") as string || "",
-      sort_order: parseInt(formData.get("sort_order") as string) || 0,
-      is_active: formData.get("is_active") === "on",
+      title: data.title,
+      description: data.description,
+      price: data.price,
+      image_url: data.image_url,
+      sort_order: data.sort_order,
+      is_active: data.is_active,
       updated_at: new Date().toISOString(),
     })
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/services")
@@ -160,10 +274,16 @@ export async function deleteService(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const deleteServiceSchema = z.object({
+    id: requiredTrimString,
+  })
+
+  const data = parseFormData(deleteServiceSchema, formData)
+
   const { error } = await supabase
     .from("services")
     .delete()
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/services")
@@ -178,12 +298,22 @@ export async function createTeamMember(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const createTeamMemberSchema = z.object({
+    name: requiredTrimString,
+    role: requiredTrimString,
+    image_url: trimString,
+    sort_order: nonNegativeInt,
+    is_active: checkboxBoolean,
+  })
+
+  const data = parseFormData(createTeamMemberSchema, formData)
+
   const { error } = await supabase.from("team_members").insert({
-    name: formData.get("name") as string,
-    role: formData.get("role") as string,
-    image_url: formData.get("image_url") as string,
-    sort_order: parseInt(formData.get("sort_order") as string) || 0,
-    is_active: formData.get("is_active") === "on",
+    name: data.name,
+    role: data.role,
+    image_url: data.image_url,
+    sort_order: data.sort_order,
+    is_active: data.is_active,
   })
 
   if (error) throw new Error(error.message)
@@ -196,17 +326,28 @@ export async function updateTeamMember(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const updateTeamMemberSchema = z.object({
+    id: requiredTrimString,
+    name: requiredTrimString,
+    role: requiredTrimString,
+    image_url: trimString,
+    sort_order: nonNegativeInt,
+    is_active: checkboxBoolean,
+  })
+
+  const data = parseFormData(updateTeamMemberSchema, formData)
+
   const { error } = await supabase
     .from("team_members")
     .update({
-      name: formData.get("name") as string,
-      role: formData.get("role") as string,
-      image_url: formData.get("image_url") as string,
-      sort_order: parseInt(formData.get("sort_order") as string) || 0,
-      is_active: formData.get("is_active") === "on",
+      name: data.name,
+      role: data.role,
+      image_url: data.image_url,
+      sort_order: data.sort_order,
+      is_active: data.is_active,
       updated_at: new Date().toISOString(),
     })
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/team")
@@ -218,10 +359,16 @@ export async function deleteTeamMember(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const deleteTeamMemberSchema = z.object({
+    id: requiredTrimString,
+  })
+
+  const data = parseFormData(deleteTeamMemberSchema, formData)
+
   const { error } = await supabase
     .from("team_members")
     .delete()
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/team")
@@ -236,11 +383,20 @@ export async function createGalleryImage(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const createGalleryImageSchema = z.object({
+    image_url: requiredTrimString,
+    alt_text: trimString,
+    sort_order: nonNegativeInt,
+    is_active: checkboxBoolean,
+  })
+
+  const data = parseFormData(createGalleryImageSchema, formData)
+
   const { error } = await supabase.from("gallery_images").insert({
-    image_url: formData.get("image_url") as string,
-    alt_text: formData.get("alt_text") as string,
-    sort_order: parseInt(formData.get("sort_order") as string) || 0,
-    is_active: formData.get("is_active") === "on",
+    image_url: data.image_url,
+    alt_text: data.alt_text,
+    sort_order: data.sort_order,
+    is_active: data.is_active,
   })
 
   if (error) throw new Error(error.message)
@@ -253,16 +409,26 @@ export async function updateGalleryImage(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const updateGalleryImageSchema = z.object({
+    id: requiredTrimString,
+    image_url: requiredTrimString,
+    alt_text: trimString,
+    sort_order: nonNegativeInt,
+    is_active: checkboxBoolean,
+  })
+
+  const data = parseFormData(updateGalleryImageSchema, formData)
+
   const { error } = await supabase
     .from("gallery_images")
     .update({
-      image_url: formData.get("image_url") as string,
-      alt_text: formData.get("alt_text") as string,
-      sort_order: parseInt(formData.get("sort_order") as string) || 0,
-      is_active: formData.get("is_active") === "on",
+      image_url: data.image_url,
+      alt_text: data.alt_text,
+      sort_order: data.sort_order,
+      is_active: data.is_active,
       updated_at: new Date().toISOString(),
     })
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/gallery")
@@ -277,13 +443,19 @@ export async function reorderItem(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
-  const table = formData.get("table") as string
-  const id = formData.get("id") as string
-  const direction = formData.get("direction") as string // "up" or "down"
-  const revalidateRoute = formData.get("revalidate") as string
+  const reorderSchema = z.object({
+    table: permittedTable,
+    id: requiredTrimString,
+    direction: directionEnum,
+    revalidate: trimString.optional(),
+  })
 
-  const allowedTables = ["services", "team_members", "gallery_images"]
-  if (!allowedTables.includes(table)) throw new Error("Tabla no permitida")
+  const data = parseFormData(reorderSchema, formData)
+
+  const table = data.table
+  const id = data.id
+  const direction = data.direction
+  const revalidateRoute = data.revalidate
 
   // Get current item
   const { data: currentItem } = await supabase
@@ -335,10 +507,16 @@ export async function deleteGalleryImage(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const deleteGalleryImageSchema = z.object({
+    id: requiredTrimString,
+  })
+
+  const data = parseFormData(deleteGalleryImageSchema, formData)
+
   const { error } = await supabase
     .from("gallery_images")
     .delete()
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/gallery")
@@ -353,27 +531,35 @@ export async function updateContactSection(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
-  const id = formData.get("id") as string
-  
-  if (id) {
+  const contactSchema = z.object({
+    id: trimString.optional(),
+    subtitle: trimString,
+    title: trimString,
+    description: trimString,
+    image_url: trimString,
+  })
+
+  const data = parseFormData(contactSchema, formData)
+
+  if (data.id) {
     const { error } = await supabase
       .from("contact_section")
       .update({
-        subtitle: formData.get("subtitle") as string,
-        title: formData.get("title") as string,
-        description: formData.get("description") as string,
-        image_url: formData.get("image_url") as string,
+        subtitle: data.subtitle,
+        title: data.title,
+        description: data.description,
+        image_url: data.image_url,
         updated_at: new Date().toISOString(),
       })
-      .eq("id", id)
+      .eq("id", data.id)
 
     if (error) throw new Error(error.message)
   } else {
     const { error } = await supabase.from("contact_section").insert({
-      subtitle: formData.get("subtitle") as string,
-      title: formData.get("title") as string,
-      description: formData.get("description") as string,
-      image_url: formData.get("image_url") as string,
+      subtitle: data.subtitle,
+      title: data.title,
+      description: data.description,
+      image_url: data.image_url,
     })
 
     if (error) throw new Error(error.message)
@@ -391,10 +577,18 @@ export async function createAboutImage(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const createAboutImageSchema = z.object({
+    image_url: requiredTrimString,
+    alt_text: trimString,
+    sort_order: nonNegativeInt,
+  })
+
+  const data = parseFormData(createAboutImageSchema, formData)
+
   const { error } = await supabase.from("about_images").insert({
-    image_url: formData.get("image_url") as string,
-    alt_text: formData.get("alt_text") as string,
-    sort_order: parseInt(formData.get("sort_order") as string) || 0,
+    image_url: data.image_url,
+    alt_text: data.alt_text,
+    sort_order: data.sort_order,
     is_active: true,
   })
 
@@ -408,15 +602,24 @@ export async function updateAboutImage(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const updateAboutImageSchema = z.object({
+    id: requiredTrimString,
+    image_url: requiredTrimString,
+    alt_text: trimString,
+    sort_order: nonNegativeInt,
+  })
+
+  const data = parseFormData(updateAboutImageSchema, formData)
+
   const { error } = await supabase
     .from("about_images")
     .update({
-      image_url: formData.get("image_url") as string,
-      alt_text: formData.get("alt_text") as string,
-      sort_order: parseInt(formData.get("sort_order") as string) || 0,
+      image_url: data.image_url,
+      alt_text: data.alt_text,
+      sort_order: data.sort_order,
       updated_at: new Date().toISOString(),
     })
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/about")
@@ -428,10 +631,16 @@ export async function deleteAboutImage(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("No autorizado")
 
+  const deleteAboutImageSchema = z.object({
+    id: requiredTrimString,
+  })
+
+  const data = parseFormData(deleteAboutImageSchema, formData)
+
   const { error } = await supabase
     .from("about_images")
     .delete()
-    .eq("id", formData.get("id") as string)
+    .eq("id", data.id)
 
   if (error) throw new Error(error.message)
   revalidatePath("/admin/about")
