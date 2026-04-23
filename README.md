@@ -1,5 +1,13 @@
 # Piega Hair & Beauty Club
 
+## Security Status
+
+✅ **No known vulnerabilities** - Dependencies audited and patched via `pnpm audit --fix` and manual overrides.
+
+Last security audit: April 2026
+- Next.js updated to 16.2.3 (patched for request smuggling, DoS, CSRF)
+- All transitive vulnerabilities resolved via dependency overrides
+
 ## Deployment on Vercel
 
 This project uses Supabase for backend data and authentication.
