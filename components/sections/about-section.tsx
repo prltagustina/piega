@@ -34,8 +34,9 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
     offset: ["start end", "end start"],
   });
 
-  const imageScale = useTransform(scrollYProgress, [0, 0.5], [1.15, 1]);
-  const imageY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
+  // Reduced parallax values for smoother mobile experience
+  const imageScale = useTransform(scrollYProgress, [0, 0.5], [1.1, 1]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["2%", "-2%"]);
 
   // Carousel state
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -198,6 +199,7 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
                 scrollPaddingLeft: "0px",
                 scrollPaddingRight: "0px",
                 userSelect: "none",
+                overscrollBehaviorX: "contain",
               }}
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
@@ -224,6 +226,8 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
                   />
                 </motion.div>
               ))}
