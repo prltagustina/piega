@@ -126,21 +126,21 @@ export function TeamSection({ team: propTeam, sectionTitle }: { team: TeamMember
                 className="text-xs uppercase tracking-[0.3em] mb-4"
                 style={{ color: "var(--site-accent)" }}
               >
-                Nuestro Equipo
+                {section.subtitle || "Nuestro Equipo"}
               </p>
               <h2
                 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-medium leading-tight"
                 style={{ color: "var(--site-fg)" }}
               >
-                Artistas del estilo
+                {section.title || "Artistas del estilo"}
               </h2>
             </div>
             <p
               className="text-sm font-light max-w-sm leading-relaxed"
               style={{ color: "var(--site-fg-muted)" }}
             >
-              Un equipo de profesionales apasionadas por la belleza y el
-              bienestar, dedicadas a realzar tu mejor versión.
+              {section.description ||
+                "Un equipo de profesionales apasionadas por la belleza y el bienestar, dedicadas a realzar tu mejor versión."}
             </p>
           </div>
         </ScrollReveal>
