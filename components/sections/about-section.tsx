@@ -155,6 +155,26 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
     }
   }, [images.length])
 
+  const nextSlide = () => {
+    const container = scrollContainerRef.current
+    if (!container) return
+    const nextIndex = (currentIndex + 1) % images.length
+    const slide = container.querySelectorAll<HTMLElement>("[data-salon-slide]")[nextIndex]
+    if (slide) {
+      container.scrollTo({ left: slide.offsetLeft, behavior: "smooth" })
+    }
+  }
+
+  const prevSlide = () => {
+    const container = scrollContainerRef.current
+    if (!container) return
+    const prevIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1
+    const slide = container.querySelectorAll<HTMLElement>("[data-salon-slide]")[prevIndex]
+    if (slide) {
+      container.scrollTo({ left: slide.offsetLeft, behavior: "smooth" })
+    }
+  }
+
   const showNavigation = images.length > 1;
 
   return (
@@ -210,27 +230,51 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
             </div>
           
             {showNavigation && (
-              <div className="flex justify-center gap-2">
-                {images.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      const container = scrollContainerRef.current
-                      const slide = container?.querySelectorAll<HTMLElement>("[data-salon-slide]")[i]
-                      if (!container || !slide) return
-                      container.scrollTo({ left: slide.offsetLeft, behavior: "smooth" })
-                    }}
-                    className="h-1.5 rounded-full transition-all duration-500 ease-out"
-                    style={{
-                      width: i === currentIndex ? "28px" : "8px",
-                      backgroundColor:
-                        i === currentIndex
-                          ? "var(--site-accent)"
-                          : "rgba(212, 204, 196, 0.45)",
-                    }}
-                    aria-label={`Ir a imagen ${i + 1}`}
-                  />
-                ))}
+              <div className="flex items-center justify-center gap-4">
+                <button
+                  onClick={prevSlide}
+                  className="p-2 rounded-full transition-colors duration-200 hover:bg-white/10"
+                  style={{ color: "var(--site-fg-muted)" }}
+                  aria-label="Imagen anterior"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                  </svg>
+                </button>
+                
+                <div className="flex gap-2">
+                  {images.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => {
+                        const container = scrollContainerRef.current
+                        const slide = container?.querySelectorAll<HTMLElement>("[data-salon-slide]")[i]
+                        if (!container || !slide) return
+                        container.scrollTo({ left: slide.offsetLeft, behavior: "smooth" })
+                      }}
+                      className="h-1.5 rounded-full transition-all duration-500 ease-out"
+                      style={{
+                        width: i === currentIndex ? "28px" : "8px",
+                        backgroundColor:
+                          i === currentIndex
+                            ? "var(--site-accent)"
+                            : "rgba(212, 204, 196, 0.45)",
+                      }}
+                      aria-label={`Ir a imagen ${i + 1}`}
+                    />
+                  ))}
+                </div>
+                
+                <button
+                  onClick={nextSlide}
+                  className="p-2 rounded-full transition-colors duration-200 hover:bg-white/10"
+                  style={{ color: "var(--site-fg-muted)" }}
+                  aria-label="Imagen siguiente"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </button>
               </div>
             )}
           </div>
