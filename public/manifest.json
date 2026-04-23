@@ -1,0 +1,19 @@
+{
+  "name": "Piega Hair & Beauty Club",
+  "short_name": "Piega",
+  "description": "Salon de belleza premium - Hair & Beauty Club",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/p-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
