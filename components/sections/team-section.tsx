@@ -13,6 +13,12 @@ type TeamMember = {
   image_url: string;
 };
 
+type TeamSectionTitle = {
+  subtitle?: string
+  title?: string
+  description?: string
+}
+
 const defaultTeam: TeamMember[] = [
   {
     id: "1",
@@ -40,8 +46,9 @@ const defaultTeam: TeamMember[] = [
   },
 ];
 
-export function TeamSection({ team: propTeam }: { team: TeamMember[] }) {
+export function TeamSection({ team: propTeam, sectionTitle }: { team: TeamMember[]; sectionTitle?: TeamSectionTitle }) {
   const team = propTeam.length > 0 ? propTeam : defaultTeam;
+  const section = sectionTitle ?? {}
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canHover, setCanHover] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);

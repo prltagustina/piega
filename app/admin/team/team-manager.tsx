@@ -1,17 +1,19 @@
 "use client"
 
-import { createTeamMember, updateTeamMember, deleteTeamMember, reorderItem } from "@/app/admin/actions"
+import { createTeamMember, updateTeamMember, deleteTeamMember, reorderItem, updateTeamSectionTitle } from "@/app/admin/actions"
 import { ImageUploader } from "@/components/admin/image-uploader"
 import { SubmitButton } from "@/components/admin/submit-button"
 import { Button } from "@/components/ui/button"
 import {
   Card,
+  CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Dialog,
   DialogContent,
@@ -32,7 +34,7 @@ type Member = {
   is_active: boolean
 }
 
-export function TeamManager({ members }: { members: Member[] }) {
+export function TeamManager({ members, sectionTitle }: { members: Member[]; sectionTitle?: { subtitle: string; title: string; description: string } }) {
   const [editingMember, setEditingMember] = useState<Member | null>(null)
   const [showCreate, setShowCreate] = useState(false)
   const [createImageUrl, setCreateImageUrl] = useState("")
@@ -40,6 +42,51 @@ export function TeamManager({ members }: { members: Member[] }) {
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
+      <Card className="border-border/50 bg-card">
+        <CardHeader>
+          <CardTitle>Encabezado de la sección Equipo</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Edita el subtítulo, título y descripción que se muestran en la página principal.
+          </p>
+        </CardHeader>
+        <CardContent>
+          <form
+            action={async (formData) => {
+              await updateTeamSectionTitle(formData)
+            }}
+            className="grid gap-4"
+          >
+            <input type="hidden" name="section_key" value="team" />
+            <div className="grid gap-2">
+              <Label htmlFor="section-subtitle">Subtítulo</Label>
+              <Input
+                id="section-subtitle"
+                name="subtitle"
+                defaultValue={sectionTitle?.subtitle ?? ""}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="section-title">Título</Label>
+              <Input
+                id="section-title"
+                name="title"
+                defaultValue={sectionTitle?.title ?? ""}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="section-description">Descripción</Label>
+              <Textarea
+                id="section-description"
+                name="description"
+                defaultValue={sectionTitle?.description ?? ""}
+                rows={3}
+              />
+            </div>
+            <SubmitButton>Guardar texto de sección</SubmitButton>
+          </form>
+        </CardContent>
+      </Card>
+
       <div className="flex items-center justify-between">
         <p className="text-muted-foreground text-sm">
           {members.length} miembros del equipo

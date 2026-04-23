@@ -375,6 +375,53 @@ export async function deleteTeamMember(formData: FormData) {
   revalidatePath("/")
 }
 
+export async function updateTeamSectionTitle(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("No autorizado")
+
+  const updateTeamSectionTitleSchema = z.object({
+    section_key: z.literal("team"),
+    subtitle: trimString,
+    title: trimString,
+    description: trimString,
+  })
+
+  const data = parseFormData(updateTeamSectionTitleSchema, formData)
+
+  const { data: existing } = await supabase
+    .from("section_titles")
+    .select("id")
+    .eq("section_key", data.section_key)
+    .single()
+
+  if (existing) {
+    const { error } = await supabase
+      .from("section_titles")
+      .update({
+        subtitle: data.subtitle,
+        title: data.title,
+        description: data.description,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("section_key", data.section_key)
+
+    if (error) throw new Error(error.message)
+  } else {
+    const { error } = await supabase.from("section_titles").insert({
+      section_key: data.section_key,
+      subtitle: data.subtitle,
+      title: data.title,
+      description: data.description,
+    })
+
+    if (error) throw new Error(error.message)
+  }
+
+  revalidatePath("/admin/team")
+  revalidatePath("/")
+}
+
 // ============================================
 // Gallery Images CRUD
 // ============================================

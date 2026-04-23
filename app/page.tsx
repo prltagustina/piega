@@ -19,7 +19,7 @@ async function getSiteData() {
   }
 
   try {
-    const [heroRes, settingsRes, servicesRes, aboutRes, aboutImagesRes, teamRes, galleryRes, contactRes] =
+    const [heroRes, settingsRes, servicesRes, aboutRes, aboutImagesRes, teamRes, teamSectionRes, galleryRes, contactRes] =
       await Promise.all([
         supabase.from("hero_section").select("*").single(),
         supabase.from("site_settings").select("*").single(),
@@ -27,6 +27,7 @@ async function getSiteData() {
         supabase.from("about_section").select("*").single(),
         supabase.from("about_images").select("*").order("sort_order"),
         supabase.from("team_members").select("*").order("sort_order"),
+        supabase.from("section_titles").select("subtitle,title,description").eq("section_key", "team").single(),
         supabase.from("gallery_images").select("*").order("sort_order"),
         supabase.from("contact_section").select("*").single(),
       ])
@@ -38,6 +39,7 @@ async function getSiteData() {
       about: aboutRes.data,
       aboutImages: aboutImagesRes.data ?? [],
       team: teamRes.data ?? [],
+      teamSection: teamSectionRes.data ?? null,
       gallery: galleryRes.data ?? [],
       contact: contactRes.data,
     }
@@ -47,7 +49,7 @@ async function getSiteData() {
 }
 
 export default async function Home() {
-  const { hero, settings, services, about, aboutImages, team, gallery, contact } = await getSiteData()
+  const { hero, settings, services, about, aboutImages, team, teamSection, gallery, contact } = await getSiteData()
 
   return (
     <main className="overflow-x-hidden w-full max-w-[100vw]">
@@ -57,7 +59,7 @@ export default async function Home() {
       <ServicesSection services={services} settings={settings} />
       <AboutSection about={about} aboutImages={aboutImages} />
       <GallerySection gallery={gallery} />
-      <TeamSection team={team} />
+      <TeamSection team={team} sectionTitle={teamSection ?? undefined} />
       <BookCTA settings={settings} contact={contact} />
       <Footer settings={settings} services={services} />
     </main>
