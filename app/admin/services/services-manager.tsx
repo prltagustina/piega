@@ -53,6 +53,8 @@ export function ServicesManager({
 }) {
   const [editingService, setEditingService] = useState<Service | null>(null)
   const [showCreate, setShowCreate] = useState(false)
+  const [createImageUrl, setCreateImageUrl] = useState("")
+  const [editImageUrl, setEditImageUrl] = useState("")
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
@@ -106,14 +108,17 @@ export function ServicesManager({
             {services.length} servicios en total
           </p>
         </div>
-        <Dialog open={showCreate} onOpenChange={setShowCreate}>
+        <Dialog open={showCreate} onOpenChange={(open) => {
+          setShowCreate(open)
+          if (!open) setCreateImageUrl("")
+        }}>
           <DialogTrigger asChild>
             <Button className="bg-primary text-primary-foreground">
               <Plus className="h-4 w-4 mr-2" />
               Nuevo Servicio
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-card border-border">
+          <DialogContent className="bg-card border-border max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-foreground">Crear Servicio</DialogTitle>
             </DialogHeader>
@@ -121,6 +126,7 @@ export function ServicesManager({
               action={async (formData) => {
                 await createService(formData)
                 setShowCreate(false)
+                setCreateImageUrl("")
               }}
               className="flex flex-col gap-4"
             >
@@ -140,9 +146,10 @@ export function ServicesManager({
                 <Label>Imagen del servicio</Label>
                 <ImageUploader
                   name="image_url"
-                  value=""
+                  value={createImageUrl}
                   aspectRatio={3 / 4}
                   folder="services"
+                  onUploaded={setCreateImageUrl}
                 />
               </div>
               <input type="hidden" name="sort_order" value={services.length + 1} />
@@ -210,20 +217,28 @@ export function ServicesManager({
                 />
                 <Dialog
                   open={editingService?.id === service.id}
-                  onOpenChange={(open) => !open && setEditingService(null)}
+                  onOpenChange={(open) => {
+                    if (!open) {
+                      setEditingService(null)
+                      setEditImageUrl("")
+                    }
+                  }}
                 >
                   <DialogTrigger asChild>
                     <Button
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8"
-                      onClick={() => setEditingService(service)}
+                      onClick={() => {
+                        setEditingService(service)
+                        setEditImageUrl(service.image_url || "")
+                      }}
                     >
                       <Pencil className="h-3.5 w-3.5" />
                       <span className="sr-only">Editar</span>
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-card border-border">
+                  <DialogContent className="bg-card border-border max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle className="text-foreground">Editar Servicio</DialogTitle>
                     </DialogHeader>
@@ -232,6 +247,7 @@ export function ServicesManager({
                         action={async (formData) => {
                           await updateService(formData)
                           setEditingService(null)
+                          setEditImageUrl("")
                         }}
                         className="flex flex-col gap-4"
                       >
@@ -251,10 +267,12 @@ export function ServicesManager({
                         <div className="grid gap-2">
                           <Label>Imagen del servicio</Label>
                           <ImageUploader
+                            key={editingService.id}
                             name="image_url"
-                            value={editingService.image_url || ""}
+                            value={editImageUrl}
                             aspectRatio={3 / 4}
                             folder="services"
+                            onUploaded={setEditImageUrl}
                           />
                         </div>
                         <input type="hidden" name="sort_order" value={editingService.sort_order} />
