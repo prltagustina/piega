@@ -102,6 +102,7 @@ export async function createService(formData: FormData) {
     title: formData.get("title") as string,
     description: formData.get("description") as string,
     price: formData.get("price") as string,
+    image_url: (formData.get("image_url") as string) || "",
     sort_order: parseInt(formData.get("sort_order") as string) || 0,
     is_active: formData.get("is_active") === "on",
   })
@@ -122,6 +123,7 @@ export async function updateService(formData: FormData) {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       price: formData.get("price") as string,
+      image_url: (formData.get("image_url") as string) || "",
       sort_order: parseInt(formData.get("sort_order") as string) || 0,
       is_active: formData.get("is_active") === "on",
       updated_at: new Date().toISOString(),

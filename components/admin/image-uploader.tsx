@@ -52,9 +52,9 @@ export function ImageUploader({
     try {
       const supabase = createClient()
       
-      // Verificar autenticación
-      const { data: { session } } = await supabase.auth.getSession()
-      if (!session) {
+      // Verificar autenticación usando getUser() para validar con el servidor
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user) {
         throw new Error("Debes iniciar sesión para subir imágenes")
       }
 
@@ -70,7 +70,10 @@ export function ImageUploader({
           upsert: false,
         })
 
-      if (uploadError) throw uploadError
+      if (uploadError) {
+        console.error("[v0] Storage upload error:", uploadError)
+        throw new Error(uploadError.message || "Error al subir archivo al storage")
+      }
 
       // Obtener URL pública
       const { data: urlData } = supabase.storage
