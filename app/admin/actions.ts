@@ -211,8 +211,8 @@ export async function createService(formData: FormData) {
 
   const createServiceSchema = z.object({
     title: requiredTrimString,
-    description: requiredTrimString,
-    price: requiredTrimString,
+    description: trimString,
+    price: trimString,
     image_url: trimString,
     sort_order: nonNegativeInt,
     is_active: checkboxBoolean,
@@ -242,8 +242,8 @@ export async function updateService(formData: FormData) {
   const updateServiceSchema = z.object({
     id: requiredTrimString,
     title: requiredTrimString,
-    description: requiredTrimString,
-    price: requiredTrimString,
+    description: trimString,
+    price: trimString,
     image_url: trimString,
     sort_order: nonNegativeInt,
     is_active: checkboxBoolean,

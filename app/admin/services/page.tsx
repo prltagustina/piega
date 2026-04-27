@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import { ServicesManager } from "./services-manager"
 
 export default async function AdminServicesPage() {
-  let services: { id: string; title: string; description: string; price: string; sort_order: number; is_active: boolean }[] = []
+  let services: { id: string; title: string; description: string; price: string; sort_order: number; is_active: boolean; image_url?: string }[] = []
   let settings: { id: string; services_default_image?: string | null } | null = null
   let settingsError: string | null = null
   try {

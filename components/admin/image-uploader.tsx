@@ -68,13 +68,17 @@ export function ImageUploader({
       const supabase = createClient()
       
       // Verificar autenticación
-      const { data: { session } } = await supabase.auth.getSession()
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+      if (sessionError) {
+        console.error("[v0] Session error:", sessionError)
+        throw new Error("Error al verificar la sesión")
+      }
       if (!session) {
         throw new Error("Debes iniciar sesión para subir imágenes")
       }
 
       // Generar nombre único
-      const ext = file.name.split(".").pop() || "jpg"
+      const ext = file.name.split(".").pop()?.toLowerCase() || "jpg"
       const uniqueName = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
 
       // Subir archivo
@@ -85,7 +89,17 @@ export function ImageUploader({
           upsert: false,
         })
 
-      if (uploadError) throw uploadError
+      if (uploadError) {
+        console.error("[v0] Upload error:", uploadError)
+        // Check for common storage errors
+        if (uploadError.message?.includes("row-level security") || uploadError.message?.includes("policy")) {
+          throw new Error("No tienes permisos para subir imágenes. Verifica las políticas de storage en Supabase.")
+        }
+        if (uploadError.message?.includes("Bucket not found")) {
+          throw new Error("El bucket 'images' no existe en Supabase Storage.")
+        }
+        throw new Error(uploadError.message || "Error al subir la imagen")
+      }
 
       // Obtener URL pública
       const { data: urlData } = supabase.storage
@@ -97,7 +111,7 @@ export function ImageUploader({
       updateHiddenInput(publicUrl)
       onUploaded?.(publicUrl)
     } catch (err) {
-      console.error("Error uploading:", err)
+      console.error("[v0] Error uploading:", err)
       setError(err instanceof Error ? err.message : "Error al subir la imagen")
     } finally {
       setUploading(false)
