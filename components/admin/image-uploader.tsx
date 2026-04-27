@@ -113,7 +113,7 @@ export function ImageUploader({
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      <input ref={hiddenInputRef} type="hidden" name={name} defaultValue={preview} />
+      <input ref={hiddenInputRef} type="hidden" name={name} value={preview} onChange={() => {}} />
       <input
         ref={fileInputRef}
         type="file"
