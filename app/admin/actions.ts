@@ -211,8 +211,8 @@ export async function createService(formData: FormData) {
 
   const createServiceSchema = z.object({
     title: requiredTrimString,
-    description: requiredTrimString,
-    price: requiredTrimString,
+    description: trimString,
+    price: trimString,
     image_url: trimString,
     sort_order: nonNegativeInt,
     is_active: checkboxBoolean,
@@ -224,7 +224,7 @@ export async function createService(formData: FormData) {
     title: data.title,
     description: data.description,
     price: data.price,
-    image_url: data.image_url,
+    image_url: data.image_url || null,
     sort_order: data.sort_order,
     is_active: data.is_active,
   })
@@ -242,14 +242,15 @@ export async function updateService(formData: FormData) {
   const updateServiceSchema = z.object({
     id: requiredTrimString,
     title: requiredTrimString,
-    description: requiredTrimString,
-    price: requiredTrimString,
+    description: trimString,
+    price: trimString,
     image_url: trimString,
     sort_order: nonNegativeInt,
     is_active: checkboxBoolean,
   })
 
   const data = parseFormData(updateServiceSchema, formData)
+  console.log("[v0] updateService data:", JSON.stringify(data, null, 2))
 
   const { error } = await supabase
     .from("services")
@@ -257,14 +258,17 @@ export async function updateService(formData: FormData) {
       title: data.title,
       description: data.description,
       price: data.price,
-      image_url: data.image_url,
+      image_url: data.image_url || null,
       sort_order: data.sort_order,
       is_active: data.is_active,
       updated_at: new Date().toISOString(),
     })
     .eq("id", data.id)
 
-  if (error) throw new Error(error.message)
+  if (error) {
+    console.error("[v0] updateService error:", error)
+    throw new Error(error.message)
+  }
   revalidatePath("/admin/services")
   revalidatePath("/")
 }
