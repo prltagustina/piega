@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import { ServicesManager } from "./services-manager"
 
 export default async function AdminServicesPage() {
-  let services: { id: string; title: string; description: string; price: string; sort_order: number; is_active: boolean }[] = []
+  let services: { id: string; title: string; description: string; price: string; sort_order: number; is_active: boolean; image_url?: string }[] = []
   let settings: { id: string; services_default_image?: string | null } | null = null
   let settingsError: string | null = null
   try {
@@ -10,7 +10,7 @@ export default async function AdminServicesPage() {
     const [{ data: servicesData, error: servicesError }, { data: settingsData, error: siteSettingsError }] = await Promise.all([
       supabase
         .from("services")
-        .select("*")
+        .select("id, title, description, price, sort_order, is_active, image_url")
         .order("sort_order", { ascending: true }),
       supabase
         .from("site_settings")
@@ -24,8 +24,8 @@ export default async function AdminServicesPage() {
     } else if (settingsData) {
       settings = settingsData
     }
-  } catch {
-    // Supabase not available
+  } catch (error) {
+    console.error("[v0] Error loading services page:", error)
   }
 
   return <ServicesManager services={services} settings={settings} settingsError={settingsError} />
