@@ -18,6 +18,28 @@ import { Plus, Pencil, Trash2, ChevronUp, ChevronDown } from "lucide-react"
 import { useState } from "react"
 import Image from "next/image"
 
+// Componente de imagen con transición suave
+function GalleryThumbnail({ src, alt }: { src: string; alt: string }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  return (
+    <>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className={`object-cover transition-opacity duration-500 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        onLoad={() => setIsLoaded(true)}
+      />
+      {/* Fondo suave mientras carga */}
+      <div 
+        className={`absolute inset-0 transition-opacity duration-500 ease-out ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
+        style={{ backgroundColor: 'rgba(92, 82, 120, 0.3)' }}
+      />
+    </>
+  );
+}
+
 type GalleryImage = {
   id: string
   image_url: string
@@ -91,14 +113,12 @@ export function GalleryManager({ images }: { images: GalleryImage[] }) {
             className="group relative rounded-lg overflow-hidden border border-border/50 bg-card"
           >
             <div className="aspect-square relative">
-              <Image
+              <GalleryThumbnail
                 src={image.image_url}
                 alt={image.alt_text || "Imagen de galeria"}
-                fill
-                className="object-cover"
               />
               {!image.is_active && (
-                <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
+                <div className="absolute inset-0 bg-background/60 flex items-center justify-center z-10">
                   <span className="text-xs text-muted-foreground">Inactiva</span>
                 </div>
               )}

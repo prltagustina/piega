@@ -5,6 +5,29 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
 
+// Componente de imagen con transición suave
+function ServiceImage({ src, alt }: { src: string; alt: string }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  return (
+    <>
+      <Image
+        src={src || "/placeholder.svg"}
+        alt={alt}
+        fill
+        className={`object-cover transition-opacity duration-500 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        sizes="50vw"
+        onLoad={() => setIsLoaded(true)}
+      />
+      {/* Fondo suave mientras carga */}
+      <div 
+        className={`absolute inset-0 transition-opacity duration-500 ease-out ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
+        style={{ backgroundColor: 'rgba(92, 82, 120, 0.3)' }}
+      />
+    </>
+  );
+}
+
 type ServiceData = {
   id: string
   title: string
@@ -129,14 +152,9 @@ export function ServicesSection({ services: propServices, settings }: { services
                 transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="absolute inset-0"
               >
-                <Image
-                  src={currentImage || "/placeholder.svg"}
-                  alt={activeIndex !== null ? services[activeIndex]?.title : "Servicios de Piega"}
-                  fill
-                  className="object-cover"
-                  sizes="50vw"
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
+                <ServiceImage 
+                  src={currentImage} 
+                  alt={activeIndex !== null ? services[activeIndex]?.title : "Servicios de Piega"} 
                 />
               </motion.div>
             </AnimatePresence>

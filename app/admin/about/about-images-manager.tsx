@@ -24,6 +24,28 @@ import { Plus, Pencil, Trash2 } from "lucide-react"
 import { useState } from "react"
 import Image from "next/image"
 
+// Componente de imagen con transición suave
+function CarouselThumbnail({ src, alt }: { src: string; alt: string }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  return (
+    <>
+      <Image
+        src={src || "/placeholder.svg"}
+        alt={alt || "Imagen del carrusel"}
+        fill
+        className={`object-cover transition-opacity duration-500 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        onLoad={() => setIsLoaded(true)}
+      />
+      {/* Fondo suave mientras carga */}
+      <div 
+        className={`absolute inset-0 transition-opacity duration-500 ease-out ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
+        style={{ backgroundColor: 'rgba(92, 82, 120, 0.3)' }}
+      />
+    </>
+  );
+}
+
 type AboutImage = {
   id: string
   image_url: string
@@ -92,11 +114,9 @@ export function AboutImagesManager({ images }: { images: AboutImage[] }) {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {images.map((img) => (
               <div key={img.id} className="relative group aspect-[4/5] overflow-hidden rounded-md">
-                <Image
-                  src={img.image_url || "/placeholder.svg"}
+                <CarouselThumbnail
+                  src={img.image_url}
                   alt={img.alt_text || "Imagen del carrusel"}
-                  fill
-                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <Dialog
