@@ -6,6 +6,30 @@ import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+// Componente de imagen con transición suave
+function TeamMemberImage({ src, name }: { src: string; name: string }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  return (
+    <>
+      <Image
+        src={src || "/placeholder.svg"}
+        alt={name}
+        fill
+        className={`object-cover transition-opacity duration-700 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, (max-width: 1024px) 380px, 420px"
+        draggable={false}
+        onLoad={() => setIsLoaded(true)}
+      />
+      {/* Fondo suave mientras carga */}
+      <div 
+        className={`absolute inset-0 transition-opacity duration-700 ease-out ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
+        style={{ backgroundColor: 'rgba(92, 82, 120, 0.3)' }}
+      />
+    </>
+  );
+}
+
 type TeamMember = {
   id: string;
   name: string;
@@ -210,16 +234,7 @@ export function TeamSection({ team: propTeam, sectionTitle }: { team: TeamMember
                       ease: [0.25, 0.46, 0.45, 0.94],
                     }}
                   >
-                    <Image
-                      src={member.image_url || "/placeholder.svg"}
-                      alt={member.name}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, (max-width: 1024px) 380px, 420px"
-                      draggable={false}
-                      placeholder="blur"
-                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
-                    />
+                    <TeamMemberImage src={member.image_url} name={member.name} />
                   </motion.div>
 
                   {/* Overlay on hover */}

@@ -6,6 +6,37 @@ import { Button } from "@/components/ui/button"
 import { Upload, X, Loader2 } from "lucide-react"
 import Image from "next/image"
 
+// Componente de preview con transición suave
+function PreviewImage({ preview, aspectRatio }: { preview: string; aspectRatio?: number }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  // Reset loaded state when preview changes
+  useEffect(() => {
+    setIsLoaded(false);
+  }, [preview]);
+  
+  return (
+    <div
+      className="relative w-full"
+      style={{ aspectRatio: aspectRatio ? `${aspectRatio}` : "16/9" }}
+    >
+      <Image
+        src={preview}
+        alt="Preview"
+        fill
+        className={`object-cover transition-opacity duration-500 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        sizes="400px"
+        onLoad={() => setIsLoaded(true)}
+      />
+      {/* Fondo suave mientras carga */}
+      <div 
+        className={`absolute inset-0 transition-opacity duration-500 ease-out ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
+        style={{ backgroundColor: 'rgba(92, 82, 120, 0.3)' }}
+      />
+    </div>
+  );
+}
+
 type ImageUploaderProps = {
   name: string
   value?: string
@@ -124,18 +155,7 @@ export function ImageUploader({
 
       {preview ? (
         <div className="relative group rounded-lg overflow-hidden border border-border/50 bg-secondary/30">
-          <div
-            className="relative w-full"
-            style={{ aspectRatio: aspectRatio ? `${aspectRatio}` : "16/9" }}
-          >
-            <Image
-              src={preview}
-              alt="Preview"
-              fill
-              className="object-cover"
-              sizes="400px"
-            />
-          </div>
+          <PreviewImage preview={preview} aspectRatio={aspectRatio} />
           <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
             <Button
               type="button"

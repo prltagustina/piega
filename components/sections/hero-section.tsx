@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
@@ -35,6 +35,8 @@ export function HeroSection({
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0.45, 0.8]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <section
@@ -51,12 +53,16 @@ export function HeroSection({
           src={hero?.image_url || "/images/hero.jpg"}
           alt="Interior del salón Piega Hair & Beauty"
           fill
-          className="object-cover object-center"
+          className={`object-cover object-center transition-opacity duration-1000 ease-out ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
           priority
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
           quality={85}
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
+          onLoad={() => setImageLoaded(true)}
+        />
+        {/* Fondo suave mientras carga */}
+        <div 
+          className={`absolute inset-0 transition-opacity duration-1000 ease-out ${imageLoaded ? 'opacity-0' : 'opacity-100'}`}
+          style={{ backgroundColor: 'rgba(92, 82, 120, 0.6)' }}
         />
       </motion.div>
 

@@ -1,9 +1,50 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
+
+// Componente de imagen con transición suave
+function CarouselSlideImage({ 
+  src, 
+  alt, 
+  imageScale, 
+  imageY 
+}: { 
+  src: string; 
+  alt: string; 
+  imageScale: MotionValue<number>; 
+  imageY: MotionValue<string>; 
+}) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  return (
+    <motion.div
+      data-salon-slide
+      className="relative aspect-[4/5] min-w-full snap-center overflow-hidden"
+      style={{ scale: imageScale, y: imageY }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+    >
+      <Image
+        src={src || "/placeholder.svg"}
+        alt={alt}
+        fill
+        className={`object-cover transition-opacity duration-700 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        onLoad={() => setIsLoaded(true)}
+      />
+      {/* Fondo suave mientras carga */}
+      <div 
+        className={`absolute inset-0 transition-opacity duration-700 ease-out ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
+        style={{ backgroundColor: 'rgba(92, 82, 120, 0.3)' }}
+      />
+    </motion.div>
+  );
+}
 
 type AboutImage = {
   id: string
@@ -210,26 +251,13 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
               onMouseLeave={handleMouseLeave}
             >
               {images.map((image) => (
-                <motion.div
+                <CarouselSlideImage
                   key={image.src}
-                  data-salon-slide
-                  className="relative aspect-[4/5] min-w-full snap-center overflow-hidden"
-                  style={{ scale: imageScale, y: imageY }}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                >
-                  <Image
-                    src={image.src || "/placeholder.svg"}
-                    alt={image.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    placeholder="blur"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
-                  />
-                </motion.div>
+                  src={image.src}
+                  alt={image.alt}
+                  imageScale={imageScale}
+                  imageY={imageY}
+                />
               ))}
             </div>
           

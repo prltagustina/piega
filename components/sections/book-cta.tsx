@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
@@ -25,6 +25,7 @@ export function BookCTA({ settings, contact }: { settings?: SettingsData; contac
   });
 
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <section
@@ -38,8 +39,14 @@ export function BookCTA({ settings, contact }: { settings?: SettingsData; contac
           src={contact?.image_url || "/images/hero.jpg"}
           alt="Ambiente del salon"
           fill
-          className="object-cover"
+          className={`object-cover transition-opacity duration-700 ease-out ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
           sizes="100vw"
+          onLoad={() => setImageLoaded(true)}
+        />
+        {/* Fondo suave mientras carga */}
+        <div 
+          className={`absolute inset-0 transition-opacity duration-700 ease-out ${imageLoaded ? 'opacity-0' : 'opacity-100'}`}
+          style={{ backgroundColor: 'rgba(92, 82, 120, 0.5)' }}
         />
       </motion.div>
 
