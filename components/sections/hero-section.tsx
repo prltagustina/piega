@@ -82,7 +82,7 @@ export function HeroSection({
           style={{ color: "var(--site-accent)" }}
         >
           {hero?.subtitle ? (
-            <span dangerouslySetInnerHTML={{ __html: hero.subtitle.replace(/(experiencia)\s+(en)/i, '$1<br class="md:hidden" /> $2') }} />
+            <span>{hero.subtitle}</span>
           ) : (
             <>
               Una nueva experiencia
