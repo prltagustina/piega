@@ -105,6 +105,17 @@
     /* Smoother scrolling on iOS */
     main {
       -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+    
+    /* Fix iOS Safari viewport height */
+    .h-screen {
+      height: 100dvh;
+    }
+    
+    /* Ensure all sections have proper positioning for scroll animations */
+    section {
+      position: relative;
     }
   }
 }

@@ -200,7 +200,7 @@ export function TeamSection({ team: propTeam, sectionTitle }: { team: TeamMember
           onMouseUp={canHover ? handleMouseUp : undefined}
           onMouseLeave={canHover ? handleMouseUp : undefined}
           onMouseMove={canHover ? handleMouseMove : undefined}
-          className={`flex items-start gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-8 md:px-16 lg:px-24 ${
+          className={`relative flex items-start gap-4 sm:gap-5 md:gap-6 overflow-x-auto scrollbar-hide pb-4 px-8 md:px-16 lg:px-24 ${
             isDragging ? "cursor-grabbing select-none" : "cursor-grab"
           }`}
           style={{
