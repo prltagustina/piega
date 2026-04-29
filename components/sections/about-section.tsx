@@ -228,10 +228,10 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         {/* Image with parallax and carousel */}
         <ScrollReveal direction="left">
-          <div className="flex flex-col gap-4">
+          <div className="relative flex flex-col gap-4">
             <div
               ref={scrollContainerRef}
-              className={`flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory ${
+              className={`relative flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory ${
                 isDragging ? 'cursor-grabbing' : 'cursor-grab'
               } select-none`}
               style={{

@@ -42,7 +42,7 @@ export function HeroSection({
     <section
       ref={ref}
       id="inicio"
-      className="relative h-screen overflow-hidden"
+      className="relative h-[100dvh] overflow-hidden"
     >
       {/* Parallax background image */}
       <motion.div 
