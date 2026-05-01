@@ -108,10 +108,20 @@ section {
 /* Service card hover */
 .service-card {
   transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
 }
 
 .service-card:hover {
   background-color: var(--site-bg-warm);
+}
+
+/* En dispositivos táctiles, usar :active en lugar de :hover */
+@media (hover: none) and (pointer: coarse) {
+  .service-card:active {
+    background-color: var(--site-bg-warm);
+  }
 }
 
 /* Text reveal mask */

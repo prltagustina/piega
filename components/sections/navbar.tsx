@@ -29,22 +29,53 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ✅ Scroll lock PRO (igual al navbar viejo)
+  // ✅ Scroll lock compatible con iOS Safari
   useEffect(() => {
     if (menuOpen) {
+      // iOS Safari necesita un enfoque diferente para el scroll lock
       const scrollY = window.scrollY;
-
+      
+      // Guardar la posición actual
+      document.documentElement.style.setProperty('--scroll-position', `-${scrollY}px`);
+      
+      // Aplicar estilos al HTML y body para iOS
+      document.documentElement.style.overflow = "hidden";
+      document.documentElement.style.height = "100%";
       document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
       document.body.style.position = "fixed";
       document.body.style.width = "100%";
       document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      
+      // Prevenir el touchmove en iOS
+      const preventScroll = (e: TouchEvent) => {
+        // Permitir scroll dentro del menú si es necesario
+        const target = e.target as HTMLElement;
+        if (!target.closest('#mobile-menu')) {
+          e.preventDefault();
+        }
+      };
+      
+      document.addEventListener('touchmove', preventScroll, { passive: false });
+      
+      return () => {
+        document.removeEventListener('touchmove', preventScroll);
+      };
     } else {
       const scrollY = document.body.style.top;
 
+      // Limpiar estilos
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.height = "";
       document.body.style.overflow = "";
+      document.body.style.height = "";
       document.body.style.position = "";
       document.body.style.width = "";
       document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
 
       if (scrollY) {
         window.scrollTo(0, parseInt(scrollY || "0") * -1);
@@ -52,10 +83,15 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
     }
 
     return () => {
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.height = "";
       document.body.style.overflow = "";
+      document.body.style.height = "";
       document.body.style.position = "";
       document.body.style.width = "";
       document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
     };
   }, [menuOpen]);
 
@@ -194,7 +230,13 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 px-6 text-center"
-            style={{ backgroundColor: "var(--site-bg)" }}
+            style={{ 
+              backgroundColor: "var(--site-bg)",
+              // Fixes para iOS Safari
+              WebkitOverflowScrolling: "touch",
+              touchAction: "none",
+              WebkitTapHighlightColor: "transparent",
+            }}
           >
             {navLinks.map((link, i) => (
               <motion.a
