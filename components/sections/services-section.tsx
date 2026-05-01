@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./scroll-reveal";
 import Image from "next/image";
@@ -30,6 +30,32 @@ const defaultServices: ServiceData[] = [
 export function ServicesSection({ services: propServices, settings }: { services: ServiceData[]; settings?: SettingsData }) {
   const services = propServices.length > 0 ? propServices : defaultServices
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  
+  // Detectar si es un dispositivo táctil (iOS/Android)
+  useEffect(() => {
+    const checkTouchDevice = () => {
+      setIsTouchDevice(
+        'ontouchstart' in window || 
+        navigator.maxTouchPoints > 0 ||
+        // @ts-expect-error - msMaxTouchPoints existe en navegadores antiguos
+        navigator.msMaxTouchPoints > 0
+      );
+    };
+    checkTouchDevice();
+  }, []);
+  
+  // Handler para click/touch que funciona en iOS
+  const handleServiceInteraction = useCallback((index: number) => {
+    setActiveIndex(prev => prev === index ? null : index);
+  }, []);
+  
+  // Handler para hover (solo en desktop)
+  const handleMouseEnter = useCallback((index: number) => {
+    if (!isTouchDevice) {
+      setActiveIndex(index);
+    }
+  }, [isTouchDevice]);
   
   // Get the default image from settings or fallback to static image
   const defaultImage = settings?.services_default_image || "/images/services.jpg";
@@ -64,9 +90,20 @@ export function ServicesSection({ services: propServices, settings }: { services
               <button
                 type="button"
                 className="service-card w-full text-left py-7 border-b flex items-start justify-between gap-4 group"
-                style={{ borderColor: "var(--site-border)" }}
-                onClick={() => setActiveIndex(activeIndex === i ? null : i)}
-                onMouseEnter={() => setActiveIndex(i)}
+                style={{ 
+                  borderColor: "var(--site-border)",
+                  // Mejorar respuesta táctil en iOS
+                  WebkitTapHighlightColor: "transparent",
+                  touchAction: "manipulation",
+                }}
+                onClick={() => handleServiceInteraction(i)}
+                onMouseEnter={() => handleMouseEnter(i)}
+                // Añadir soporte explícito para touch en iOS
+                onTouchEnd={(e) => {
+                  // Prevenir el comportamiento por defecto que causa delays en iOS
+                  e.preventDefault();
+                  handleServiceInteraction(i);
+                }}
               >
                 <div className="flex-1">
                   <div className="flex items-baseline gap-4">

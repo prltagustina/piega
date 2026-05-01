@@ -107,4 +107,34 @@
       -webkit-overflow-scrolling: touch;
     }
   }
+  
+  /* iOS Safari specific fixes */
+  @supports (-webkit-touch-callout: none) {
+    /* Fix para elementos fixed en iOS */
+    .fixed {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+    
+    /* Mejorar respuesta táctil en botones */
+    button, 
+    a, 
+    [role="button"] {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    
+    /* Fix para el menú móvil en iOS */
+    #mobile-menu {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+    
+    /* Asegurar que los elementos interactivos respondan correctamente */
+    .service-card {
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+  }
 }

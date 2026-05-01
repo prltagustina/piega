@@ -1,6 +1,16 @@
 import React from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
+
+// Viewport separado para Next.js 16+ - mejor compatibilidad con iOS
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  themeColor: "#5C5278",
+};
 
 import "./globals.css";
 import "./styles/site.css";
@@ -21,8 +31,6 @@ export const metadata: Metadata = {
   title: "Piega Hair & Beauty Club",
   description: "Salon de belleza premium - Hair & Beauty Club",
   manifest: "/manifest.json",
-  viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
-  themeColor: "#000000",
   icons: {
     icon: [
       {
@@ -49,9 +57,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark">
+    <html lang="es" className="dark" style={{ WebkitTextSizeAdjust: "100%" }}>
       <body
         className={`${cormorant.variable} ${montserrat.variable} font-sans antialiased`}
+        style={{
+          // Fixes para iOS Safari
+          WebkitOverflowScrolling: "touch",
+          overscrollBehavior: "none",
+        }}
       >
         {children}
       </body>
