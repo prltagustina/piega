@@ -1,5 +1,5 @@
 import React from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 
 import "./globals.css";
@@ -20,27 +20,13 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Piega Hair & Beauty Club",
   description: "Salon de belleza premium - Hair & Beauty Club",
-  manifest: "/manifest.json",
-  viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
   themeColor: "#5C5278",
-  icons: {
-    icon: [
-      {
-        url: "/favicon.svg",
-        type: "image/svg+xml",
-      },
-      {
-        url: "/p-icon.svg",
-        type: "image/svg+xml",
-        sizes: "any",
-      },
-    ],
-    shortcut: "/p-icon.svg",
-    apple: {
-      url: "/p-icon.svg",
-      type: "image/svg+xml",
-    },
-  },
 };
 
 export default function RootLayout({
