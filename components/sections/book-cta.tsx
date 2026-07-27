@@ -62,7 +62,7 @@ export function BookCTA({ settings, contact }: { settings?: SettingsData; contac
 
         <ScrollReveal delay={0.1}>
           <h2
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-sans font-medium leading-tight max-w-3xl text-balance"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-sans font-medium leading-tight max-w-3xl text-balance"
             style={{ color: "var(--site-fg)" }}
           >
             {contact?.title || "Tu momento de belleza te espera"}

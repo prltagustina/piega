@@ -297,7 +297,7 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
 
           <ScrollReveal delay={0.2}>
             <h2
-              className="text-3xl sm:text-4xl md:text-6xl font-sans font-medium leading-tight"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-sans font-medium leading-tight"
               style={{ color: "var(--site-fg)" }}
             >
               {about?.title || "Un espacio pensado para vos"}
