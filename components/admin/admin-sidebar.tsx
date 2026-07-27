@@ -67,8 +67,8 @@ export function AdminSidebar({ user }: { user: User }) {
           <Image
             src="/images/logo-piega.png"
             alt="Piega"
-            width={80}
-            height={26}
+            width={331}
+            height={133}
             className="h-6 w-auto brightness-110"
           />
           <span className="text-[7px] font-heading font-medium leading-[1.3] tracking-[0.04em] text-sidebar-foreground">

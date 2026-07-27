@@ -42,8 +42,8 @@ export function Footer({ settings, services: propServices }: { settings: Setting
               <Image
                 src="/images/logo-piega.png"
                 alt="Piega"
-                width={140}
-                height={46}
+                width={331}
+                height={133}
                 className="h-9 w-auto"
               />
               <span

@@ -78,13 +78,13 @@ export function Navbar({ settings }: { settings?: SettingsData }) {
             <Image
               src="/images/logo-piega.png"
               alt="Piega"
-              width={120}
-              height={40}
-              className="h-6 w-auto shrink-0 sm:h-7 md:h-9"
+              width={331}
+              height={133}
+              className="h-8 w-auto shrink-0 sm:h-10 md:h-12"
               priority
             />
             <span
-              className="font-heading text-[7px] font-medium leading-[1.3] tracking-[0.04em] max-[340px]:hidden sm:text-[8px] md:text-[9px]"
+              className="font-heading text-[9px] font-medium leading-[1.3] tracking-[0.04em] max-[340px]:hidden sm:text-[11px] md:text-[12px]"
               style={{ color: "var(--site-fg)" }}
             >
               Hair &<br />
