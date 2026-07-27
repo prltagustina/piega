@@ -129,7 +129,7 @@ export function TeamSection({ team: propTeam, sectionTitle }: { team: TeamMember
                 {section.subtitle || "Nuestro Equipo"}
               </p>
               <h2
-                className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-medium leading-tight"
+                className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-sans font-medium leading-tight"
                 style={{ color: "var(--site-fg)" }}
               >
                 {section.title || "Artistas del estilo"}

@@ -94,7 +94,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
             Galería
           </p>
           <h2
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-medium"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-sans font-medium"
             style={{ color: "var(--site-fg)" }}
           >
             Nuestro trabajo

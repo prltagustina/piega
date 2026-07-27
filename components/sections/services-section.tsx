@@ -54,7 +54,7 @@ export function ServicesSection({ services: propServices, settings }: { services
           Nuestros Servicios
         </p>
         <h2
-          className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-medium leading-tight max-w-2xl"
+          className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-sans font-medium leading-tight max-w-2xl"
           style={{ color: "var(--site-fg)" }}
         >
           Experiencias que transforman
