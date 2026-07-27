@@ -331,7 +331,7 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
               ].map((stat) => (
                 <div key={stat.label}>
                   <p
-                    className="text-3xl md:text-4xl font-heading font-medium"
+                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-medium"
                     style={{ color: "var(--site-accent-secondary)" }}
                   >
                     {stat.number}

@@ -82,7 +82,7 @@ export function ServicesSection({ services: propServices, settings }: { services
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3
-                      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-medium transition-colors duration-300"
+                      className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-heading font-medium transition-colors duration-300"
                       style={{
                         color:
                           activeIndex === i

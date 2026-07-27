@@ -247,7 +247,7 @@ export function TeamSection({ team: propTeam, sectionTitle }: { team: TeamMember
                 {/* Name and role below image */}
                 <div className="mt-5">
                   <h3
-                    className="text-2xl md:text-3xl font-heading font-medium transition-colors duration-300 group-hover:text-[var(--site-accent)]"
+                    className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-heading font-medium transition-colors duration-300 group-hover:text-[var(--site-accent)]"
                     style={{ color: "var(--site-fg)" }}
                   >
                     {member.name}
