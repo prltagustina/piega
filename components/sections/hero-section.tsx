@@ -18,6 +18,29 @@ type SettingsData = {
   booking_url?: string;
 } | null;
 
+function splitSubtitleWithBreak(subtitle: string) {
+  const match = subtitle.match(/(experiencia)\s+(en)/i);
+  if (!match || match.index === undefined) {
+    return subtitle;
+  }
+
+  const before = subtitle.slice(0, match.index);
+  const word1 = match[1];
+  const word2 = match[2];
+  const after = subtitle.slice(match.index + match[0].length);
+
+  return (
+    <>
+      {before}
+      {word1}
+      <br className="md:hidden" />
+      {" "}
+      {word2}
+      {after}
+    </>
+  );
+}
+
 export function HeroSection({
   hero,
   settings,
@@ -82,7 +105,7 @@ export function HeroSection({
           style={{ color: "var(--site-accent)" }}
         >
           {hero?.subtitle ? (
-            <span dangerouslySetInnerHTML={{ __html: hero.subtitle.replace(/(experiencia)\s+(en)/i, '$1<br class="md:hidden" /> $2') }} />
+            <span>{splitSubtitleWithBreak(hero.subtitle)}</span>
           ) : (
             <>
               Una nueva experiencia
