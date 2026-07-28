@@ -4,6 +4,7 @@ import { createPublicClient } from "@/lib/supabase/public"
 import { Navbar } from "@/components/sections/navbar"
 import { HeroSection } from "@/components/sections/hero-section"
 import { Marquee } from "@/components/sections/marquee"
+import { Banner } from "@/components/sections/banner"
 import { ServicesSection } from "@/components/sections/services-section"
 import { AboutSection } from "@/components/sections/about-section"
 import { GallerySection } from "@/components/sections/gallery-section"
@@ -56,6 +57,7 @@ export default async function Home() {
       <Navbar settings={settings} />
       <HeroSection hero={hero} settings={settings} />
       <Marquee services={services} />
+      <Banner />
       <ServicesSection services={services} settings={settings} />
       <AboutSection about={about} aboutImages={aboutImages} />
       <GallerySection gallery={gallery} />
