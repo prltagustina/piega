@@ -123,7 +123,7 @@ export function HeroSection({
             delay: 0.5,
             ease: [0.25, 0.46, 0.45, 0.94],
           }}
-          className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-heading font-medium leading-[0.95] tracking-tight text-balance"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-medium leading-[0.95] tracking-tight text-balance"
           style={{ color: "var(--site-fg)" }}
         >
           {hero?.title_line1 || "Love your"}

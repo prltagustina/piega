@@ -129,7 +129,7 @@ export function TeamSection({ team: propTeam, sectionTitle }: { team: TeamMember
                 {section.subtitle || "Nuestro Equipo"}
               </p>
               <h2
-                className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-medium leading-tight"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-sans font-medium leading-tight"
                 style={{ color: "var(--site-fg)" }}
               >
                 {section.title || "Artistas del estilo"}
@@ -247,7 +247,7 @@ export function TeamSection({ team: propTeam, sectionTitle }: { team: TeamMember
                 {/* Name and role below image */}
                 <div className="mt-5">
                   <h3
-                    className="text-2xl md:text-3xl font-heading font-medium transition-colors duration-300 group-hover:text-[var(--site-accent)]"
+                    className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-heading font-medium transition-colors duration-300 group-hover:text-[var(--site-accent)]"
                     style={{ color: "var(--site-fg)" }}
                   >
                     {member.name}

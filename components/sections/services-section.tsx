@@ -54,7 +54,7 @@ export function ServicesSection({ services: propServices, settings }: { services
           Nuestros Servicios
         </p>
         <h2
-          className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-medium leading-tight max-w-2xl"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-sans font-medium leading-tight max-w-2xl"
           style={{ color: "var(--site-fg)" }}
         >
           Experiencias que transforman
@@ -82,7 +82,7 @@ export function ServicesSection({ services: propServices, settings }: { services
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3
-                      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-medium transition-colors duration-300"
+                      className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-heading font-medium transition-colors duration-300"
                       style={{
                         color:
                           activeIndex === i

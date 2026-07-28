@@ -74,8 +74,8 @@ function LoginPageContent() {
               <Image
                 src="/images/logo-piega.png"
                 alt="Piega"
-                width={140}
-                height={46}
+                width={331}
+                height={133}
                 className="h-10 w-auto"
                 priority
               />
