@@ -112,12 +112,12 @@ export function Banner() {
               data-banner-slide
               className="relative aspect-[820/1000] min-w-full snap-center overflow-hidden"
             >
-              <Link href={slide.href} aria-label={slide.alt} className="block w-full h-full">
+              <Link href={slide.href} aria-label={slide.alt} className="group block w-full h-full">
                 <Image
                   src={slide.src}
                   alt={slide.alt}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                   sizes="100vw"
                 />
               </Link>
@@ -148,13 +148,13 @@ export function Banner() {
             key={slide.href + i}
             href={slide.href}
             aria-label={slide.alt}
-            className="relative aspect-[820/1000] overflow-hidden block transition-opacity duration-300 hover:opacity-90"
+            className="group relative aspect-[820/1000] overflow-hidden block transition-opacity duration-300 hover:opacity-90"
           >
             <Image
               src={slide.src}
               alt={slide.alt}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
               sizes="25vw"
             />
           </Link>
