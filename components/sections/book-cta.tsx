@@ -35,7 +35,7 @@ export function BookCTA({ settings, contact }: { settings?: SettingsData; contac
       {/* Parallax background */}
       <motion.div className="absolute top-[-10%] bottom-[-10%] left-0 right-0 h-[120%]" style={{ y: bgY }}>
         <Image
-          src={contact?.image_url || "/images/hero.jpg"}
+          src={contact?.image_url || "/images/hero.webp"}
           alt="Ambiente del salon"
           fill
           className="object-cover"

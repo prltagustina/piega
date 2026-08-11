@@ -24,25 +24,25 @@ const defaultTeam: TeamMember[] = [
     id: "1",
     name: "Sofia Martinez",
     role: "Directora Creativa",
-    image_url: "/images/team.jpg",
+    image_url: "/images/team.webp",
   },
   {
     id: "2",
     name: "Valentina Rossi",
     role: "Colorista Senior",
-    image_url: "/images/gallery-1.jpg",
+    image_url: "/images/gallery-1.webp",
   },
   {
     id: "3",
     name: "Camila Torres",
     role: "Especialista en Spa",
-    image_url: "/images/gallery-2.jpg",
+    image_url: "/images/gallery-2.webp",
   },
   {
     id: "4",
     name: "Lucia Fernandez",
     role: "Estilista",
-    image_url: "/images/gallery-3.jpg",
+    image_url: "/images/gallery-3.webp",
   },
 ];
 

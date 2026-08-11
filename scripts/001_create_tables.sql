@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.hero_section (
   title_line1 TEXT DEFAULT 'El arte de',
   title_line2 TEXT DEFAULT 'ser vos',
   description TEXT,
-  image_url TEXT DEFAULT '/images/hero.jpg',
+  image_url TEXT DEFAULT '/images/hero.webp',
   cta_primary_text TEXT DEFAULT 'Reservar turno',
   cta_secondary_text TEXT DEFAULT 'Nuestros servicios',
   updated_at TIMESTAMPTZ DEFAULT now()
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS public.about_section (
   title TEXT DEFAULT 'Un espacio pensado para vos',
   paragraph1 TEXT,
   paragraph2 TEXT,
-  image_url TEXT DEFAULT '/images/salon.jpg',
+  image_url TEXT DEFAULT '/images/salon.webp',
   stat1_number TEXT DEFAULT '10+',
   stat1_label TEXT DEFAULT 'Años de experiencia',
   stat2_number TEXT DEFAULT '5k+',

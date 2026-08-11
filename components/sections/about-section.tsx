@@ -119,7 +119,7 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
   ]
 
   if (images.length === 0) {
-    images.push({ src: "/images/salon.jpg", alt: "Interior del salon Piega" })
+    images.push({ src: "/images/salon.webp", alt: "Interior del salon Piega" })
   }
 
   useEffect(() => {

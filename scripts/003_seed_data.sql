@@ -24,7 +24,7 @@ VALUES (
   'El arte de',
   'ser vos',
   'Un espacio donde el estilo se encuentra con la sofisticación. Experiencias de belleza personalizadas para cada persona.',
-  '/images/hero.jpg',
+  '/images/hero.webp',
   'Reservar turno',
   'Nuestros servicios'
 )
@@ -37,7 +37,7 @@ VALUES (
   'Un espacio pensado para vos',
   'Piega nació con la visión de crear un salón donde la calidad, el diseño y la calidez humana se fusionan. Cada detalle de nuestro espacio fue cuidadosamente pensado para que te sientas en un lugar único desde el momento en que entrás.',
   'Trabajamos con productos de primera línea y un equipo de profesionales apasionados por lo que hacen. Porque creemos que cada persona merece una experiencia de belleza excepcional.',
-  '/images/salon.jpg',
+  '/images/salon.webp',
   '10+', 'Años de experiencia',
   '5k+', 'Clientes felices',
   '15', 'Profesionales'
@@ -55,15 +55,15 @@ INSERT INTO public.services (title, description, price, sort_order) VALUES
 
 -- Team Members
 INSERT INTO public.team_members (name, role, image_url, sort_order) VALUES
-  ('Sofia Martinez', 'Directora Creativa', '/images/team.jpg', 1),
-  ('Valentina Rossi', 'Colorista Senior', '/images/gallery-1.jpg', 2),
-  ('Camila Torres', 'Especialista en Spa', '/images/gallery-2.jpg', 3);
+  ('Sofia Martinez', 'Directora Creativa', '/images/team.webp', 1),
+  ('Valentina Rossi', 'Colorista Senior', '/images/gallery-1.webp', 2),
+  ('Camila Torres', 'Especialista en Spa', '/images/gallery-2.webp', 3);
 
 -- Gallery Images
 INSERT INTO public.gallery_images (image_url, alt_text, sort_order) VALUES
-  ('/images/gallery-1.jpg', 'Resultado de estilismo profesional', 1),
-  ('/images/gallery-2.jpg', 'Sala de spa y tratamientos', 2),
-  ('/images/gallery-3.jpg', 'Productos y herramientas premium', 3),
-  ('/images/hero.jpg', 'Ambiente del salón', 4),
-  ('/images/services.jpg', 'Estilista en acción', 5),
-  ('/images/salon.jpg', 'Vista del salón', 6);
+  ('/images/gallery-1.webp', 'Resultado de estilismo profesional', 1),
+  ('/images/gallery-2.webp', 'Sala de spa y tratamientos', 2),
+  ('/images/gallery-3.webp', 'Productos y herramientas premium', 3),
+  ('/images/hero.webp', 'Ambiente del salón', 4),
+  ('/images/services.webp', 'Estilista en acción', 5),
+  ('/images/salon.webp', 'Vista del salón', 6);
