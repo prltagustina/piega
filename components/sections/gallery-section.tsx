@@ -13,7 +13,28 @@ type GalleryImage = {
   is_active?: boolean
 }
 
-const aspects = ["aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square", "aspect-[3/4]", "aspect-square"]
+const aspects = ["aspect-[3/4]", "aspect-square"]
+
+type GalleryItem = {
+  id: string
+  src: string
+  alt: string
+  aspect: string
+}
+
+// El aspect se elige por la posicion dentro de la columna y no por el indice
+// global: con el indice global cada columna terminaba con un unico aspect
+// (todas verticales de un lado, todas cuadradas del otro) y las alturas se
+// desincronizaban a medida que la galeria crecia. El desfase por columna es lo
+// que evita que queden todas alineadas.
+function toItem(img: GalleryImage, positionInColumn: number, columnPhase: number): GalleryItem {
+  return {
+    id: img.id,
+    src: img.image_url,
+    alt: img.alt_text || "Imagen de galeria",
+    aspect: aspects[(positionInColumn + columnPhase) % aspects.length],
+  }
+}
 
 const defaultGallery: GalleryImage[] = [
   { id: "1", image_url: "/images/gallery-1.webp", alt_text: "Resultado de estilismo profesional", sort_order: 1 },
@@ -25,48 +46,44 @@ const defaultGallery: GalleryImage[] = [
 ]
 
 export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage[] }) {
-  const gallery =
-    propGallery.length > 0
-      ? propGallery
-          .filter((img) => (img.is_active ?? true) && img.image_url)
-          .sort((a, b) => a.sort_order - b.sort_order)
-      : defaultGallery
+  const gallery = useMemo(
+    () =>
+      propGallery.length > 0
+        ? propGallery
+            .filter((img) => (img.is_active ?? true) && img.image_url)
+            .sort((a, b) => a.sort_order - b.sort_order)
+        : defaultGallery,
+    [propGallery],
+  )
 
-  const images = gallery.map((img, i) => ({
-    id: img.id,
-    src: img.image_url,
-    alt: img.alt_text || "Imagen de galeria",
-    aspect: aspects[i % aspects.length],
-  }))
-  
   // Distribute images into columns dynamically (no limit)
   // For mobile: 2 columns, for desktop: 3 columns
   const columns = useMemo(() => {
-    const col1: typeof images = []
-    const col2: typeof images = []
-    const col3: typeof images = []
-    
-    images.forEach((img, i) => {
-      if (i % 3 === 0) col1.push(img)
-      else if (i % 3 === 1) col2.push(img)
-      else col3.push(img)
+    const col1: GalleryItem[] = []
+    const col2: GalleryItem[] = []
+    const col3: GalleryItem[] = []
+
+    gallery.forEach((img, i) => {
+      if (i % 3 === 0) col1.push(toItem(img, col1.length, 0))
+      else if (i % 3 === 1) col2.push(toItem(img, col2.length, 1))
+      else col3.push(toItem(img, col3.length, 0))
     })
-    
+
     return { col1, col2, col3 }
-  }, [images])
-  
+  }, [gallery])
+
   // For mobile: distribute all images into 2 columns
   const mobileColumns = useMemo(() => {
-    const col1: typeof images = []
-    const col2: typeof images = []
-    
-    images.forEach((img, i) => {
-      if (i % 2 === 0) col1.push(img)
-      else col2.push(img)
+    const col1: GalleryItem[] = []
+    const col2: GalleryItem[] = []
+
+    gallery.forEach((img, i) => {
+      if (i % 2 === 0) col1.push(toItem(img, col1.length, 0))
+      else col2.push(toItem(img, col2.length, 1))
     })
-    
+
     return { col1, col2 }
-  }, [images])
+  }, [gallery])
   
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -74,10 +91,13 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
     offset: ["start end", "end start"],
   });
 
-  // Reduced parallax values for smoother mobile performance
-  const col1Y = useTransform(scrollYProgress, [0, 1], ["3%", "-3%"]);
-  const col2Y = useTransform(scrollYProgress, [0, 1], ["-2%", "2%"]);
-  const col3Y = useTransform(scrollYProgress, [0, 1], ["2%", "-2%"]);
+  // Offsets en rem, no en %: un translate porcentual se resuelve contra la altura
+  // del propio elemento, asi que el parallax escalaba con la cantidad de imagenes
+  // (~30px con 6, ~240px con 46). El recorrido tampoco cambia de signo, para que
+  // la columna del medio quede siempre por debajo de las laterales.
+  const col1Y = useTransform(scrollYProgress, [0, 1], ["0rem", "-2rem"]);
+  const col2Y = useTransform(scrollYProgress, [0, 1], ["0rem", "2rem"]);
+  const col3Y = useTransform(scrollYProgress, [0, 1], ["0rem", "-1.5rem"]);
 
   return (
     <section

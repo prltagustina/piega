@@ -57,7 +57,7 @@ export default async function Home() {
       <Navbar settings={settings} />
       <HeroSection hero={hero} settings={settings} />
       <Marquee services={services} />
-      <Banner />
+      {/* <Banner /> */}
       <ServicesSection services={services} settings={settings} />
       <AboutSection about={about} aboutImages={aboutImages} />
       <GallerySection gallery={gallery} />
