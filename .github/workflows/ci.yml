@@ -38,3 +38,52 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+  deploy:
+    needs: ci
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      # ############################################################
+      # TODO: REEMPLAZAR con el nombre y el email de la duena de la
+      # cuenta Vercel (el mismo email que figura en el equipo Hobby).
+      # Solo reescribe el autor del commit en el checkout efimero del
+      # runner: no se pushea nada, el historial real no se toca.
+      # ############################################################
+      - name: Reescribir autor del commit para el CLI de Vercel
+        env:
+          AUTHOR_NAME: AUTHOR_NAME
+          AUTHOR_EMAIL: AUTHOR_EMAIL
+        run: |
+          git config user.name "$AUTHOR_NAME"
+          git config user.email "$AUTHOR_EMAIL"
+          git commit --amend --no-edit --author="$AUTHOR_NAME <$AUTHOR_EMAIL>"
+
+      - name: Install Vercel CLI
+        run: pnpm add -g vercel@latest
+
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment=production
+
+      - name: Build project artifacts
+        run: vercel build --prod
+
+      - name: Deploy to production
+        run: vercel deploy --prebuilt --prod
