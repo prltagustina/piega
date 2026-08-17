@@ -45,7 +45,7 @@ export function ServicesSection({ services: propServices, settings }: { services
   };
 
   return (
-    <section id="servicios" className="py-24 md:py-32 px-6 md:px-12 lg:px-16">
+    <section id="servicios" className="py-16 md:py-20 px-6 md:px-12 lg:px-16">
       <ScrollReveal>
         <p
           className="text-xs uppercase tracking-[0.3em] mb-4"
