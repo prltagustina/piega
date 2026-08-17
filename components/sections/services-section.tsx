@@ -61,7 +61,7 @@ export function ServicesSection({ services: propServices, settings }: { services
         </h2>
       </ScrollReveal>
 
-      <div className="mt-16 md:mt-20 grid lg:grid-cols-2 gap-0 lg:gap-16">
+      <div className="mt-8 md:mt-10 grid lg:grid-cols-2 gap-0 lg:gap-16">
         {/* Services list */}
         <div className="flex flex-col">
           {services.map((service, i) => (

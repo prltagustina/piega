@@ -117,7 +117,7 @@ export function TeamSection({ team: propTeam, sectionTitle }: { team: TeamMember
   };
 
   return (
-    <section id="equipo" className="py-24 md:py-32 overflow-hidden">
+    <section id="equipo" className="py-16 md:py-20 overflow-hidden">
       <div className="px-6 md:px-12 lg:px-16">
         <ScrollReveal>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12 md:mb-16">

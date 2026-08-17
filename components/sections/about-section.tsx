@@ -182,7 +182,7 @@ export function AboutSection({ about, aboutImages }: { about: AboutData; aboutIm
     <section
       ref={sectionRef}
       id="salon"
-      className="relative py-24 md:py-32 px-6 md:px-12 lg:px-16"
+      className="relative py-12 md:py-16 px-6 md:px-12 lg:px-16"
     >
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         {/* Image with parallax and carousel */}

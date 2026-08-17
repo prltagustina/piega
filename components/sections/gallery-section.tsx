@@ -103,7 +103,7 @@ export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage
     <section
       ref={sectionRef}
       id="galeria"
-      className="relative py-24 md:py-32 px-6 md:px-12 lg:px-16"
+      className="relative py-12 md:py-16 px-6 md:px-12 lg:px-16"
     >
       <ScrollReveal>
         <div className="text-center mb-16 md:mb-20">
