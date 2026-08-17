@@ -71,7 +71,7 @@ export function HeroSection({
         style={{ y: imageY }}
       >
         <Image
-          src={hero?.image_url || "/images/hero.jpg"}
+          src={hero?.image_url || "/images/hero.webp"}
           alt="Interior del salón Piega Hair & Beauty"
           fill
           className="object-cover object-center"

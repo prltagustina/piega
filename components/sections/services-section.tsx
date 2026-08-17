@@ -19,12 +19,12 @@ type SettingsData = {
 } | null
 
 const defaultServices: ServiceData[] = [
-  { id: "1", title: "Corte & Estilo", description: "Cortes personalizados que realzan tu belleza natural. Nuestros estilistas analizan la textura, forma del rostro y estilo de vida para crear el look perfecto.", price: "Desde $5.500", sort_order: 1, image_url: "/images/services.jpg" },
-  { id: "2", title: "Color & Mechas", description: "Tecnicas de coloracion de vanguardia. Balayage, highlights, global color y mas. Trabajamos con productos premium para un resultado impecable.", price: "Desde $12.000", sort_order: 2, image_url: "/images/gallery-1.jpg" },
-  { id: "3", title: "Tratamientos Capilares", description: "Hidratacion profunda, keratina, botox capilar y tratamientos reparadores. Devolvemos la salud y el brillo a tu cabello.", price: "Desde $8.000", sort_order: 3, image_url: "/images/gallery-2.jpg" },
-  { id: "4", title: "Spa & Bienestar", description: "Rituales de relajacion que combinan aromaterapia, masajes y cuidados especializados. Una experiencia integral de bienestar.", price: "Desde $9.500", sort_order: 4, image_url: "/images/gallery-3.jpg" },
-  { id: "5", title: "Maquillaje Profesional", description: "Looks para eventos, sesiones fotograficas o tu dia a dia. Resaltamos tus rasgos con tecnicas profesionales y productos de alta gama.", price: "Desde $7.000", sort_order: 5, image_url: "/images/salon.jpg" },
-  { id: "6", title: "Novias & Eventos", description: "Paquetes exclusivos para tu dia especial. Incluyen prueba previa, peinado, maquillaje y atencion personalizada.", price: "Consultar", sort_order: 6, image_url: "/images/team.jpg" },
+  { id: "1", title: "Corte & Estilo", description: "Cortes personalizados que realzan tu belleza natural. Nuestros estilistas analizan la textura, forma del rostro y estilo de vida para crear el look perfecto.", price: "Desde $5.500", sort_order: 1, image_url: "/images/services.webp" },
+  { id: "2", title: "Color & Mechas", description: "Tecnicas de coloracion de vanguardia. Balayage, highlights, global color y mas. Trabajamos con productos premium para un resultado impecable.", price: "Desde $12.000", sort_order: 2, image_url: "/images/gallery-1.webp" },
+  { id: "3", title: "Tratamientos Capilares", description: "Hidratacion profunda, keratina, botox capilar y tratamientos reparadores. Devolvemos la salud y el brillo a tu cabello.", price: "Desde $8.000", sort_order: 3, image_url: "/images/gallery-2.webp" },
+  { id: "4", title: "Spa & Bienestar", description: "Rituales de relajacion que combinan aromaterapia, masajes y cuidados especializados. Una experiencia integral de bienestar.", price: "Desde $9.500", sort_order: 4, image_url: "/images/gallery-3.webp" },
+  { id: "5", title: "Maquillaje Profesional", description: "Looks para eventos, sesiones fotograficas o tu dia a dia. Resaltamos tus rasgos con tecnicas profesionales y productos de alta gama.", price: "Desde $7.000", sort_order: 5, image_url: "/images/salon.webp" },
+  { id: "6", title: "Novias & Eventos", description: "Paquetes exclusivos para tu dia especial. Incluyen prueba previa, peinado, maquillaje y atencion personalizada.", price: "Consultar", sort_order: 6, image_url: "/images/team.webp" },
 ]
 
 export function ServicesSection({ services: propServices, settings }: { services: ServiceData[]; settings?: SettingsData }) {
@@ -32,7 +32,7 @@ export function ServicesSection({ services: propServices, settings }: { services
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   
   // Get the default image from settings or fallback to static image
-  const defaultImage = settings?.services_default_image || "/images/services.jpg";
+  const defaultImage = settings?.services_default_image || "/images/services.webp";
   
   // Get the current image to display (active service image or default)
   const currentImage = activeIndex !== null && services[activeIndex]?.image_url 

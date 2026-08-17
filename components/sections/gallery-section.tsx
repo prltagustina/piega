@@ -37,12 +37,12 @@ function toItem(img: GalleryImage, positionInColumn: number, columnPhase: number
 }
 
 const defaultGallery: GalleryImage[] = [
-  { id: "1", image_url: "/images/gallery-1.jpg", alt_text: "Resultado de estilismo profesional", sort_order: 1 },
-  { id: "2", image_url: "/images/gallery-2.jpg", alt_text: "Sala de spa y tratamientos", sort_order: 2 },
-  { id: "3", image_url: "/images/gallery-3.jpg", alt_text: "Productos y herramientas premium", sort_order: 3 },
-  { id: "4", image_url: "/images/gallery-1.jpg", alt_text: "Corte y estilo profesional", sort_order: 4 },
-  { id: "5", image_url: "/images/gallery-2.jpg", alt_text: "Tratamiento capilar", sort_order: 5 },
-  { id: "6", image_url: "/images/gallery-3.jpg", alt_text: "Color y tendencia", sort_order: 6 },
+  { id: "1", image_url: "/images/gallery-1.webp", alt_text: "Resultado de estilismo profesional", sort_order: 1 },
+  { id: "2", image_url: "/images/gallery-2.webp", alt_text: "Sala de spa y tratamientos", sort_order: 2 },
+  { id: "3", image_url: "/images/gallery-3.webp", alt_text: "Productos y herramientas premium", sort_order: 3 },
+  { id: "4", image_url: "/images/gallery-1.webp", alt_text: "Corte y estilo profesional", sort_order: 4 },
+  { id: "5", image_url: "/images/gallery-2.webp", alt_text: "Tratamiento capilar", sort_order: 5 },
+  { id: "6", image_url: "/images/gallery-3.webp", alt_text: "Color y tendencia", sort_order: 6 },
 ]
 
 export function GallerySection({ gallery: propGallery }: { gallery: GalleryImage[] }) {

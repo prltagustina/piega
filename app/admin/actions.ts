@@ -190,7 +190,7 @@ export async function updateServicesDefaultImage(formData: FormData) {
   const { error } = await supabase
     .from("site_settings")
     .update({
-      services_default_image: data.services_default_image || "/images/services.jpg",
+      services_default_image: data.services_default_image || "/images/services.webp",
       updated_at: new Date().toISOString(),
     })
     .eq("id", data.id)
